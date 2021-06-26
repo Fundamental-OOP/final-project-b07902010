@@ -1,14 +1,15 @@
 import controller.GameLoop;
-import level.BattleStatusChecker;
 import level.LevelConstructor;
-import model.CollisionHandler;
 import model.LevelWorld;
 import level.Level;
 
 import java.awt.*;
 import java.io.File;
 
-import static media.AudioPlayer.addAudioByFilePath;
+import battletype.BattleStatusChecker.*;
+
+
+// import static media.AudioPlayer.addAudioByFilePath;
 
 public class LevelMain {
     public static void main(String[] args) {
@@ -20,18 +21,17 @@ public class LevelMain {
 
         // Initialization
         BattleStatusChecker[] battleTypes = {
-            
+            new NormalBattleStatusChecker()
         };
         LevelConstructor levelConstructor = new LevelConstructor(battleTypes);
+
         // Start a level
+        LevelWorld world = new LevelWorld();
         String levelName = "";
-        
-        LevelWorld world = new LevelWorld(CollisionHandler ch, );  // model
         Level level = levelConstructor.constructLevel(levelName, world);
         GameLoop game = new GameLoop(world);  // controller
         GameView view = new GameView(game);  // GUI
         game.start();  // run the game and the game loop
         view.launch(); // launch the GUI
-        
     }
 }

@@ -6,45 +6,72 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import model.World;
-// import enemy
-// defining a stage's condition
+import battletype.BattleStatus;
+import battletype.BattleStatusChecker;
+import model.LevelWorld;
+import unit.AllyConstructor;
+import unit.EnemyConstructor;
 
 public class Level {
-    private World world;
+    private LevelWorld world;
     private String levelName; // input file name for this stage
     private int enemyNum;
-    private ArrayList< Integer > timeLine;
-    private ArrayList< String > enemyUnitName; // timeline and enemyUnitName decide when and which enemy character should appear
+    private ArrayList< EnemyInfo > enemySchedule;
     private int time;
-    private int appearedEnemy;
+    private int appearedEnemyNum;
     private BattleStatus status;
     private BattleStatusChecker battleStatusChecker;
-    public Level(String levelName, World world, int enemyNum, ArrayList< Integer > timeLine, ArrayList< String > enemyUnitName, BattleStatusChecker battleStatusChecker){     // and enemy types
+    private Background background;
+    private AllyConstructor allyConstructor;
+    private EnemyConstructor enemyConstructor;
+    public Level(String levelName, LevelWorld world, int enemyNum, ArrayList< EnemyInfo > enemySchedule ,Background background,BattleStatusChecker battleStatusChecker, AllyConstructor allyConstructor, EnemyConstructor enemyConstructor){     // and enemy types
         time = 0;
-        appearedEnemy = 0;
+        appearedEnemyNum = 0;
         status = BattleStatus.battleContinue;
 
         this.world = world;
         this.levelName = levelName;
         this.enemyNum = enemyNum;
-        this.timeLine = timeLine;
-        this.enemyUnitName = enemyUnitName;
+        this.enemySchedule = enemySchedule;
         this.battleStatusChecker = battleStatusChecker;
+        battleStatusChecker.setLevel(this);
+        battleStatusChecker.setWorld(world);
+        this.background = background;
+
+        this.allyConstructor = allyConstructor;
+        this.enemyConstructor = enemyConstructor;
     }
+    // public void setWorld(LevelWorld world){
+    //     this.world = world;
+    //     battleStatusChecker.setWorld(world);
+    // }
     public void update(){
         time += 1;
         // to get the time of the game should be call by world
         // gameloop -> world.update -> stage.update
-        int nextAppearTime = timeLine.get(appearedEnemy);
-        if( nextAppearTime == time){
-            // an enemy should appear now
-            String enemyType = enemyUnitName.get(appearedEnemy);
-            // find correct enemy type and inject into world (add sprite)
+        for(int i = appearedEnemyNum; i < enemySchedule.size(); i++){
+            EnemyInfo nextEnemy = enemySchedule.get(appearedEnemyNum);
+            if( nextEnemy.getTime() == time){
+                // an enemy should appear now
+                // find correct enemy type and inject into world (add sprite)
+                Unit newEnemy = enemyConstructor.constructEnemy(nextEnemy.getType());
+                world.addEnemy(newEnemy);
+                appearedEnemyNum += 1;
+            }
+            else{
+                break;
+            }
         }
     }
     public BattleStatus checkBattleStatus(){
         return battleStatusChecker.checkBattleStatus();
+    }
+    public boolean allEnemyAppeared(){
+        return enemyNum == appearedEnemyNum;
+    }
+
+    public Background getBackground(){
+        return background;
     }
     
 }

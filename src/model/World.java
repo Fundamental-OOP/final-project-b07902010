@@ -16,71 +16,22 @@ import level.*;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toSet;
 
-public class World {
+public abstract class World {
+    protected final List renderees = new CopyOnWriteArrayList< Renderee >();     // not sure
 
-    protected final ArrayList< Ally > allies = new ArrayList< Ally >();
-    protected final ArrayList< Enemy > enemies = new ArrayList< Enemy >();
-    // ally
-    // enemy
-    // graveyard ally
-    // grave yard enemy
-    
-
-    // to graveyard and real dead
-
-    public World(Sprite... sprites) {
-        addSprites(sprites);
+    public World() {
+        
     }
-    public boolean update() {
-        for (Sprite sprite : sprites) {
-            sprite.update();
-        }
-        return true;
+    public abstract boolean update();
+
+    public void addRenderee(Renderee r){
+        renderees.add(r);
     }
-    
-    public void addSprites(Sprite... sprites) {
-        stream(sprites).forEach(this::addSprite);
+    public void removeRenderee(Renderee r){
+        renderees.remove(r);
     }
 
-    public void addSprite(Sprite sprite) {
-        sprites.add(sprite);
-        sprite.setWorld(this);
+    public List< Renderee > getRenderees(){
+        return renderees;
     }
-
-    public void removeSprite(Sprite sprite) {
-        sprites.remove(sprite);
-        sprite.setWorld(null);
-    }
-
-    // public void move(Sprite from, Dimension offset) {
-    //     Point originalLocation = new Point(from.getLocation());
-    //     from.getLocation().translate(offset.width, offset.height);
-
-    //     Rectangle body = from.getBody();
-    //     // collision detection
-    //     for (Sprite to : sprites) {
-    //         if (to != from && body.intersects(to.getBody())) {
-    //             collisionHandler.handle(originalLocation, from, to);
-    //         }
-    //     }
-    // }
-
-    public Collection<Sprite> getSprites(Rectangle area) {
-        return sprites.stream()
-                .filter(s -> area.intersects(s.getBody()))
-                .collect(toSet());
-    }
-
-    public List<Sprite> getSprites() {
-        return sprites;
-    }
-
-    // Actually, directly couple your model with the class "java.awt.Graphics" is not a good design
-    // If you want to decouple them, create an interface that encapsulates the variation of the Graphics.
-
-    // public void render(Graphics g) {
-    //     for (Sprite sprite : sprites) {
-    //         sprite.render(g);
-    //     }
-    // }
 }

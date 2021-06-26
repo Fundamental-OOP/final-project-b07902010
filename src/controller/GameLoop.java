@@ -2,7 +2,7 @@ package controller;
 
 import model.World;
 
-public abstract class GameLoop {
+public class GameLoop {
     private boolean running;
     private World world;
 
