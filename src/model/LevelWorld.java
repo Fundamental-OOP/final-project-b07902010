@@ -6,6 +6,8 @@ import level.Level;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+
+import resource.Poop;
 import battletype.BattleStatus;
 
 
