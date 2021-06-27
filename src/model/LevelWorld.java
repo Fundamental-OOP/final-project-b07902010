@@ -16,11 +16,11 @@ public class LevelWorld extends World{
 
     private Level level;
 
-    protected final List< Unit > allies = new CopyOnWriteArrayList< Unit >();
-    protected final List< Unit > enemies = new CopyOnWriteArrayList< Unit >();
-    protected final List< Unit > dyingAllies = new CopyOnWriteArrayList< Unit >();
-    protected final List< Unit > dyingEnemies = new CopyOnWriteArrayList< Unit >();
-
+    protected final List< Ally > allies = new CopyOnWriteArrayList< Ally >();
+    protected final List< Enemy > enemies = new CopyOnWriteArrayList< Enemy >();
+    protected final List< Ally > dyingAllies = new CopyOnWriteArrayList< Ally >();
+    protected final List< Enemy > dyingEnemies = new CopyOnWriteArrayList< Enemy >();
+    protected final List < Bullet > bullets = new CopyOnWriteArrayList< Bullet >();
     protected Castle castle;
     protected Poop poop;
     protected Background background;
@@ -28,16 +28,19 @@ public class LevelWorld extends World{
     @Override
     public boolean update() {
         level.update();
-        for (Unit ally : allies) {
+        for (Ally ally : allies) {
             ally.update();
         }
-        for(Unit enemy : enemies){
-            enemy.update();
-        }
-        for(Unit dyingAlly : dyingAllies){
+        for(Ally dyingAlly : dyingAllies){
             dyingAlly.updaye();
         }
-        for(Unit dyingEnemy : dyingEnemies){
+        for(Bullet bullet : bullets){
+            bullet.update();
+        }
+        for(Enemy enemy : enemies){
+            enemy.update();
+        }
+        for(Enemy dyingEnemy : dyingEnemies){
             dyingEnemy.update();
         }
         return checkGameOver();
@@ -53,31 +56,39 @@ public class LevelWorld extends World{
     // adjust units
     public void addAlly(Ally freshman){
         allies.add(freshman);
-        // freshman.setWorld(this);
+        freshman.setWorld(this);
         // addRenderee((Renderee)freshman);
     }
-    public void moveAllyToGraveYard(Unit victim){
+    public void moveAllyToGraveYard(Ally victim){
         allies.remove(victim);
         dyingAllies.add(victim);
     }
-    public void reallyKillAlly(Unit theRealVictim){
+    public void reallyKillAlly(Ally theRealVictim){
         dyingAllies.remove(theRealVictim);
         // removeRenderee((Renderee)theRealVictim);
-        // theRealVictim.setWorld(null);
+        theRealVictim.setWorld(null);
     }
-    public void addEnemy(Unit freshman){
+    public void addBullet(Bullet bullet){
+        bullets.add(bullet);
+        bullet.setWorld(this);
+    }
+    public void removeBullet(Bullet bullet){
+        bullets.remove(bullet);
+        bullet.setWorld(null);
+    }
+    public void addEnemy(Enemy freshman){
         enemies.add(freshman);
-        // freshman.setWorld(this);
+        freshman.setWorld(this);
         // addRenderee((Renderee)freshman);
     }
-    public void moveEnemyToGraveYard(Unit victim){
+    public void moveEnemyToGraveYard(Enemy victim){
         enemies.remove(victim);
         dyingEnemies.add(victim);
     }
-    public void reallyKillEnemy(Unit theRealVictim){
+    public void reallyKillEnemy(Enemy theRealVictim){
         dyingEnemies.remove(theRealVictim);
         // removeRenderee((Renderee)theRealVictim);
-        // theRealVictim.setWorld(null);
+        theRealVictim.setWorld(null);
     }
 
 
