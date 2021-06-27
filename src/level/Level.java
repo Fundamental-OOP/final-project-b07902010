@@ -21,10 +21,10 @@ public class Level {
     private int appearedEnemyNum;
     private BattleStatus status;
     private BattleStatusChecker battleStatusChecker;
-    private Background background;
+    // private Background background;
     private AllyConstructor allyConstructor;
     private EnemyConstructor enemyConstructor;
-    public Level(String levelName, LevelWorld world, int enemyNum, ArrayList< EnemyInfo > enemySchedule ,Background background,BattleStatusChecker battleStatusChecker, AllyConstructor allyConstructor, EnemyConstructor enemyConstructor){     // and enemy types
+    public Level(String levelName, LevelWorld world, int enemyNum, ArrayList< EnemyInfo > enemySchedule, BattleStatusChecker battleStatusChecker, AllyConstructor allyConstructor, EnemyConstructor enemyConstructor){     // and enemy types
         time = 0;
         appearedEnemyNum = 0;
         status = BattleStatus.battleContinue;
@@ -36,7 +36,7 @@ public class Level {
         this.battleStatusChecker = battleStatusChecker;
         battleStatusChecker.setLevel(this);
         battleStatusChecker.setWorld(world);
-        this.background = background;
+        // this.background = background;
 
         this.allyConstructor = allyConstructor;
         this.enemyConstructor = enemyConstructor;
@@ -54,7 +54,7 @@ public class Level {
             if( nextEnemy.getTime() == time){
                 // an enemy should appear now
                 // find correct enemy type and inject into world (add sprite)
-                Unit newEnemy = enemyConstructor.constructEnemy(nextEnemy.getType());
+                Enemy newEnemy = enemyConstructor.constructEnemy(nextEnemy.getType());
                 world.addEnemy(newEnemy);
                 appearedEnemyNum += 1;
             }
@@ -69,9 +69,8 @@ public class Level {
     public boolean allEnemyAppeared(){
         return enemyNum == appearedEnemyNum;
     }
-
-    public Background getBackground(){
-        return background;
-    }
+    // public Background getBackground(){
+    //     return background;
+    // }
     
 }

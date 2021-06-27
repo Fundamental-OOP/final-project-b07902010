@@ -1,14 +1,17 @@
 package unit;
 
-public class AllyConstructor {
-    public AllyConstructor(){
+import model.LevelWorld;
 
+public class AllyConstructor {
+    LevelWorld world;
+    public AllyConstructor(LevelWorld world){
+        this.world = world;
     }
-    public Unit constructAlly(String allyType){     // and other attributes
-        Unit newAlly = null;
+    public Ally constructAlly(String allyType){     // and other attributes
+        Ally newAlly = null;
         switch(allyType){
-            case "Corgi":
-                newAlly = new Corgi();
+            case "MiMiMaoMao":
+                newAlly = new Ally_MiMiMaoMao();
                 break;
             case "MimiMaoMao":
                 break;

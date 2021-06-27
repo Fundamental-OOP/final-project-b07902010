@@ -1,14 +1,17 @@
 package unit;
 
-public class EnemyConstructor {
-    public EnemyConstructor(){
+import model.LevelWorld;
 
+public class EnemyConstructor {
+    LevelWorld world;
+    public EnemyConstructor(LevelWorld world){
+        this.world = world;
     }
-    public Unit constructEnemy(String enemyType){      // and other attributes
-        Unit newEnemy = null;
+    public Enemy constructEnemy(String enemyType){      // and other attributes
+        Enemy newEnemy = null;
         switch(enemyType){
-            case "ADA":
-                newEnemy = new ADA();
+            case "FOOP":
+                newEnemy = new Enemy_FOOP();
                 break;
             case "CNlab":
                 break;

@@ -23,7 +23,7 @@ public class LevelWorld extends World{
     protected final List < Bullet > bullets = new CopyOnWriteArrayList< Bullet >();
     protected Castle castle;
     protected Poop poopPurse;
-    protected Background background;
+    // protected Background background;
 
     @Override
     public boolean update() {
@@ -50,7 +50,7 @@ public class LevelWorld extends World{
         this.level = level;
         castle = new Castle();
         Poop = new Poop();
-        background = level.getBackground();
+        // background = level.getBackground();
     }
 
     // adjust units

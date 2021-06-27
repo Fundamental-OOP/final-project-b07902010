@@ -1,6 +1,6 @@
 package level;
 
-import model.World;
+import model.LevelWorld;
 import unit.AllyConstructor;
 import unit.EnemyConstructor;
 
@@ -14,12 +14,10 @@ import battletype.BattleStatusChecker;
 
 public class LevelConstructor {
     private BattleStatusChecker[] battleTypes;
-    private final AllyConstructor allyConstructor = new AllyConstructor();
-    private final EnemyConstructor enemyConstructor = new EnemyConstructor();
     public LevelConstructor(BattleStatusChecker[] battleTypes){
         this.battleTypes = battleTypes;
     }
-    public Level constructLevel(String levelName, World world){
+    public Level constructLevel(String levelName, LevelWorld world){
         int enemyNum = -1;
         ArrayList< EnemyInfo > enemySchedule = new ArrayList< EnemyInfo >();
         BattleStatusChecker battleStatusChecker = null;
@@ -39,6 +37,7 @@ public class LevelConstructor {
             }
             if(battleStatusChecker == null){
                 System.out.println("Battle Type doesn't exist.");
+                fr.close();
                 return null;
             }
             // read in every evemy's type, appearing time, and lane
@@ -56,7 +55,7 @@ public class LevelConstructor {
         catch(IOException e){
             System.out.println("Reach unexpected EOF.");
         }
-        Level level = new Level(levelName, world, enemyNum, enemySchedule ,battleStatusChecker, background, allyConstructor, enemyConstructor);
+        Level level = new Level(levelName, world, enemyNum, enemySchedule ,battleStatusChecker, new AllyConstructor(world), new EnemyConstructor(world));
         return level;
     }
 }
