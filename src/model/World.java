@@ -30,6 +30,7 @@ public abstract class World {
     public void removeRenderee(Renderee r){
         renderees.remove(r);
     }
+    
     public List< Renderee > getRenderees(){
         return renderees;
     }

@@ -54,7 +54,7 @@ public class Level {
             if( nextEnemy.getTime() == time){
                 // an enemy should appear now
                 // find correct enemy type and inject into world (add sprite)
-                Enemy newEnemy = enemyConstructor.constructEnemy(nextEnemy.getType());
+                Enemy newEnemy = enemyConstructor.constructEnemy(nextEnemy.getType(), nextEnemy.getLane());
                 world.addEnemy(newEnemy);
                 appearedEnemyNum += 1;
             }

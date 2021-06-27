@@ -21,8 +21,9 @@ public class LevelMain {
 
         // Start a level
         LevelWorld world = new LevelWorld();
-        String levelName = "";
+        String levelName = "level_test";
         Level level = levelConstructor.constructLevel(levelName, world);
+        world.setLevel(level);
         GameLoop gameLoop = new GameLoop();  // controller
         gameLoop.setWorld(world);
         gameLoop.start();  // run the game and the game loop

@@ -43,6 +43,7 @@ public class LevelWorld extends World{
         for(Enemy dyingEnemy : dyingEnemies){
             dyingEnemy.update();
         }
+        
         return checkGameOver();
     }
 
@@ -93,16 +94,16 @@ public class LevelWorld extends World{
 
 
     // get units
-    public List< Unit > getAllies(){
+    public List< Ally > getAllies(){
         return allies;
     }
-    public List< Unit > getEnemies(){
+    public List< Enemy > getEnemies(){
         return enemies;
     }
-    public List< Unit > getDyingAllies(){
+    public List< Ally > getDyingAllies(){
         return dyingAllies;
     }
-    public List< Unit > getDyingEnemies(){
+    public List< Enemy > getDyingEnemies(){
         return dyingEnemies;
     }
     public Castle getCastle(){

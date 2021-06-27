@@ -7,7 +7,7 @@ public class EnemyConstructor {
     public EnemyConstructor(LevelWorld world){
         this.world = world;
     }
-    public Enemy constructEnemy(String enemyType){      // and other attributes
+    public Enemy constructEnemy(String enemyType, int lane){      // and other attributes
         Enemy newEnemy = null;
         switch(enemyType){
             case "FOOP":
