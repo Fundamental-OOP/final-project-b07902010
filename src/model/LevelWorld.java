@@ -22,7 +22,7 @@ public class LevelWorld extends World{
     protected final List< Enemy > dyingEnemies = new CopyOnWriteArrayList< Enemy >();
     protected final List < Bullet > bullets = new CopyOnWriteArrayList< Bullet >();
     protected Castle castle;
-    protected Poop poop;
+    protected Poop poopPurse;
     protected Background background;
 
     @Override
@@ -32,7 +32,7 @@ public class LevelWorld extends World{
             ally.update();
         }
         for(Ally dyingAlly : dyingAllies){
-            dyingAlly.updaye();
+            dyingAlly.update();
         }
         for(Bullet bullet : bullets){
             bullet.update();
@@ -109,7 +109,7 @@ public class LevelWorld extends World{
         return castle;
     }
     public Poop getPoop(){
-        return Poop;
+        return poopPurse;
     }
 
     private BattleStatus checkBattleStatus(){

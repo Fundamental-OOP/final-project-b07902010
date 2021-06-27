@@ -5,12 +5,14 @@ import model.World;
 public class GameLoop {
     private boolean running;
     private World world;
+    private final GameView view = new GameView();
 
-    public GameLoop(World world){
+    public GameLoop(){
+    }
+    public void setWorld(World world){
         this.world = world;
         running = true;
     }
-
     public void start() {
         new Thread(this::gameLoop).start();
     }
@@ -20,6 +22,7 @@ public class GameLoop {
         while (running) {
             World world = getWorld();
             running = world.update();
+            view.update();
             delay(15);
         }
     }
