@@ -2,29 +2,35 @@ package controller;
 
 import model.World;
 
+import game.*;
+
 public class GameLoop {
     private boolean running;
     private World world;
-    private final GameView view = new GameView();
-
+    private final GameView view = new GameView(1440, 900);
+    
     public GameLoop(){
     }
     public void setWorld(World world){
         this.world = world;
+        this.view.setWorld(world);
         running = true;
     }
     public void start() {
-        new Thread(this::gameLoop).start();
+        // new Thread(this::gameLoop).start();
+        gameLoop();
     }
 
     private void gameLoop() {
         running = true;
         while (running) {
             World world = getWorld();
+            view.setWorld(world);
             running = world.update();
             view.update();
             delay(15);
         }
+        System.out.println("stopped");
     }
 
     protected World getWorld(){

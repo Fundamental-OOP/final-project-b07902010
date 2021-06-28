@@ -14,19 +14,26 @@ import battletype.BattleStatusChecker;
 
 public class LevelConstructor {
     private BattleStatusChecker[] battleTypes;
+    LevelWorld world;
     public LevelConstructor(BattleStatusChecker[] battleTypes){
         this.battleTypes = battleTypes;
     }
-    public Level constructLevel(String levelName, LevelWorld world){
+    public void setWorld(LevelWorld world){
+        this.world = world;
+    }
+    public Level constructLevel(String levelName){
         int enemyNum = -1;
         ArrayList< EnemyInfo > enemySchedule = new ArrayList< EnemyInfo >();
         BattleStatusChecker battleStatusChecker = null;
         try{
-            BufferedReader fr = new BufferedReader(new FileReader(levelName + ".txt"));
+            BufferedReader fr = new BufferedReader(new FileReader("./level_data/" + levelName + ".txt"));
             // first line will be enemy number
             enemyNum = Integer.parseInt(fr.readLine());
             // second line will be battle type (define battle status checker)
+
+
             String battleTypeName = fr.readLine();
+            
             // third line will be background info
             // background
 
@@ -43,9 +50,8 @@ public class LevelConstructor {
             // read in every evemy's type, appearing time, and lane
             for(int i = 0; i < enemyNum; i++){
                 String line = fr.readLine();
-                String[] enemyInfo = line.split(",");
-                enemySchedule.add(new EnemyInfo(enemyInfo[1], Integer.parseInt(enemyInfo[0]), Integer.parseInt(enemyInfo[2])));
-
+                String[] enemyInfo = line.split(", ");
+                enemySchedule.add(new EnemyInfo(enemyInfo[0], Integer.parseInt(enemyInfo[1]), Integer.parseInt(enemyInfo[2])));
             }
             fr.close();
         }

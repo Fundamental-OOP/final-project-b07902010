@@ -11,6 +11,8 @@ import battletype.BattleStatusChecker;
 import model.LevelWorld;
 import unit.AllyConstructor;
 import unit.EnemyConstructor;
+import unit.enemy.*;
+import unit.ally.*;
 
 public class Level {
     private LevelWorld world;

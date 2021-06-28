@@ -1,6 +1,7 @@
 package unit;
 
 import model.LevelWorld;
+import unit.enemy.Enemy;
 
 public class EnemyConstructor {
     LevelWorld world;
@@ -11,7 +12,7 @@ public class EnemyConstructor {
         Enemy newEnemy = null;
         switch(enemyType){
             case "FOOP":
-                newEnemy = new Enemy_FOOP();
+                newEnemy = new Enemy_FOOP(1200, 600, lane, world);
                 break;
             case "CNlab":
                 break;
