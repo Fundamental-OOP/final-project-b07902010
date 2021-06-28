@@ -1,7 +1,7 @@
 package graphics;
 
 import java.awt.*;
-
+import utils.*;
 
 public class ImageRenderer implements Renderer {
     private Image image;
@@ -9,6 +9,10 @@ public class ImageRenderer implements Renderer {
 
     public ImageRenderer (Image image) {
         this.image = image;
+    }
+
+    public ImageRenderer (String image_path) {
+        this.image = ImageReader.readImageFromPath(image_path);
     }
     
     public void render (Graphics g) {

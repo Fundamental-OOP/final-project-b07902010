@@ -14,6 +14,7 @@
 ```
 ## Usage
 
+### Renderer and Renderee
 
 ```java
 import graphics.*;
@@ -21,24 +22,33 @@ import graphics.*;
 
 class Corgi implements Renderee {
     AnimationRenderer renderer = new AnimationRenderer("./corgi", "sprite");
-    /* make animation from ./corgi/sprite_0.png, ./corgi/sprite_1.png, ... */
 
-    renderer.setPosition(50, 20);  /* 畫在 (x, y) = (50, 20) 的位置, default (0, 0), 可以一直更新 */
+    renderer.setPosition(50, 20); 
 
-    /* Must implement: 讓 GUI 的每一幀 frame 可以 update 用的 function */
     Renderer getRenderer() {
-        return renderer;  /* 如果會報錯: return (Renderer) renderer; */
-    }
+        return renderer; 
 }
 
 class Background implements Renderee {
     ImageRenderer renderer = new ImageRenderer("./images/backgroud.png");
-    /* 只讀取一張圖片，extension 不限 (e.g. png, jpg...) */
 
-    /* Must implement: 讓 GUI 的每一幀 frame 可以 update 用的 function */
     Renderer getRenderer() {
-        return renderer;   /* 如果會報錯: return (Renderer) renderer; */
-    }
+        return renderer;  
 }
+```
+
+### Selector
+```java
+import selector.*;
+import selector.Button; // 會有 ambiguous 所以要特別 import Button
+
+Selector selector = new Selector();
+Selector selector = new Selector(10); // 指定 button 數量
+
+/* 傳入 按鈕名稱、按鈕 icon 路徑、滑鼠 preview 圖路徑 */
+seletor.addSelection("MiMiMaoMao", "./img/.../icon.png", "./img/.../preview.png");
+
+seletor.getCurrentSelection() // 回傳目前選擇的按鈕（e.g. "MiMiMaoMao"）
+
 ```
 ![Position Example](./position_example.png)
