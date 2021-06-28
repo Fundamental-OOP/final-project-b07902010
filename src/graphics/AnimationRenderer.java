@@ -8,13 +8,16 @@ import utils.*;
 public class AnimationRenderer implements Renderer {
     private int index = 0, x = 0, y = 0;
     private List<Image> images;
+    String tmp;
     public AnimationRenderer (String path_to_images, String prefix) {
         this.images = ImageReader.readImagesFromPrefix(path_to_images, prefix);
+        this.tmp = path_to_images + prefix;
     }
     public AnimationRenderer (String path_to_images, String prefix, int x, int y) {
         this.images = ImageReader.readImagesFromPrefix(path_to_images, prefix);
         this.x = x;
         this.y = y;
+        this.tmp = path_to_images + prefix;
     }
     public AnimationRenderer (List<Image> images) {
         this.images = images;
@@ -41,8 +44,10 @@ public class AnimationRenderer implements Renderer {
         this.y = y;
     }
 
-    public void render(Graphics g) {
-        g.drawImage(images.get(index), x, y, null);
-        index = (index + 1) % images.size();
+    public void render(Graphics g) {        if (images.size() > 0) {
+            g.drawImage(images.get(index), x, y, null);
+            index = (index + 1) % images.size();
+        }
+
     }
 }

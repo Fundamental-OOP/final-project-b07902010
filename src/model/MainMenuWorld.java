@@ -1,7 +1,8 @@
 package model;
 
+import selector.*;
+
 public class MainMenuWorld extends World{
-    private Selector selector;
     public MainMenuWorld(){
         super("MainMenu");
     }
@@ -10,7 +11,7 @@ public class MainMenuWorld extends World{
         // and return false to stop this world
         return true;
     }
-    public void resetWorld(){
+    public void reset(){
 
     }
 }

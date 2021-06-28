@@ -3,27 +3,57 @@ package game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+
+
 import model.*;
 import graphics.*;
 
+import java.awt.*;
+import java.io.File;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+import javax.swing.text.GapContent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import graphics.*;
+import graphics.Renderer;
+import utils.*;
+
+import java.util.Map;
+import java.util.HashMap;
+
+import selector.*;
+import selector.Button;
+
 public class GameView extends JFrame {
-    public Canvas canvas = new Canvas(this);
+    
     private World world;
+    public Canvas canvas;
 
     int width = 1440, height = 900;
 
     public GameView (int width, int height)  {
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setContentPane(canvas);
         this.setVisible(true);
     }
 
     public void setWorld(World world) {
         this.world = world;
-        canvas.setWorld(world);
     }
 
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+        this.setContentPane(canvas);
+        this.setVisible(true);
+        this.canvas.setVisible(true);
+    }
     public void update () {
         this.canvas.renderNextFrame();
     }
@@ -31,34 +61,18 @@ public class GameView extends JFrame {
         return this.world;
     }
 
-}
+    public void changeCanvas() {}
 
-/** Draw some baseline???? */
-class Canvas extends JPanel {
-    private World world;
-    private GameView view;
-    public Canvas (GameView view) {
-        this.view = view;
-    }
-
-    public void paintComponent(Graphics g) {
-        
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 1400, 800);
-        for (Renderee renderee : view.getWorld().getRenderees() ) {
-            renderee.getRenderer().render(g);
-        }
-
-    }
-
-    public void renderNextFrame () {
-        repaint();  /** calliing paintComponent() */
-    }
-
-    public void setWorld(World world) {
-        this.world = world;
-    }
 }
 
 
 
+
+// class Background implements Renderee {
+    
+//     ImageRenderer renderer = new ImageRenderer("./img/background.png");
+    
+//     public Renderer getRenderer() {
+//         return renderer;
+//     }
+// }

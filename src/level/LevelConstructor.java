@@ -26,7 +26,7 @@ public class LevelConstructor {
         ArrayList< EnemyInfo > enemySchedule = new ArrayList< EnemyInfo >();
         BattleType battleType = null;
         try{
-            BufferedReader fr = new BufferedReader(new FileReader("./level_data/" + levelName + ".txt"));
+            BufferedReader fr = new BufferedReader(new FileReader("../level_data/" + levelName + ".txt"));
             // first line will be enemy number
             enemyNum = Integer.parseInt(fr.readLine());
             // second line will be battle type (define battle status checker)
@@ -61,7 +61,7 @@ public class LevelConstructor {
         catch(IOException e){
             System.out.println("Reach unexpected EOF.");
         }
-        Level level = new Level(levelName, world, enemyNum, enemySchedule ,battleType, new AllyConstructor(world), new EnemyConstructor(world));
+        Level level = new Level(levelName, world, enemyNum, enemySchedule , battleType, new AllyConstructor(world), new EnemyConstructor(world));
         return level;
     }
 }

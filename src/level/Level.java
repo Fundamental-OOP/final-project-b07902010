@@ -18,7 +18,7 @@ public class Level {
     private BattleStatus status;
     private BattleType battleType;
     // private Background background;
-    public Level(String levelName, LevelWorld world, int enemyNum, ArrayList< EnemyInfo > enemySchedule, BattleType battleStatusChecker, AllyConstructor allyConstructor, EnemyConstructor enemyConstructor){     // and enemy types
+    public Level(String levelName, LevelWorld world, int enemyNum, ArrayList< EnemyInfo > enemySchedule, BattleType battleType, AllyConstructor allyConstructor, EnemyConstructor enemyConstructor){     // and enemy types
         time = 0;
         appearedEnemyNum = 0;
         status = BattleStatus.battleContinue;
@@ -27,9 +27,9 @@ public class Level {
         this.levelName = levelName;
         this.enemyNum = enemyNum;
         this.enemySchedule = enemySchedule;
-        this.battleType = battleStatusChecker;
-        battleStatusChecker.setLevel(this);
-        battleStatusChecker.setWorld(world);
+        this.battleType = battleType;
+        battleType.setLevel(this);
+        battleType.setWorld(world);
         // this.background = background;
     }
     // public void setWorld(LevelWorld world){
@@ -45,6 +45,7 @@ public class Level {
             if( nextEnemy.getTime() == time){
                 // an enemy should appear now
                 // find correct enemy type and inject into world (add sprite)
+                
                 world.addEnemy(nextEnemy.getType(), nextEnemy.getLane());
                 appearedEnemyNum += 1;
             }
