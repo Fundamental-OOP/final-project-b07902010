@@ -21,7 +21,8 @@ import graphics.Renderee;
 public class LevelWorld extends World{
     private LevelConstructor levelConstructor;
     private Level level;
-    
+    private final AllyConstructor allyConstructor = new AllyConstructor(this);
+    private final EnemyConstructor enemyConstructor = new EnemyConstructor(this);
     private Selector selector;
 
     private final List< Ally > allies = new CopyOnWriteArrayList< Ally >();
@@ -78,6 +79,7 @@ public class LevelWorld extends World{
         dyingEnemies.clear();
         castle = null;
         poopPurse = null;
+        selector = null;
         setLevel(levelConstructor.constructLevel(loadData()));
     }
     public String loadData(){
@@ -90,10 +92,12 @@ public class LevelWorld extends World{
         castle = new Castle();
         poopPurse = new Poop();
         // background = level.getBackground();
+        selector = new Selector();
     }
 
     // adjust units
-    public void addAlly(Ally freshman){
+    public void addAlly(String allyType, int lane, int column){
+        Ally freshman = allyConstructor.constructAlly(allyType, lane, column);
         allies.add(freshman);
         freshman.setLevelWorld(this);
         // addRenderee((Renderee)freshman);
@@ -113,7 +117,8 @@ public class LevelWorld extends World{
     public void removeBullet(Bullet bullet){
         bullets.remove(bullet);
     }
-    public void addEnemy(Enemy freshman){
+    public void addEnemy(String enemyType, int lane){
+        Enemy freshman = enemyConstructor.constructEnemy(enemyType, lane);
         enemies.add(freshman);
         freshman.setLevelWorld(this);
         // addRenderee((Renderee)freshman);
