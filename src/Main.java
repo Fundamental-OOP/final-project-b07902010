@@ -12,12 +12,16 @@ public class Main {
         BattleStatusChecker[] battleTypes = {
             new NormalBattleStatusChecker()
         };
+        
         RecordIO recordIO = new RecordIO(battleTypes);
         World[] worlds = {
             new LevelWorld(new LevelConstructor(battleTypes)),
             new MainMenuWorld()
         };
+        // initialize canvas
+
         GameFlow gameFlow = new GameFlow(worlds);
         gameFlow.launchGame();
     }   
+
 }

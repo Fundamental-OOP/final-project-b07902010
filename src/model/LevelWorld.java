@@ -93,12 +93,12 @@ public class LevelWorld extends World{
         this.level = level;
         castle = new Castle();
         poopPurse = new Poop();
+        setUpSelector();
         // background = level.getBackground();
     }
 
     private void setUpSelector(){
         int allyTypeNum = 1;
-        
         selector = new Selector(allyTypeNum);
         // for(int i = 0; i < allyTypeNum; i++){
         //     selector.addSelection("", "", "")
