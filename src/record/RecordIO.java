@@ -36,7 +36,7 @@ public class RecordIO {
                 String battleType = fr.readLine();
                 if(battleTypes.contains(battleType)){
                     levelNum.add(Integer.parseInt(fr.readLine()));  // how many level does this type has
-                    
+
                     for(int j = 0; j < levelNum.get(i); j++){
                         // read in level names
 
@@ -73,5 +73,8 @@ public class RecordIO {
         catch(IOException e){
             System.out.println("Reach unexpected EOF.");
         }
+    }   
+    public void writeRecord(){
+        
     }
 }
