@@ -1,5 +1,5 @@
-import battletype.BattleStatusChecker;
-import battletype.NormalBattleStatusChecker;
+import battletype.BattleType;
+import battletype.NormalBattleType;
 import controller.GameFlow;
 import level.LevelConstructor;
 import model.LevelWorld;
@@ -9,8 +9,8 @@ import record.RecordIO;
 
 public class Main {
     public static void main(String[] args) {
-        BattleStatusChecker[] battleTypes = {
-            new NormalBattleStatusChecker()
+        BattleType[] battleTypes = {
+            new NormalBattleType()
         };
         
         RecordIO recordIO = new RecordIO(battleTypes);
@@ -19,6 +19,7 @@ public class Main {
             new MainMenuWorld()
         };
         // initialize canvas
+
 
         GameFlow gameFlow = new GameFlow(worlds);
         gameFlow.launchGame();

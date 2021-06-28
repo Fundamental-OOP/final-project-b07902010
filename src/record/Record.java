@@ -3,8 +3,9 @@ package record;
 import java.util.ArrayList;
 
 public class Record {
-    ArrayList< String > allAllyTypes;
-    ArrayList< String > usingAllyTypes;
+    ArrayList< String > enableAllyTypes;
+    ArrayList< String > chosenAllyTypes;
+    
     String highestLevelName;
     String nextLevelName;
     public Record(String highestLevelName){

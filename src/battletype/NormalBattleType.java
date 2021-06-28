@@ -1,10 +1,8 @@
 package battletype;
 
-import model.LevelWorld;
-
-public class NormalBattleStatusChecker extends BattleStatusChecker{
-    public NormalBattleStatusChecker(){
-        super();
+public class NormalBattleType extends BattleType{
+    public NormalBattleType(){
+        super("Normal");
     }
     public BattleStatus checkBattleStatus(){
         if(world.getCastle().getHP() <= 0){
@@ -16,8 +14,5 @@ public class NormalBattleStatusChecker extends BattleStatusChecker{
             return BattleStatus.win;
         }
         return BattleStatus.battleContinue;
-    }
-    public String getName(){
-        return "Normal";
     }
 }

@@ -3,7 +3,7 @@ package level;
 import java.util.ArrayList;
 
 import battletype.BattleStatus;
-import battletype.BattleStatusChecker;
+import battletype.BattleType;
 import model.LevelWorld;
 import unit.AllyConstructor;
 import unit.EnemyConstructor;
@@ -16,9 +16,9 @@ public class Level {
     private int time;
     private int appearedEnemyNum;
     private BattleStatus status;
-    private BattleStatusChecker battleStatusChecker;
+    private BattleType battleType;
     // private Background background;
-    public Level(String levelName, LevelWorld world, int enemyNum, ArrayList< EnemyInfo > enemySchedule, BattleStatusChecker battleStatusChecker, AllyConstructor allyConstructor, EnemyConstructor enemyConstructor){     // and enemy types
+    public Level(String levelName, LevelWorld world, int enemyNum, ArrayList< EnemyInfo > enemySchedule, BattleType battleStatusChecker, AllyConstructor allyConstructor, EnemyConstructor enemyConstructor){     // and enemy types
         time = 0;
         appearedEnemyNum = 0;
         status = BattleStatus.battleContinue;
@@ -27,7 +27,7 @@ public class Level {
         this.levelName = levelName;
         this.enemyNum = enemyNum;
         this.enemySchedule = enemySchedule;
-        this.battleStatusChecker = battleStatusChecker;
+        this.battleType = battleStatusChecker;
         battleStatusChecker.setLevel(this);
         battleStatusChecker.setWorld(world);
         // this.background = background;
@@ -54,7 +54,7 @@ public class Level {
         }
     }
     public BattleStatus checkBattleStatus(){
-        return battleStatusChecker.checkBattleStatus();
+        return battleType.checkBattleStatus();
     }
     public boolean allEnemyAppeared(){
         return enemyNum == appearedEnemyNum;

@@ -2,21 +2,16 @@ import controller.GameLoop;
 import game.GameView;
 import level.LevelConstructor;
 import model.LevelWorld;
-import level.Level;
-
-import java.awt.*;
-import java.io.File;
-
-import battletype.BattleStatusChecker;
-import battletype.NormalBattleStatusChecker;
+import battletype.BattleType;
+import battletype.NormalBattleType;
 
 // import static media.AudioPlayer.addAudioByFilePath;
 
 public class LevelMain {
     public static void main(String[] args) {
         // Initialization
-        BattleStatusChecker[] battleTypes = {
-            new NormalBattleStatusChecker()
+        BattleType[] battleTypes = {
+            new NormalBattleType()
         };
         LevelConstructor levelConstructor = new LevelConstructor(battleTypes);
 
@@ -26,6 +21,7 @@ public class LevelMain {
         // Level level = levelConstructor.constructLevel(levelName, world);
         // world.setLevel(level);
         world.resetWorld();
+        
         GameView view = new GameView(1440, 900);
         GameLoop gameLoop = new GameLoop(view);  // controller
         gameLoop.setWorld(world);

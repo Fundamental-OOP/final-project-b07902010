@@ -1,14 +1,16 @@
 package battletype;
 
-import level.Level;
 import model.LevelWorld;
+import level.Level;
 
-public abstract class BattleStatusChecker {
+public abstract class BattleType{
     protected LevelWorld world;
     protected Level level;
-    public BattleStatusChecker(){
+    protected String name;
+    public BattleType(String name){
         world = null;
         level = null;
+        this.name = name;
     }
     public void setWorld(LevelWorld world){
         this.world = world;
@@ -17,5 +19,7 @@ public abstract class BattleStatusChecker {
         this.level = level;
     }
     public abstract BattleStatus checkBattleStatus();
-    public abstract String getName();
+    public String getName(){
+        return name;
+    }
 }

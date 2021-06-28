@@ -6,7 +6,7 @@ import game.*;
 
 public class GameFlow {
     private final GameView view = new GameView(1440, 900);
-    private final GameLoop gameLoop = new GameLoop(view);
+    private final GameLoop gameLoop = new GameLoop(view, this);
     World[] worlds;
     World currentWorld;
     String currentWorldType;
@@ -14,7 +14,7 @@ public class GameFlow {
     public GameFlow(World[] worlds){
         this.worlds = worlds;
         currentWorldType = "MainMenu";
-        
+
     }
 
     public void launchGame(){

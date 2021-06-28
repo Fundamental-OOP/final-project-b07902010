@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import battletype.BattleStatusChecker;
+import battletype.BattleType;
 
 public class RecordIO {
     private String recordPath = "./records/";
@@ -20,9 +20,9 @@ public class RecordIO {
     private int battletypesNum;
     
     private ArrayList< Integer > levelNum;
-    public RecordIO(BattleStatusChecker[] battleStatusCheckers){
+    public RecordIO(BattleType[] battleStatusCheckers){
         // get every battle types' name
-        for(BattleStatusChecker type : battleStatusCheckers){
+        for(BattleType type : battleStatusCheckers){
             battleTypes.add(type.getName());
         }
 
@@ -75,6 +75,6 @@ public class RecordIO {
         }
     }   
     public void writeRecord(){
-        
+
     }
 }

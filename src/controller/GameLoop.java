@@ -8,9 +8,10 @@ public class GameLoop {
     private boolean running;
     private World world;
     private final GameView view;
-    
-    public GameLoop(GameView view){
+    private GameFlow flow;
+    public GameLoop(GameView view, GameFlow flow){
         this.view = view;
+        this.flow = flow;
     }
     public void setWorld(World world){
         this.world = world;
@@ -18,8 +19,7 @@ public class GameLoop {
         running = true;
     }
     public void start() {
-        // new Thread(this::gameLoop).start();
-        gameLoop();
+        new Thread(this::gameLoop).start();
     }
 
     private void gameLoop() {
