@@ -7,9 +7,10 @@ import game.*;
 public class GameLoop {
     private boolean running;
     private World world;
-    private final GameView view = new GameView(1440, 900);
+    private final GameView view;
     
-    public GameLoop(){
+    public GameLoop(GameView view){
+        this.view = view;
     }
     public void setWorld(World world){
         this.world = world;

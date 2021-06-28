@@ -1,21 +1,20 @@
 package controller;
 
-import battletype.BattleStatusChecker;
-import level.LevelConstructor;
 import model.World;
 
+import game.*;
+
 public class GameFlow {
-    private final GameLoop gameLoop = new GameLoop();
-    // private LevelConstructor levelConstructor;
-    // BattleStatusChecker[] battleTypes;
+    private final GameView view = new GameView(1440, 900);
+    private final GameLoop gameLoop = new GameLoop(view);
     World[] worlds;
     World currentWorld;
     String currentWorldType;
+
     public GameFlow(World[] worlds){
         this.worlds = worlds;
         currentWorldType = "MainMenu";
-        // this.battleTypes = battleTypes;
-        // levelConstructor = new LevelConstructor(battleTypes);
+        
     }
 
     public void launchGame(){

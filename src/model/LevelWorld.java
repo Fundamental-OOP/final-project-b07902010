@@ -17,6 +17,9 @@ import resource.*;
 import castle.Castle;
 import graphics.Renderee;
 
+import selector.Selector;
+import selector.Button;
+
 
 public class LevelWorld extends World{
     private LevelConstructor levelConstructor;
@@ -40,7 +43,6 @@ public class LevelWorld extends World{
         this.levelConstructor = levelConstructor;
         levelConstructor.setWorld(this);
     }
-
 
     @Override
     public boolean update() {
@@ -92,7 +94,16 @@ public class LevelWorld extends World{
         castle = new Castle();
         poopPurse = new Poop();
         // background = level.getBackground();
-        selector = new Selector();
+    }
+
+    private void setUpSelector(){
+        int allyTypeNum = 1;
+        
+        selector = new Selector(allyTypeNum);
+        // for(int i = 0; i < allyTypeNum; i++){
+        //     selector.addSelection("", "", "")
+        // }
+        selector.addSelection("MiMiMaoMao", "./img/MiMiMaoMao/icon.png", "./img/MiMiMaoMao/preview.png");
     }
 
     // adjust units
