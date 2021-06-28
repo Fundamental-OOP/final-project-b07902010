@@ -11,11 +11,11 @@ public class Ally_MiMiMaoMao extends Shooter {
 
     public Ally_MiMiMaoMao (int posX, int posY, int lane, LevelWorld levelWorld) {
         super(100,100, posX, posY, lane, levelWorld, 100); // TODO:寫死
-        this.walkRenderer = new AnimationRenderer("./img/shooter/MiMiMaoMao", "walk");
-        this.idleRenderer = new AnimationRenderer("./img/shooter/MiMiMaoMao", "idle");
-        this.attackRenderer = new AnimationRenderer("./img/shooter/MiMiMaoMao", "attack");
-        this.beAttackedRenderer = new AnimationRenderer("./img/shooter/MiMiMaoMao", "beAttack");
-        this.deadRenderer = new AnimationRenderer("./img/shooter/MiMiMaoMao", "dead");
+        this.walkRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao", "walk");
+        this.idleRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao", "idle");
+        this.attackRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao", "attack");
+        this.beAttackedRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao", "beAttack");
+        this.deadRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao", "dead");
     }
 
     public void shoot() {

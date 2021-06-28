@@ -1,5 +1,6 @@
 package unit.enemy;
 
+import castle.Castle;
 import unit.ally.Ally;
 import unit.State;
 import unit.Unit;
@@ -20,10 +21,15 @@ public abstract class Enemy extends Unit {
         // dead
         if (this.HP <= 0 ) {
             this.setState(State.Dead);
+            deadCycle++;
+            if(deadCycle >= 5) {
+                levelWorld.reallyKillEnemy(this);
+            }
             return;
         }
 
         // attack
+        // attack ally
         List<Ally> allies = this.levelWorld.getAllies();
         boolean hasDamage = false;
         for (Ally ally : allies){
@@ -31,6 +37,11 @@ public abstract class Enemy extends Unit {
                 this.damage(ally);
                 hasDamage = true;
             }
+        }
+        // attack castle
+        if (!hasDamage && this.posX <= 300) {
+            this.damageCastle();
+            hasDamage = true;
         }
         if (hasDamage) {
             this.setState(State.Attack);
@@ -48,6 +59,12 @@ public abstract class Enemy extends Unit {
     protected void damage(Ally a) {
         int newHP = a.getHP() - this.ATK;
         a.setHP(Math.max(newHP, 0));
+    }
+
+    protected void damageCastle() {
+        Castle castle = levelWorld.getCastle();
+        int newHP =  castle.getHP() - this.ATK;
+        castle.setHP(Math.max(newHP, 0));
     }
 
     protected boolean touch(Ally a) {  // TODO: set diff
