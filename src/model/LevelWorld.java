@@ -1,8 +1,11 @@
 package model;
 
 import level.Level;
+import level.LevelConstructor;
 
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -17,24 +20,38 @@ import resource.*;
 import castle.Castle;
 import graphics.Renderee;
 
+import selector.Selector;
+import selector.Button;
+
 
 public class LevelWorld extends World{
-
+    private LevelConstructor levelConstructor;
     private Level level;
+    private final AllyConstructor allyConstructor = new AllyConstructor(this);
+    private final EnemyConstructor enemyConstructor = new EnemyConstructor(this);
+    // private Selector selector;
 
-    protected final List< Ally > allies = new CopyOnWriteArrayList< Ally >();
-    protected final List< Enemy > enemies = new CopyOnWriteArrayList< Enemy >();
-    protected final List< Ally > dyingAllies = new CopyOnWriteArrayList< Ally >();
-    protected final List< Enemy > dyingEnemies = new CopyOnWriteArrayList< Enemy >();
-    protected final List < Bullet > bullets = new CopyOnWriteArrayList< Bullet >();
-    protected Castle castle;
-    protected Poop poopPurse;
+    private final List< Ally > allies = new CopyOnWriteArrayList< Ally >();
+    private final List< Enemy > enemies = new CopyOnWriteArrayList< Enemy >();
+    private final List< Ally > dyingAllies = new CopyOnWriteArrayList< Ally >();
+    private final List< Enemy > dyingEnemies = new CopyOnWriteArrayList< Enemy >();
+    private final List < Bullet > bullets = new CopyOnWriteArrayList< Bullet >();
+    private Castle castle;
+    private Poop poopPurse;
+
+    
     // protected Background background;
+    public LevelWorld(LevelConstructor levelConstructor){
+        super("Level");
+        this.levelConstructor = levelConstructor;
+        levelConstructor.setWorld(this);
+    }
 
     @Override
     public boolean update() {
         level.update();
         renderees.clear();
+        
         for (Ally ally : allies) {
             addRenderee((Renderee) ally);
             ally.update();
@@ -44,6 +61,7 @@ public class LevelWorld extends World{
             dyingAlly.update();
         }
         for(Enemy enemy : enemies){
+            
             addRenderee((Renderee) enemy);
             enemy.update();
         }
@@ -58,20 +76,50 @@ public class LevelWorld extends World{
         // renderees.addAll( (List<Renderee>) allies );
         // renderees.addAll( (List<Renderee>) dyingAlly );
         // renderees.addAll( (List<Renderee>) allies );
-
-
+        
         return checkGameOver();
     }
 
+    public void resetWorld(){   // be called when this world is the next one to run
+        allies.clear();
+        enemies.clear();
+        dyingAllies.clear();
+        dyingEnemies.clear();
+        castle = null;
+        poopPurse = null;
+        selector = null;
+        setLevel(levelConstructor.constructLevel(loadData()));
+    }
+    public String loadData(){
+        String levelName = "level_test";    // for testing
+        // read in record and get next level name
+        return levelName;
+    }
     public void setLevel(Level level){
         this.level = level;
         castle = new Castle();
         poopPurse = new Poop();
+        setUpSelector();
         // background = level.getBackground();
     }
 
+    private void setUpSelector(){
+        int allyTypeNum = 1;
+        selector = new Selector(allyTypeNum);
+        // for(int i = 0; i < allyTypeNum; i++){
+        //     selector.addSelection("", "", "")
+        // }
+        selector.addSelection("MiMiMaoMao", "../img/ally/button.png", "../img/ally/button.png");
+        // selector.addSelection("Menu", "../img/menu_button.png", "../img/menu_button.png");
+    }
+
+    public Selector getSelector() {
+        return this.selector;
+    }
+
     // adjust units
-    public void addAlly(Ally freshman){
+    public void addAlly(String allyType, int lane, int column){
+        Ally freshman = allyConstructor.constructAlly(allyType, lane, column);
         allies.add(freshman);
         freshman.setLevelWorld(this);
         // addRenderee((Renderee)freshman);
@@ -91,7 +139,8 @@ public class LevelWorld extends World{
     public void removeBullet(Bullet bullet){
         bullets.remove(bullet);
     }
-    public void addEnemy(Enemy freshman){
+    public void addEnemy(String enemyType, int lane){
+        Enemy freshman = enemyConstructor.constructEnemy(enemyType, lane);
         enemies.add(freshman);
         freshman.setLevelWorld(this);
         // addRenderee((Renderee)freshman);
@@ -130,7 +179,7 @@ public class LevelWorld extends World{
     private BattleStatus checkBattleStatus(){
         return level.checkBattleStatus();
     }
-    public boolean checkGameOver(){     // return running or not
+    private boolean checkGameOver(){     // return running or not
         if(checkBattleStatus() == BattleStatus.battleContinue){
             return true;
         }

@@ -14,15 +14,19 @@ import battletype.BattleStatusChecker;
 
 public class LevelConstructor {
     private BattleStatusChecker[] battleTypes;
+    LevelWorld world;
     public LevelConstructor(BattleStatusChecker[] battleTypes){
         this.battleTypes = battleTypes;
     }
-    public Level constructLevel(String levelName, LevelWorld world){
+    public void setWorld(LevelWorld world){
+        this.world = world;
+    }
+    public Level constructLevel(String levelName){
         int enemyNum = -1;
         ArrayList< EnemyInfo > enemySchedule = new ArrayList< EnemyInfo >();
         BattleStatusChecker battleStatusChecker = null;
         try{
-            BufferedReader fr = new BufferedReader(new FileReader("./level_data/" + levelName + ".txt"));
+            BufferedReader fr = new BufferedReader(new FileReader("../level_data/" + levelName + ".txt"));
             // first line will be enemy number
             enemyNum = Integer.parseInt(fr.readLine());
             // second line will be battle type (define battle status checker)

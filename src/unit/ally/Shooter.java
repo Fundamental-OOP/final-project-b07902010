@@ -15,6 +15,10 @@ public abstract class Shooter extends Ally {
         // dead
         if (this.HP <= 0 ) {
             this.setState(State.Dead);
+            deadCycle++;
+            if (deadCycle >= 5) {
+                levelWorld.reallyKillAlly(this);
+            }
             return;
         }
 

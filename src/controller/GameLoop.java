@@ -7,9 +7,10 @@ import game.*;
 public class GameLoop {
     private boolean running;
     private World world;
-    private final GameView view = new GameView(1440, 900);
+    private final GameView view;
     
-    public GameLoop(){
+    public GameLoop(GameView view){
+        this.view = view;
     }
     public void setWorld(World world){
         this.world = world;
@@ -17,7 +18,8 @@ public class GameLoop {
         running = true;
     }
     public void start() {
-        new Thread(this::gameLoop).start();
+        // new Thread(this::gameLoop).start();
+        gameLoop();
     }
 
     private void gameLoop() {
@@ -28,6 +30,7 @@ public class GameLoop {
             running = world.update();
             view.update();
             delay(15);
+            
         }
         System.out.println("stopped");
     }

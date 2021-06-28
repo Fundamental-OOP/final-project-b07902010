@@ -2,7 +2,6 @@ package unit;
 import graphics.*;
 import model.*;
 
-
 public abstract class Unit implements Renderee {
     protected int HP;
     protected int ATK;
@@ -10,6 +9,7 @@ public abstract class Unit implements Renderee {
     protected int lane;
     protected  LevelWorld levelWorld;
     protected State state;
+    protected int deadCycle = 0;
 
     protected AnimationRenderer walkRenderer, idleRenderer, attackRenderer, beAttackedRenderer, deadRenderer;
 

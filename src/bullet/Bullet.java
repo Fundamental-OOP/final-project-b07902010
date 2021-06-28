@@ -23,6 +23,10 @@ public abstract class Bullet implements Renderee{
         this.levelWorld = levelWorld;
     }
 
+    public void setLevelWorld(LevelWorld levelWorld) {
+        this.levelWorld = levelWorld;
+    }
+
     public void update() {
         List<Enemy> enemies = this.levelWorld.getEnemies();
         boolean hit = false;

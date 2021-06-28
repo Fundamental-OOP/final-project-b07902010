@@ -1,9 +1,5 @@
 package level;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import battletype.BattleStatus;
@@ -11,8 +7,6 @@ import battletype.BattleStatusChecker;
 import model.LevelWorld;
 import unit.AllyConstructor;
 import unit.EnemyConstructor;
-import unit.enemy.*;
-import unit.ally.*;
 
 public class Level {
     private LevelWorld world;
@@ -24,8 +18,6 @@ public class Level {
     private BattleStatus status;
     private BattleStatusChecker battleStatusChecker;
     // private Background background;
-    private AllyConstructor allyConstructor;
-    private EnemyConstructor enemyConstructor;
     public Level(String levelName, LevelWorld world, int enemyNum, ArrayList< EnemyInfo > enemySchedule, BattleStatusChecker battleStatusChecker, AllyConstructor allyConstructor, EnemyConstructor enemyConstructor){     // and enemy types
         time = 0;
         appearedEnemyNum = 0;
@@ -39,9 +31,6 @@ public class Level {
         battleStatusChecker.setLevel(this);
         battleStatusChecker.setWorld(world);
         // this.background = background;
-
-        this.allyConstructor = allyConstructor;
-        this.enemyConstructor = enemyConstructor;
     }
     // public void setWorld(LevelWorld world){
     //     this.world = world;
@@ -56,8 +45,8 @@ public class Level {
             if( nextEnemy.getTime() == time){
                 // an enemy should appear now
                 // find correct enemy type and inject into world (add sprite)
-                Enemy newEnemy = enemyConstructor.constructEnemy(nextEnemy.getType(), nextEnemy.getLane());
-                world.addEnemy(newEnemy);
+                
+                world.addEnemy(nextEnemy.getType(), nextEnemy.getLane());
                 appearedEnemyNum += 1;
             }
             else{
