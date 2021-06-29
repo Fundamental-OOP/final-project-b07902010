@@ -4,7 +4,7 @@ package model;
 public class HomeWorld extends World{
     private boolean selected = false;
     public HomeWorld(){
-        super("MainMenu");
+        super("Home");
     }
     public boolean update(){
         return !selected;
