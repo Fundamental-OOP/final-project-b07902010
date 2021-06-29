@@ -3,9 +3,7 @@ package model;
 import level.Level;
 import level.LevelConstructor;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -21,7 +19,6 @@ import castle.Castle;
 import graphics.Renderee;
 
 import selector.Selector;
-import selector.Button;
 
 
 public class LevelWorld extends World{
@@ -29,7 +26,7 @@ public class LevelWorld extends World{
     private Level level;
     private final AllyConstructor allyConstructor = new AllyConstructor(this);
     private final EnemyConstructor enemyConstructor = new EnemyConstructor(this);
-    // private Selector selector;
+    private final Selector selector = new Selector();
 
     private final List< Ally > allies = new CopyOnWriteArrayList< Ally >();
     private final List< Enemy > enemies = new CopyOnWriteArrayList< Enemy >();
@@ -38,12 +35,14 @@ public class LevelWorld extends World{
     private final List < Bullet > bullets = new CopyOnWriteArrayList< Bullet >();
     private Castle castle;
     private Poop poopPurse;
-
+    private final boolean[][] grid = new boolean[5][9];
     
     // protected Background background;
     public LevelWorld(LevelConstructor levelConstructor){
         super("Level");
+        this.nextWorldType = "Home";
         this.levelConstructor = levelConstructor;
+        
         levelConstructor.setWorld(this);
     }
 
@@ -80,15 +79,23 @@ public class LevelWorld extends World{
         return checkGameOver();
     }
 
-    public void resetWorld(){   // be called when this world is the next one to run
+    public void reset(){   // be called when this world is the next one to run
         allies.clear();
         enemies.clear();
         dyingAllies.clear();
         dyingEnemies.clear();
         castle = null;
         poopPurse = null;
-        selector = null;
+        selector.reset();
+        resetGrid();
         setLevel(levelConstructor.constructLevel(loadData()));
+    }
+    private void resetGrid(){
+        for(int row = 0; row < 5; row++){
+            for(int col = 0; col < 9; col++){
+                grid[row][col] = false;
+            }
+        }
     }
     public String loadData(){
         String levelName = "level_test";    // for testing
@@ -105,7 +112,7 @@ public class LevelWorld extends World{
 
     private void setUpSelector(){
         int allyTypeNum = 1;
-        selector = new Selector(allyTypeNum);
+        
         // for(int i = 0; i < allyTypeNum; i++){
         //     selector.addSelection("", "", "")
         // }
@@ -119,6 +126,7 @@ public class LevelWorld extends World{
 
     // adjust units
     public void addAlly(String allyType, int lane, int column){
+        
         Ally freshman = allyConstructor.constructAlly(allyType, lane, column);
         allies.add(freshman);
         freshman.setLevelWorld(this);
@@ -130,6 +138,7 @@ public class LevelWorld extends World{
     }
     public void reallyKillAlly(Ally theRealVictim){
         dyingAllies.remove(theRealVictim);
+        grid[theRealVictim.getLane()][theRealVictim.getColumn()] = false;
         // removeRenderee((Renderee)theRealVictim);
         theRealVictim.setLevelWorld(null);
     }
@@ -152,7 +161,7 @@ public class LevelWorld extends World{
     public void reallyKillEnemy(Enemy theRealVictim){
         dyingEnemies.remove(theRealVictim);
         // removeRenderee((Renderee)theRealVictim);
-        theRealVictim.setLevelWorld(null);
+        // theRealVictim.setLevelWorld(null);
     }
 
 

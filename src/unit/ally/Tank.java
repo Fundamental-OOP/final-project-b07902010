@@ -3,8 +3,8 @@ import unit.State;
 import model.*;
 
 public abstract class Tank extends Ally {
-    public Tank (int HP, int posX, int posY, int lane, LevelWorld levelWorld, int cost) {
-        super(HP, 0, posX, posY, lane, levelWorld, cost);
+    public Tank (int HP, int posX, int posY, int lane, int column, LevelWorld levelWorld, int cost) {
+        super(HP, 0, posX, posY, lane, column, levelWorld, cost);
     }
 
     public void update() {

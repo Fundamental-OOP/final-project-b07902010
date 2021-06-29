@@ -1,0 +1,3 @@
+1
+Normal
+FOOP, 100, 1

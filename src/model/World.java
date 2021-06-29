@@ -1,32 +1,33 @@
 package model;
 
-import java.awt.*;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 
 import graphics.*;
-import unit.*;
-
-import selector.*;
-import level.*;
-
-import game.Canvas;
-import static java.util.Arrays.stream;
-import static java.util.stream.Collectors.toSet;
 
 public abstract class World {
     protected final List<Renderee> renderees = new CopyOnWriteArrayList< Renderee >();     // not sure
     protected String nextWorldType;
     protected String myWorldType;
-    protected Selector selector;
+    private int updateInterval = 3;
+    private int updateCnt;
+    // protected Selector selector;
 
     // protected Background background;
     // String endingStatus;
     public World(String myWorldType) {
         nextWorldType = "None";
         this.myWorldType = myWorldType;
+        updateCnt = 0;
+    }
+    public boolean updateCount(){
+        if(++updateCnt == updateInterval){
+            return update();
+        }
+        else{
+            return true;
+        }
     }
     public abstract boolean update();
     // public setBackground(Background background){
@@ -41,7 +42,11 @@ public abstract class World {
     public List< Renderee > getRenderees() {
         return renderees;
     }
-    public abstract void resetWorld();
+    public void resetWorld(){
+        updateCnt = 0;
+        reset();
+    }
+    public abstract void reset();
     public String getNextWorldType(){
         return nextWorldType;
     }

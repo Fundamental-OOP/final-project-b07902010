@@ -1,6 +1,8 @@
 #!/bin/bash
 
-rm ./*.class
-rm */*.class
-javac LevelMain.java
-java LevelMain
+rm -r ./*.class
+rm -r */*.class
+rm -r */*/*.class
+
+javac Main.java
+java Main
