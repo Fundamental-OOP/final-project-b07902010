@@ -14,6 +14,6 @@ public class HomeWorld extends World{
         selected = true;
     }
     public void reset(){
-
+        selected = false;
     }
 }

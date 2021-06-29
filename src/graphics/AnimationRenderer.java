@@ -44,7 +44,8 @@ public class AnimationRenderer implements Renderer {
         this.y = y;
     }
 
-    public void render(Graphics g) {        if (images.size() > 0) {
+    public void render(Graphics g) {
+        if (images.size() > 0) {
             g.drawImage(images.get(index), x, y, null);
             index = (index + 1) % images.size();
         }

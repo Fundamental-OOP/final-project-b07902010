@@ -19,9 +19,11 @@ public class Ally_MiMiMaoMao extends Shooter {
     }
 
     public void shoot() {
-        // Bullet bullet = new Bullet_MiMiMaoMao(300, 300, 1, levelWorld);
-        // this.levelWorld.addBullet(bullet);
+        Bullet bullet = new Bullet_MiMiMaoMao(posX, posY, lane, levelWorld);
+        this.levelWorld.addBullet(bullet);
     }
 
-    public boolean canSee(Enemy e) { return e.getLane() == this.lane; }
+    public boolean canSee(Enemy e) { 
+        return e.getLane() == this.lane;
+    }
 }

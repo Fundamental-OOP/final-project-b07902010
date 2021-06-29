@@ -21,8 +21,10 @@ public abstract class Enemy extends Unit {
         // dead
         if (this.HP <= 0 ) {
             this.setState(State.Dead);
+            if (deadCycle == 0)
+                levelWorld.moveEnemyToGraveYard(this);
             deadCycle++;
-            if(deadCycle >= 5) {
+            if (deadCycle >= 5) {
                 levelWorld.reallyKillEnemy(this);
             }
             return;

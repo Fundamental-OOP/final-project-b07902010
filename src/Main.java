@@ -5,7 +5,8 @@ import level.LevelConstructor;
 import model.LevelWorld;
 import model.HomeWorld;
 import model.World;
-import record.RecordIO;
+import view.*;
+// import record.RecordIO;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,13 +14,25 @@ public class Main {
             new NormalBattleType()
         };
         
-        RecordIO recordIO = new RecordIO(battleTypes);
+        // RecordIO recordIO = new RecordIO(battleTypes);
         World[] worlds = {
             new LevelWorld(new LevelConstructor(battleTypes)),
             new HomeWorld()
         };
+        
+        // initialize gameview
+        GameView view = new GameView();
+
         // initialize canvas
-        GameFlow gameFlow = new GameFlow(worlds);
+        Canvas[] canvases = {
+            new HomeCanvas(view,  (HomeWorld)worlds[1]),
+            new LevelCanvas(view, (LevelWorld)worlds[0])
+        };
+
+        for (Canvas canvas : canvases)
+            view.addCanvas(canvas);
+
+        GameFlow gameFlow = new GameFlow(worlds, view);
         gameFlow.launchGame();
     }   
 

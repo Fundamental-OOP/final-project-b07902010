@@ -15,6 +15,8 @@ public abstract class Shooter extends Ally {
         // dead
         if (this.HP <= 0 ) {
             this.setState(State.Dead);
+            if (deadCycle == 0)
+                levelWorld.moveAllyToGraveYard(this);
             deadCycle++;
             if (deadCycle >= 5) {
                 levelWorld.reallyKillAlly(this);
@@ -38,6 +40,7 @@ public abstract class Shooter extends Ally {
 
         // idle
         else {
+            // System.out.println("idle");
             this.setState(State.Idle);
             return;
         }

@@ -3,6 +3,7 @@ package model;
 import level.Level;
 import level.LevelConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -25,7 +26,7 @@ public class LevelWorld extends World{
     private Level level;
     private final AllyConstructor allyConstructor = new AllyConstructor(this);
     private final EnemyConstructor enemyConstructor = new EnemyConstructor(this);
-    private Selector selector;
+    private final Selector selector = new Selector();
 
     private final List< Ally > allies = new CopyOnWriteArrayList< Ally >();
     private final List< Enemy > enemies = new CopyOnWriteArrayList< Enemy >();
@@ -39,9 +40,10 @@ public class LevelWorld extends World{
     // protected Background background;
     public LevelWorld(LevelConstructor levelConstructor){
         super("Level");
+        this.nextWorldType = "Home";
         this.levelConstructor = levelConstructor;
+        
         levelConstructor.setWorld(this);
-        nextWorldType = "Home";
     }
 
     @Override
@@ -82,9 +84,10 @@ public class LevelWorld extends World{
         enemies.clear();
         dyingAllies.clear();
         dyingEnemies.clear();
+        bullets.clear();
         castle = null;
         poopPurse = null;
-        selector = null;
+        selector.reset();
         resetGrid();
         setLevel(levelConstructor.constructLevel(loadData()));
     }
@@ -110,7 +113,7 @@ public class LevelWorld extends World{
 
     private void setUpSelector(){
         int allyTypeNum = 1;
-        selector = new Selector(allyTypeNum);
+        
         // for(int i = 0; i < allyTypeNum; i++){
         //     selector.addSelection("", "", "")
         // }
@@ -124,7 +127,7 @@ public class LevelWorld extends World{
 
     // adjust units
     public void addAlly(String allyType, int lane, int column){
-        
+        if(grid[lane][column]){ return; }
         Ally freshman = allyConstructor.constructAlly(allyType, lane, column);
         allies.add(freshman);
         freshman.setLevelWorld(this);
@@ -159,7 +162,7 @@ public class LevelWorld extends World{
     public void reallyKillEnemy(Enemy theRealVictim){
         dyingEnemies.remove(theRealVictim);
         // removeRenderee((Renderee)theRealVictim);
-        theRealVictim.setLevelWorld(null);
+        // theRealVictim.setLevelWorld(null);
     }
 
 
@@ -188,7 +191,6 @@ public class LevelWorld extends World{
     }
     private boolean checkGameOver(){     // return running or not
         if(checkBattleStatus() == BattleStatus.battleContinue){
-
             return true;
         }
         else{

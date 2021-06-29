@@ -97,7 +97,7 @@ public abstract class Unit implements Renderee {
             return beAttackedRenderer;
         }
         else if (state == State.Dead) {
-            beAttackedRenderer.setPosition(posX, posY);
+            deadRenderer.setPosition(posX, posY);
             return deadRenderer;
         }
         return null;

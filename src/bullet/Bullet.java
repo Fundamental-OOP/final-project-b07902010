@@ -12,7 +12,7 @@ public abstract class Bullet implements Renderee{
     protected int posX, posY, dx;
     protected int lane;
     protected LevelWorld levelWorld;
-    protected AnimationRenderer renderer;
+    protected ImageRenderer renderer;
 
     public Bullet (int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld) {
         this.ATK = ATK;
