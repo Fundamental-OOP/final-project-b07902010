@@ -1,15 +1,17 @@
 package model;
 
-import selector.*;
 
 public class MainMenuWorld extends World{
+    private boolean selected = false;
     public MainMenuWorld(){
         super("MainMenu");
     }
     public boolean update(){
-        // if selector is triggered check selector and decide which world to go to (setNextWorld)
-        // and return false to stop this world
-        return true;
+        return !selected;
+    }
+    public void setNextWorld(String nextWorld){
+        this.nextWorldType = nextWorld;
+        selected = true;
     }
     public void reset(){
 

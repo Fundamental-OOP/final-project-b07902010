@@ -19,8 +19,6 @@ public class Main {
             new MainMenuWorld()
         };
         // initialize canvas
-
-
         GameFlow gameFlow = new GameFlow(worlds);
         gameFlow.launchGame();
     }   
