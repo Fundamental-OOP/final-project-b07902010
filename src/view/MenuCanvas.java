@@ -37,7 +37,10 @@ public class MenuCanvas extends Canvas {
     }
 
     public void renderBackground(Graphics g) {
-        g.drawImage(background, 0, 0, null);
+        int window_width = 1440, window_height = 900;
+        int w = background.getWidth(null), h = background.getHeight(null);
+        int x = (window_width - w) / 2, y = (window_height - h) / 2 ;
+        g.drawImage(background, x, y, null);
     }
 
     public void popUp () {
@@ -46,6 +49,9 @@ public class MenuCanvas extends Canvas {
     }
 
     public void setInvisible () {
+        view.getCanvas().setEnabled(true);
+        for (Component component: view.getCanvas().getComponents())
+            component.setEnabled(true);
         pop_up = false;
         this.setVisible(false); 
     }
@@ -58,9 +64,9 @@ public class MenuCanvas extends Canvas {
         int window_width = 1440, window_height = 900;
         int w = background.getWidth(null), h = background.getHeight(null);
         int x = (window_width - w) / 2, y = (window_height - h) / 2 ;
-        this.setBounds(x, y, w, h);
+        // this.setBounds(x, y, w, h);
+        this.setBounds(0, 0, window_width, window_height);
     }
-
 }
 
 class CancelButton extends JButton implements ActionListener {
@@ -79,6 +85,7 @@ class CancelButton extends JButton implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         menu_canvas.setInvisible();
+        
     }
 
 }

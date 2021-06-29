@@ -138,6 +138,7 @@ public class LevelWorld extends World{
     }
     public void reallyKillAlly(Ally theRealVictim){
         dyingAllies.remove(theRealVictim);
+        System.out.println(theRealVictim.getLane() + " " + theRealVictim.getColumn());
         grid[theRealVictim.getLane()][theRealVictim.getColumn()] = false;
         // removeRenderee((Renderee)theRealVictim);
         theRealVictim.setLevelWorld(null);

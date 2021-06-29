@@ -62,6 +62,8 @@ public class Selector {
 
     public void cleanSelection() {
         this.current_selection = -1;
+        for (Button button: buttons)
+            button.cancel();
     }
 }
 
