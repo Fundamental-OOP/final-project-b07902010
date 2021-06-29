@@ -7,8 +7,8 @@ import model.*;
 import java.util.List;
 
 public abstract class Shooter extends Ally {
-    public Shooter (int HP, int ATK, int posX, int posY, int lane, LevelWorld levelWorld, int cost) {
-        super(HP, ATK, posX, posY, lane, levelWorld, cost);
+    public Shooter (int HP, int ATK, int posX, int posY, int lane, int column, LevelWorld levelWorld, int cost) {
+        super(HP, ATK, posX, posY, lane, column, levelWorld, cost);
     }
 
     public void update() {

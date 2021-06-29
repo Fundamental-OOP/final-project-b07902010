@@ -10,8 +10,8 @@ public class Ally_Pooper extends Ally {
     int poopAmount = 25;
     int nowCycle = 0;
 
-    public Ally_Pooper(int posX, int posY, int lane, LevelWorld levelWorld) {
-        super(100, 0, posX, posY, lane, levelWorld, 100);
+    public Ally_Pooper(int posX, int posY, int lane, int column, LevelWorld levelWorld) {
+        super(100, 0, posX, posY, lane, column, levelWorld, 100);
         this.walkRenderer = new AnimationRenderer("../img/ally/Pooper", "walk");
         this.idleRenderer = new AnimationRenderer("../img/ally/Pooper", "idle");
         this.attackRenderer = new AnimationRenderer("../img/ally/Pooper", "attack");
