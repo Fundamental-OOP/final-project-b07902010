@@ -41,6 +41,7 @@ public class LevelWorld extends World{
         super("Level");
         this.levelConstructor = levelConstructor;
         levelConstructor.setWorld(this);
+        nextWorldType = "Home";
     }
 
     @Override
@@ -187,6 +188,7 @@ public class LevelWorld extends World{
     }
     private boolean checkGameOver(){     // return running or not
         if(checkBattleStatus() == BattleStatus.battleContinue){
+
             return true;
         }
         else{
