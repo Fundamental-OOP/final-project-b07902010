@@ -1,9 +1,9 @@
 package model;
 
 
-public class MainMenuWorld extends World{
+public class HomeWorld extends World{
     private boolean selected = false;
-    public MainMenuWorld(){
+    public HomeWorld(){
         super("MainMenu");
     }
     public boolean update(){
