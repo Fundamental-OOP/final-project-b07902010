@@ -1,8 +1,7 @@
 package controller;
 
 import model.World;
-
-import game.*;
+import view.*;
 
 public class GameLoop {
     private boolean running;
@@ -12,6 +11,7 @@ public class GameLoop {
     public GameLoop(GameView view){
         this.view = view;
     }
+
     public void setWorld(World world){
         this.world = world;
         this.view.setWorld(world);
@@ -25,12 +25,11 @@ public class GameLoop {
     private void gameLoop() {
         running = true;
         while (running) {
-            World world = getWorld();
-            view.setWorld(world);
+            // World world = getWorld();
+            // view.setWorld(world);
             running = world.update();
             view.update();
-            delay(15);
-            
+            delay(100);
         }
         System.out.println("stopped");
     }

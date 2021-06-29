@@ -10,12 +10,12 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import battletype.BattleStatusChecker;
+import battletype.BattleType;
 
 public class LevelConstructor {
-    private BattleStatusChecker[] battleTypes;
+    private BattleType[] battleTypes;
     LevelWorld world;
-    public LevelConstructor(BattleStatusChecker[] battleTypes){
+    public LevelConstructor(BattleType[] battleTypes){
         this.battleTypes = battleTypes;
     }
     public void setWorld(LevelWorld world){
@@ -24,7 +24,7 @@ public class LevelConstructor {
     public Level constructLevel(String levelName){
         int enemyNum = -1;
         ArrayList< EnemyInfo > enemySchedule = new ArrayList< EnemyInfo >();
-        BattleStatusChecker battleStatusChecker = null;
+        BattleType battleType = null;
         try{
             BufferedReader fr = new BufferedReader(new FileReader("../level_data/" + levelName + ".txt"));
             // first line will be enemy number
@@ -37,12 +37,12 @@ public class LevelConstructor {
             // third line will be background info
             // background
 
-            for(BattleStatusChecker battleType : battleTypes){
-                if(battleType.getName().equals(battleTypeName)){
-                    battleStatusChecker = battleType;
+            for(BattleType Type : battleTypes){
+                if(Type.getName().equals(battleTypeName)){
+                    battleType = Type;
                 }
             }
-            if(battleStatusChecker == null){
+            if(battleType == null){
                 System.out.println("Battle Type doesn't exist.");
                 fr.close();
                 return null;
@@ -61,7 +61,7 @@ public class LevelConstructor {
         catch(IOException e){
             System.out.println("Reach unexpected EOF.");
         }
-        Level level = new Level(levelName, world, enemyNum, enemySchedule ,battleStatusChecker, new AllyConstructor(world), new EnemyConstructor(world));
+        Level level = new Level(levelName, world, enemyNum, enemySchedule , battleType, new AllyConstructor(world), new EnemyConstructor(world));
         return level;
     }
 }

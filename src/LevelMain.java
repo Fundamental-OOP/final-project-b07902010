@@ -1,7 +1,7 @@
 import controller.GameLoop;
-import game.GameView;
 import level.LevelConstructor;
 import model.LevelWorld;
+import view.*;
 import level.Level;
 
 import java.awt.*;
@@ -9,18 +9,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import battletype.BattleStatusChecker;
-import battletype.NormalBattleStatusChecker;
-
-import game.*;
-// import static media.AudioPlayer.addAudioByFilePath;
-import game.Canvas;
+import battletype.*;
 
 public class LevelMain {
     public static void main(String[] args) {
         // Initialization
-        BattleStatusChecker[] battleTypes = {
-            new NormalBattleStatusChecker()
+        BattleType[] battleTypes = {
+            new NormalBattleType()
         };
         LevelConstructor levelConstructor = new LevelConstructor(battleTypes);
         
@@ -28,13 +23,26 @@ public class LevelMain {
         LevelWorld world = new LevelWorld(levelConstructor);
         
         GameView view = new GameView(1440, 900);
-        Canvas levelcanvas = new Canvas(view);
-        
+        HomeCanvas maincanvas = new HomeCanvas(view);
+        LevelCanvas levelcanvas = new LevelCanvas(view);
+        // Container container = view.getContentPane();
+        // container.add(levelcanvas);
+        //container.add(maincanvas);
+
+        // view.setContentPane(maincanvas);
+
         world.resetWorld();
-        
         levelcanvas.setWorld(world);
-        view.setCanvas(levelcanvas);
+        // view.addCanvas("Menu", menucanvas);
+        view.addCanvas("Main", maincanvas);
+        view.addCanvas("Level", levelcanvas);
+        
+        
+        // view.setCanvas("Level");
         view.setWorld(world);
+        view.setCanvas("Main");
+
+        
         
         // String levelName = "level_test";
         // Level level = levelConstructor.constructLevel(levelName, world);

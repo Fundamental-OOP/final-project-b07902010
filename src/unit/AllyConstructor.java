@@ -13,13 +13,13 @@ public class AllyConstructor {
         Ally newAlly = null;
         switch(allyType){
             case "MiMiMaoMao":
-                newAlly = new Ally_MiMiMaoMao(300 + 99 * column, 160 + 120 * lane, column, lane, world);
+                newAlly = new Ally_MiMiMaoMao(300 + 99 * column, 160 + 120 * lane, lane, column, world);
                 break;
             case "Pooper":
-                newAlly = new Ally_Pooper(300 + 99 * column, 160 + 120 * lane, column, lane, world);
+                newAlly = new Ally_Pooper(300 + 99 * column, 160 + 120 * lane,  lane, column,  world);
                 break;
             case "Saxophone":
-                newAlly = new Ally_Saxophone(300 + 99 * column, 160 + 120 * lane, lane, column, world);
+                newAlly = new Ally_Saxophone(300 + 99 * column, 160 + 120 * lane,  lane, column, world);
                 break;
             default:
                 System.out.println("Ally type " + allyType + " not found.");

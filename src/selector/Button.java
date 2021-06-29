@@ -4,32 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-
-import model.*;
-import graphics.*;
-
-import java.awt.*;
-import java.io.File;
-
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-import javax.swing.event.*;
-import javax.swing.text.GapContent;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import graphics.*;
-import graphics.Renderer;
 import utils.*;
-
-import java.util.Map;
-import java.util.HashMap;
 
 public class Button extends JButton implements ActionListener {
 
-    private Selector selector;
+    private final Selector selector;
     private Image default_image = ImageReader.readImageFromPath("../img/default_button.png");
     private Image icon_image;
     private Image preview_image;
@@ -37,7 +18,7 @@ public class Button extends JButton implements ActionListener {
     private int index;
     private boolean selected;
 
-    
+
     public Button (Selector selector, int index) {
         this.index = index;
         this.icon_image = default_image;
@@ -57,7 +38,7 @@ public class Button extends JButton implements ActionListener {
         }
         else {
             this.selected = false;
-            this.selector.setCurrentSelection(-1);
+            this.selector.cleanSelection();
         }
     }
 
@@ -67,10 +48,13 @@ public class Button extends JButton implements ActionListener {
         this.preview_image = ImageReader.readImageFromPath(preview_path);
         ImageIcon icon = new ImageIcon(this.icon_image);
         this.setIcon(icon);
-        if (name.equals("Menu"))
-            this.setPosition(1220, 20);
     }
 
+    public void reset() {
+        this.setIcon(new ImageIcon(default_image));
+        this.preview_image = null;
+        this.selected = false;
+    }
 
     public boolean isSelected() {
         return selected;

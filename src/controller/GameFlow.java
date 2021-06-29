@@ -1,20 +1,20 @@
 package controller;
 
 import model.World;
-
-import game.*;
+import view.*;
 
 public class GameFlow {
-    private final GameView view = new GameView(1440, 900);
-    private final GameLoop gameLoop = new GameLoop(view);
+    private final GameView view;
+    private final GameLoop gameLoop;
     World[] worlds;
     World currentWorld;
     String currentWorldType;
 
-    public GameFlow(World[] worlds){
+    public GameFlow(World[] worlds, GameView view){
+        this.view = view;
         this.worlds = worlds;
-        currentWorldType = "MainMenu";
-        
+        this.gameLoop = new GameLoop(view);
+        currentWorldType = "Home";
     }
 
     public void launchGame(){
@@ -25,8 +25,11 @@ public class GameFlow {
             getNextWorld();
         }
     }
+
     private void setCurrentWorld(){
+        
         for(World world : worlds){
+            System.out.println(world.getMyWorldType());
             if(world.getMyWorldType().equals(currentWorldType)){
                 currentWorld = world;
                 currentWorld.resetWorld();
