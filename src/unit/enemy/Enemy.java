@@ -21,8 +21,10 @@ public abstract class Enemy extends Unit {
         // dead
         if (this.HP <= 0 ) {
             this.setState(State.Dead);
+            if (deadCycle == 0)
+                levelWorld.moveEnemyToGraveYard(this);
             deadCycle++;
-            if(deadCycle >= 5) {
+            if (deadCycle >= 15) {
                 levelWorld.reallyKillEnemy(this);
             }
             return;
@@ -68,7 +70,10 @@ public abstract class Enemy extends Unit {
     }
 
     protected boolean touch(Ally a) {  // TODO: set diff
-        return Math.abs(a.getPosX() - this.posX) < 10;
+        if(this.lane == a.getLane()){
+            return Math.abs(a.getPosX() - this.posX) < 50;
+        }
+        return false;
     }
 
 }

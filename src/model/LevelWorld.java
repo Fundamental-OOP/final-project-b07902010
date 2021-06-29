@@ -84,6 +84,7 @@ public class LevelWorld extends World{
         enemies.clear();
         dyingAllies.clear();
         dyingEnemies.clear();
+        bullets.clear();
         castle = null;
         poopPurse = null;
         selector.reset();
@@ -126,10 +127,14 @@ public class LevelWorld extends World{
 
     // adjust units
     public void addAlly(String allyType, int lane, int column){
-        
+        if(grid[lane][column]){
+            System.out.println("[LevelWorld]: This place is planted.");
+            return;
+        }
         Ally freshman = allyConstructor.constructAlly(allyType, lane, column);
         allies.add(freshman);
         freshman.setLevelWorld(this);
+        grid[lane][column] = true;
         // addRenderee((Renderee)freshman);
     }
     public void moveAllyToGraveYard(Ally victim){
