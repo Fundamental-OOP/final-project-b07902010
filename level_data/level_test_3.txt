@@ -1,0 +1,7 @@
+5
+Normal
+FOOP, 100, 1
+FOOP, 100, 2
+FOOP, 200, 3
+FOOP, 350, 4
+FOOP, 500, 0

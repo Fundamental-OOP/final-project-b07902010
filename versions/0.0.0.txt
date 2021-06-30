@@ -1,0 +1,7 @@
+Battle Types
+1
+Normal
+3
+level_test
+level_test_2
+level_test_3
