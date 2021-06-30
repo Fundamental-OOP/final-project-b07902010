@@ -14,7 +14,7 @@ import java.util.Hashtable;
 import version.GameVersion;
 
 public class Record {
-    private static final String currentRecordName = "test";
+    private static String currentRecordName;
     private static final String recordPath = "../records/";
     private static final ArrayList< String > availableAllyTypes = new ArrayList< String >();
     private static final ArrayList< String > chosenAllyTypes = new ArrayList< String >();
@@ -79,11 +79,39 @@ public class Record {
     public static void addAvailableAllyTypes(String type){
         availableAllyTypes.add(type);
     }
-    
-    public static boolean loadRecord(String recordName){
+    public static boolean newRecord(String recordName){
+        currentRecordName = recordName;
+        if(loadRecord("new")){
+            writeRecord();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public static boolean loadLastRecord(){
+        try{
+            BufferedReader fr = new BufferedReader(new FileReader(recordPath + "last.txt"));
+            currentRecordName = fr.readLine();
+            fr.close();
+            if(!loadRecord(currentRecordName)){
+                newRecord(currentRecordName);
+            }
+            return true;
+        }
+        catch(FileNotFoundException e){
+            System.out.println("[Record]: Cannot find last record, start a new record.");
+            return newRecord("ThisIsYourFirstRecord");
+        }
+        catch(IOException e){
+            System.out.println("[Record]: Reach unexpected EOF.");
+            return false;
+        }
+    }
+    public static boolean loadRecord(String loadRecordName){
         String checkPoint = "";
         try{
-            BufferedReader fr = new BufferedReader(new FileReader(recordPath + recordName + ".txt"));
+            BufferedReader fr = new BufferedReader(new FileReader(recordPath + loadRecordName + ".txt"));
             // available ally
             checkPoint = fr.readLine();
             if(!checkPoint.equals("Available Ally")){
@@ -156,7 +184,7 @@ public class Record {
             fr.close();
         }
         catch(FileNotFoundException e){
-            System.out.println("[Record]: Cannot find last record.");
+            System.out.println("[Record]: Cannot find record " + loadRecordName + ".");
             return false;
         }
         catch(IOException e){
@@ -167,6 +195,19 @@ public class Record {
     }
     
     public static void writeRecord(){
+        try{
+            File recordFile = new File(recordPath + "last.txt");
+            recordFile.createNewFile();
+            FileWriter fw = new FileWriter(recordPath + "last.txt");
+            fw.write(currentRecordName);
+            fw.close();
+        }
+        catch(FileNotFoundException e){
+            System.out.println("[Record] Write last fail: File "+ recordPath+ "last.txt not found.");
+        }
+        catch(IOException e){
+            System.out.println("[Record] Write record fail: IO exception.");
+        }
         try{
             File recordFile = new File(recordPath + currentRecordName + ".txt");
             recordFile.createNewFile();
@@ -194,12 +235,12 @@ public class Record {
             System.out.println("[Record] Write in Chosen Ally.");
             // level progresses
             fw.write("Level Progress\n");
-            fw.write(levelProgresses.size());
+            fw.write(levelProgresses.size() + "\n");
             Enumeration< String > battleTypeNames = levelProgresses.keys();
             while (battleTypeNames.hasMoreElements()){
                String battleType = battleTypeNames.nextElement();
                String progress = levelProgresses.get(battleType);
-               fw.write(battleType + ": " + progress + "\n");
+               fw.write(battleType + ":" + progress + "\n");
             }
             fw.write("\n");
             System.out.println("[Record] Write in Level Progress.");
