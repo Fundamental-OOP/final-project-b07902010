@@ -19,6 +19,8 @@ public class LevelList {
     }
     public String searchNextLevel(String levelName){
         int levelOrder = levelNames.indexOf(levelName);
+        System.out.println("[LevelList] getting level name: " + levelName + " with order " + levelOrder);
+
         levelOrder++;
         if(levelOrder == levelNames.size()){
             return levelNames.get(levelOrder-1);
@@ -37,5 +39,8 @@ public class LevelList {
             if(levelName.equals(progress)){ break;}
         }
         return ret;
+    }
+    public String highestLevel(){
+        return levelNames.get(levelNames.size()-1);
     }
 }

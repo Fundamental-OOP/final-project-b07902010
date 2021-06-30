@@ -14,7 +14,7 @@ public class Main {
         BattleType[] battleTypes = {
             new NormalBattleType()
         };
-        if(!GameVersion.loadVersion(battleTypes, "0.0.0")) {
+        if(!GameVersion.loadVersion(battleTypes, "test")) {
             System.out.println("[Main] Error when loading version.");
             return;
         }

@@ -49,6 +49,7 @@ public class LevelWorld extends World{
 
     @Override
     public boolean update() {
+        if(pause){ return true; }
         level.update();
         renderees.clear();
         
@@ -83,6 +84,7 @@ public class LevelWorld extends World{
     }
 
     public void reset(){   // be called when this world is the next one to run
+        pause = false;
         allies.clear();
         enemies.clear();
         dyingAllies.clear();

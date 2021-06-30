@@ -7,7 +7,7 @@ import model.*;
 
 public class Enemy_CNLab extends Enemy {
     public Enemy_CNLab (int posX, int posY, int lane, LevelWorld levelWorld ) {
-        super(100, 10, posX, posY, lane, levelWorld, 10);
+        super(10, 1, posX, posY, lane, levelWorld, 20);
         this.walkRenderer = new AnimationRenderer("../img/enemy/CNLab", "walk");
         this.idleRenderer = new AnimationRenderer("../img/enemy/CNLab", "idle");
         this.attackRenderer = new AnimationRenderer("../img/enemy/CNLab", "attack");

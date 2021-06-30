@@ -193,6 +193,7 @@ public class Record {
                 currentBattleTypeName = "Normal";
                 currentLevelName = levelProgresses.get(currentBattleTypeName);
             }
+            
             fr.close();
         }
         catch(FileNotFoundException e){

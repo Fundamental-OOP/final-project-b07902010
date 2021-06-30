@@ -19,7 +19,7 @@ public class GameVersion {
     public static boolean loadVersion(BattleType[] battleTypes, String versionName){
         maxLevelNum = 0;
         String versionPath = "../versions/";
-        String checkPoint = "";
+        String[] infos = "";
         // construct levelList
         // get every battle types' name
         for(BattleType type : battleTypes){
@@ -31,14 +31,15 @@ public class GameVersion {
             BufferedReader fr = new BufferedReader(new FileReader(versionPath + versionName + ".txt"));
             
             // types of battle
-            checkPoint = fr.readLine();
-            if(!checkPoint.equals("Battle Types")){
+            infos = fr.readLine().split(":");
+            
+            if(!infos[0].equals("Battle Types")){
                 System.out.println("[Version] Version file format error : Battle Types.");
                 fr.close();
                 return false;
             }
-            int battletypesNum = Integer.parseInt(fr.readLine());
-
+            int battletypesNum = Integer.parseInt(infos[1]);
+            
             for(int i = 0; i < battletypesNum; i++){
                 String battleTypeName = fr.readLine();
                 LevelList levelList = levelLists.get(battleTypeName);
@@ -89,4 +90,8 @@ public class GameVersion {
         return levelList.getAvailableLevels(levelName);
     }
     public static int getMaxLevelNum(){ return maxLevelNum; }
+    public static String getHighestLevelOf(String battleTypeName){
+        LevelList levelList = levelLists.get(battleTypeName);
+        return levelList.highestLevel();
+    }
 }
