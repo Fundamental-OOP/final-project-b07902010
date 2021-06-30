@@ -10,7 +10,7 @@ import model.*;
 public class Ally_MiMiMaoMao extends Shooter {
 
     public Ally_MiMiMaoMao (int posX, int posY, int lane, int column, LevelWorld levelWorld) {
-        super(100,100, posX, posY, lane, column, levelWorld, 100); // TODO:寫死
+        super(100,100, posX, posY, lane, column, levelWorld, 100, 10); // TODO:寫死
         this.walkRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao/walk", "walk");
         this.idleRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao/idle", "idle");
         this.attackRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao/attack", "attack");

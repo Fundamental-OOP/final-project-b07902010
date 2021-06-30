@@ -6,15 +6,25 @@ import model.LevelWorld;
 import model.HomeWorld;
 import model.World;
 import view.*;
-// import record.RecordIO;
+import record.Record;
+import version.GameVersion;
 
 public class Main {
     public static void main(String[] args) {
         BattleType[] battleTypes = {
             new NormalBattleType()
         };
-        
-        // RecordIO recordIO = new RecordIO(battleTypes);
+        // if(!GameVersion.loadVersion(battleTypes)) {
+        //     System.out.println("[Main] Error when loading version.");
+        //     return;
+        // }
+        // if(!Record.loadRecord("last")) {
+        //     System.out.println("[Main] Error when loading last record, try construct a new one.");
+        //     if(!Record.loadRecord("new")){
+        //         System.out.println("[Main] Error when constructing new record, please check the init record file.");
+        //     }
+        // }
+
         World[] worlds = {
             new LevelWorld(new LevelConstructor(battleTypes)),
             new HomeWorld()

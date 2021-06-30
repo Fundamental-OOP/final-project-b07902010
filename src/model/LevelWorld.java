@@ -17,6 +17,7 @@ import bullet.*;
 import resource.*;
 import castle.Castle;
 import graphics.Renderee;
+import record.Record;
 
 import selector.Selector;
 
