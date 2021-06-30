@@ -8,7 +8,7 @@ import model.*;
 
 
 public class Ally_MiMiMaoMao extends Shooter {
-
+    static private int cost;
     public Ally_MiMiMaoMao (int posX, int posY, int lane, int column, LevelWorld levelWorld) {
         super(100,100, posX, posY, lane, column, levelWorld, 100, 10); // TODO:寫死
         this.walkRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao/walk", "walk");
@@ -16,6 +16,7 @@ public class Ally_MiMiMaoMao extends Shooter {
         this.attackRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao/attack", "attack");
         this.beAttackedRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao/beAttack", "beAttack");
         this.deadRenderer = new AnimationRenderer("../img/ally/MiMiMaoMao/dead", "dead");
+        cost = 100;
     }
 
     public void shoot() {
@@ -26,4 +27,5 @@ public class Ally_MiMiMaoMao extends Shooter {
     public boolean canSee(Enemy e) { 
         return e.getLane() == this.lane;
     }
+    public static int getCost(){ return Ally_MiMiMaoMao.cost; }
 }

@@ -30,4 +30,12 @@ public class LevelList {
     public int getLevelOrder(String levelName){
         return levelNames.indexOf(levelName);
     }
+    public ArrayList< String > getAvailableLevels(String progress){
+        ArrayList< String > ret = new ArrayList< String >();
+        for(String levelName : levelNames){
+            ret.add(levelName);
+            if(levelName.equals(progress)){ break;}
+        }
+        return ret;
+    }
 }

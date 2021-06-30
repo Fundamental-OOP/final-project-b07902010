@@ -3,6 +3,7 @@ import model.*;
 import graphics.*;
 
 public class Ally_Saxophone extends Tank {
+    static private int cost;
     public Ally_Saxophone(int posX, int posY, int lane, int column, LevelWorld levelWorld) {
         super(300, posX, posY, lane, column, levelWorld, 50);
         this.walkRenderer = new AnimationRenderer("../img/ally/Saxophone", "walk");
@@ -10,7 +11,8 @@ public class Ally_Saxophone extends Tank {
         this.attackRenderer = new AnimationRenderer("../img/ally/Saxophone", "attack");
         this.beAttackedRenderer = new AnimationRenderer("../img/ally/Saxophone", "beAttack");
         this.deadRenderer = new AnimationRenderer("../img/ally/Saxophone", "dead");
+        cost = 50;
     }
-
+    public static int getCost(){ return Ally_Saxophone.cost; }
 
 }

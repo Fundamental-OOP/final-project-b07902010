@@ -26,4 +26,21 @@ public class AllyConstructor {
         }
         return newAlly;
     }
+    static public int getNeededPoop(String allyType) {
+        int cost = 0;
+        switch(allyType){
+            case "MiMiMaoMao":
+                cost = Ally_MiMiMaoMao.getCost();
+                break;
+            case "Pooper":
+                cost = Ally_Pooper.getCost();
+                break;
+            case "Saxophone":
+                cost = Ally_Saxophone.getCost();               
+                break;
+            default:
+                System.out.println("Ally type " + allyType + " not found.");
+        }
+        return cost;
+    }
 }

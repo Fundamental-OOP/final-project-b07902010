@@ -16,7 +16,7 @@ public abstract class Ally extends Unit {
         this.column = column;
     }
 
-    public int getCost() { return cost; }
+    // static public int getCost() { return Ally.cost; }
     public void setCost(int cost) { this.cost = cost; }
     public int getColumn(){ return column; }
     abstract public void update();

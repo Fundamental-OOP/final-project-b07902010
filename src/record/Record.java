@@ -79,9 +79,9 @@ public class Record {
     public static void addAvailableAllyTypes(String type){
         availableAllyTypes.add(type);
     }
-
-
-
+    public static ArrayList< String > getAvailableLevels(){
+        return GameVersion.getAvailableLevels(currentBattleTypeName, levelProgresses.get(currentBattleTypeName));
+    }
 
     public static boolean setRecord(String recordName){
         currentRecordName = recordName;

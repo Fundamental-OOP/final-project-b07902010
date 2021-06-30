@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -13,8 +14,10 @@ import battletype.BattleType;
 
 public class GameVersion {
     private static final Dictionary< String, LevelList > levelLists = new Hashtable< String, LevelList>();
+    private static int maxLevelNum; // for one type of battle
     // private static final Set< String > initializedBattleTypes = new HashSet< String >();
     public static boolean loadVersion(BattleType[] battleTypes, String versionName){
+        maxLevelNum = 0;
         String versionPath = "../versions/";
         String checkPoint = "";
         // construct levelList
@@ -81,4 +84,9 @@ public class GameVersion {
         if(levelOrder1 >= levelOrder2){ return levelName1; }
         else{ return levelName2; }
     }
+    public static ArrayList< String > getAvailableLevels(String battleTypeName, String levelName){
+        LevelList levelList = levelLists.get(battleTypeName);
+        return levelList.getAvailableLevels(levelName);
+    }
+    public static int getMaxLevelNum(){ return maxLevelNum; }
 }

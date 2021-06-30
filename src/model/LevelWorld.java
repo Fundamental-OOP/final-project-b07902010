@@ -19,7 +19,7 @@ import castle.Castle;
 import graphics.Renderee;
 import record.Record;
 
-import selector.Selector;
+import selector.AllySelector;
 
 
 public class LevelWorld extends World{
@@ -27,7 +27,7 @@ public class LevelWorld extends World{
     private Level level;
     private final AllyConstructor allyConstructor = new AllyConstructor(this);
     private final EnemyConstructor enemyConstructor = new EnemyConstructor(this);
-    private final Selector selector = new Selector();
+    private final AllySelector selector = new AllySelector(this);
 
     private final List< Ally > allies = new CopyOnWriteArrayList< Ally >();
     private final List< Enemy > enemies = new CopyOnWriteArrayList< Enemy >();
@@ -77,8 +77,8 @@ public class LevelWorld extends World{
         // renderees.addAll( (List<Renderee>) allies );
         // renderees.addAll( (List<Renderee>) dyingAlly );
         // renderees.addAll( (List<Renderee>) allies );
-        
-        return checkGameOver();
+        checkGameOver();
+        return running;
     }
 
     public void reset(){   // be called when this world is the next one to run
@@ -89,9 +89,9 @@ public class LevelWorld extends World{
         bullets.clear();
         castle = null;
         poopPurse = null;
-        selector.reset();
+        selector.clear();
         resetGrid();
-        setLevel(levelConstructor.constructLevel(loadData()));
+        setLevel(levelConstructor.constructLevel());
     }
     private void resetGrid(){
         for(int row = 0; row < 5; row++){
@@ -99,10 +99,6 @@ public class LevelWorld extends World{
                 grid[row][col] = false;
             }
         }
-    }
-    public String loadData(){
-        System.out.println("[LevelWorld] Loading level: " + Record.getCurrentLevel());
-        return Record.getCurrentLevel();
     }
     public void setLevel(Level level){
         this.level = level;
@@ -113,16 +109,15 @@ public class LevelWorld extends World{
     }
 
     private void setUpSelector(){
-        int allyTypeNum = 1;
-        
-        // for(int i = 0; i < allyTypeNum; i++){
-        //     selector.addSelection("", "", "")
-        // }
-        selector.addSelection("MiMiMaoMao", "../img/ally/button.png", "../img/ally/button.png");
+        ArrayList< String > chosenAllyTypes = Record.getChosenAllyTypes();
+        for(String allyType : chosenAllyTypes){
+            selector.addSelection(allyType, "../img/ally/button.png", "../img/ally/button.png");
+        }
+        // selector.addSelection("MiMiMaoMao", "../img/ally/button.png", "../img/ally/button.png");
         // selector.addSelection("Menu", "../img/menu_button.png", "../img/menu_button.png");
     }
 
-    public Selector getSelector() {
+    public AllySelector getAllySelector() {
         return this.selector;
     }
 
@@ -196,10 +191,12 @@ public class LevelWorld extends World{
             return true;
         }
         else if(status == BattleStatus.win){
+            win();
             Record.gotoNextLevel();
             Record.writeRecord();
         }
         else if(status == BattleStatus.lose){
+            lose();
         }
         else{
             System.out.println("[LevelWorld] Undefined battle status.");
@@ -208,4 +205,10 @@ public class LevelWorld extends World{
         return false;
     }
 
+    private void win(){
+        running = false;
+    }
+    private void lose(){
+        running = false;
+    }
 }

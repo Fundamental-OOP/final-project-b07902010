@@ -12,6 +12,7 @@ public abstract class World {
     protected String myWorldType;
     private int updateInterval = 3;
     private int updateCnt;
+    protected boolean running;
     // protected Selector selector;
 
     // protected Background background;
@@ -20,6 +21,7 @@ public abstract class World {
         nextWorldType = "None";
         this.myWorldType = myWorldType;
         updateCnt = 0;
+        running = true;
     }
     public boolean updateCount(){
         if(++updateCnt == updateInterval){
@@ -52,5 +54,9 @@ public abstract class World {
     }
     public String getMyWorldType(){
         return myWorldType;
+    }
+    public void setNextWorld(String nextWorld){
+        this.nextWorldType = nextWorld;
+        running = false;
     }
 }

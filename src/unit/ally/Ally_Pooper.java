@@ -9,7 +9,7 @@ public class Ally_Pooper extends Ally {
     int poopCycle = 10;
     int poopAmount = 25;
     int nowCycle = 0;
-
+    private static int cost;
     public Ally_Pooper(int posX, int posY, int lane, int column, LevelWorld levelWorld) {
         super(100, 0, posX, posY, lane, column, levelWorld, 100);
         this.walkRenderer = new AnimationRenderer("../img/ally/Pooper", "walk");
@@ -17,6 +17,7 @@ public class Ally_Pooper extends Ally {
         this.attackRenderer = new AnimationRenderer("../img/ally/Pooper", "attack");
         this.beAttackedRenderer = new AnimationRenderer("../img/ally/Pooper", "beAttack");
         this.deadRenderer = new AnimationRenderer("../img/ally/Pooper", "dead");
+        cost = 100;
     }
 
     public void update() {
@@ -39,5 +40,5 @@ public class Ally_Pooper extends Ally {
             levelWorld.getPoop().pickUp(poopAmount);
         }
     }
-
+    public static int getCost(){ return Ally_Pooper.cost; }
 }

@@ -1,6 +1,7 @@
 package level;
 
 import model.LevelWorld;
+import record.Record;
 import unit.AllyConstructor;
 import unit.EnemyConstructor;
 
@@ -21,18 +22,20 @@ public class LevelConstructor {
     public void setWorld(LevelWorld world){
         this.world = world;
     }
-    public Level constructLevel(String levelName){
+    public Level constructLevel(){
         int enemyNum = -1;
         ArrayList< EnemyInfo > enemySchedule = new ArrayList< EnemyInfo >();
         BattleType battleType = null;
         try{
-            BufferedReader fr = new BufferedReader(new FileReader("../level_data/" + levelName + ".txt"));
+            BufferedReader fr = new BufferedReader(new FileReader("../level_data/" + Record.getCurrentBattleTypeName() + "/" + Record.getCurrentLevel() + ".txt"));
             // first line will be enemy number
             enemyNum = Integer.parseInt(fr.readLine());
             // second line will be battle type (define battle status checker)
 
-
             String battleTypeName = fr.readLine();
+            if(!battleTypeName.equals(Record.getCurrentBattleTypeName())){
+                System.out.println("[LevelContructor] Battle type not match:" + battleTypeName + "in file, " + Record.getCurrentBattleTypeName() + "in record.");
+            }
             
             // third line will be background info
             // background
@@ -56,12 +59,13 @@ public class LevelConstructor {
             fr.close();
         }
         catch(FileNotFoundException e){
-            System.out.println("File " + levelName + " does not exist.");
+            System.out.println("File " + Record.getCurrentLevel() + " does not exist.");
         }
         catch(IOException e){
             System.out.println("Reach unexpected EOF.");
         }
-        Level level = new Level(levelName, world, enemyNum, enemySchedule , battleType, new AllyConstructor(world), new EnemyConstructor(world));
+        Level level = new Level(Record.getCurrentLevel(), world, enemyNum, enemySchedule , battleType, new AllyConstructor(world), new EnemyConstructor(world));
+        System.out.println("[LevelConstructor] " + Record.getCurrentBattleTypeName() + ":" + Record.getCurrentLevel() + " constructed.");
         return level;
     }
 }
