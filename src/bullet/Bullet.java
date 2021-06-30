@@ -12,7 +12,7 @@ public abstract class Bullet implements Renderee{
     protected int posX, posY, dx;
     protected int lane;
     protected LevelWorld levelWorld;
-    protected AnimationRenderer renderer;
+    protected ImageRenderer renderer;
 
     public Bullet (int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld) {
         this.ATK = ATK;
@@ -43,7 +43,10 @@ public abstract class Bullet implements Renderee{
     }
 
     private boolean touch( Unit u )  {  // TODO: set diff
-        return Math.abs(u.getPosX() - this.posX) < 10;
+        if(u.getLane() == lane){
+            return Math.abs(u.getPosX() - this.posX) < 20;
+        }
+        return false;
     }
 
     private void damage(Enemy e) {

@@ -7,8 +7,12 @@ import model.*;
 import java.util.List;
 
 public abstract class Shooter extends Ally {
-    public Shooter (int HP, int ATK, int posX, int posY, int lane, int column, LevelWorld levelWorld, int cost) {
+    int shootCycle;
+    int shootCycleCnt;
+    public Shooter (int HP, int ATK, int posX, int posY, int lane, int column, LevelWorld levelWorld, int cost, int shootCycle) {
         super(HP, ATK, posX, posY, lane, column, levelWorld, cost);
+        this.shootCycle = shootCycle;
+        this.shootCycleCnt = 0;
     }
 
     public void update() {
@@ -18,7 +22,7 @@ public abstract class Shooter extends Ally {
             if (deadCycle == 0)
                 levelWorld.moveAllyToGraveYard(this);
             deadCycle++;
-            if (deadCycle >= 15) {
+            if (deadCycle >= 5) {
                 levelWorld.reallyKillAlly(this);
             }
             return;
@@ -29,8 +33,12 @@ public abstract class Shooter extends Ally {
         boolean hasShoot = false;
         for (Enemy enemy : enemies){
             if ( this.aim(enemy) ) {
-                this.shoot();
                 hasShoot = true;
+                if(shootCycleCnt == 0){
+                    this.shoot();
+                    shootCycleCnt++;
+                }
+                else{ shootCycleCnt = (shootCycleCnt + 1) % shootCycle;}
             }
         }
         if (hasShoot) {
@@ -40,6 +48,7 @@ public abstract class Shooter extends Ally {
 
         // idle
         else {
+            // System.out.println("idle");
             this.setState(State.Idle);
             return;
         }

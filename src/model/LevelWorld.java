@@ -17,8 +17,9 @@ import bullet.*;
 import resource.*;
 import castle.Castle;
 import graphics.Renderee;
+import record.Record;
 
-import selector.Selector;
+import selector.*;
 
 
 public class LevelWorld extends World{
@@ -26,7 +27,7 @@ public class LevelWorld extends World{
     private Level level;
     private final AllyConstructor allyConstructor = new AllyConstructor(this);
     private final EnemyConstructor enemyConstructor = new EnemyConstructor(this);
-    private final Selector selector = new Selector();
+    private final AllySelector selector = new AllySelector(this, "../img/default_button.png");
 
     private final List< Ally > allies = new CopyOnWriteArrayList< Ally >();
     private final List< Enemy > enemies = new CopyOnWriteArrayList< Enemy >();
@@ -42,7 +43,6 @@ public class LevelWorld extends World{
         super("Level");
         this.nextWorldType = "Home";
         this.levelConstructor = levelConstructor;
-        
         levelConstructor.setWorld(this);
     }
 
@@ -72,11 +72,16 @@ public class LevelWorld extends World{
             addRenderee((Renderee) bullet);
             bullet.update();
         }
+        poopPurse.update();
+        addRenderee(poopPurse);
+
         // renderees.addAll( (List<Renderee>) allies );
         // renderees.addAll( (List<Renderee>) dyingAlly );
         // renderees.addAll( (List<Renderee>) allies );
-        
-        return checkGameOver();
+        this.selector.update();
+
+        checkGameOver();
+        return running;
     }
 
     public void reset(){   // be called when this world is the next one to run
@@ -84,9 +89,11 @@ public class LevelWorld extends World{
         enemies.clear();
         dyingAllies.clear();
         dyingEnemies.clear();
+        bullets.clear();
         castle = null;
         poopPurse = null;
-        selector.reset();
+        running = true;
+        selector.clear();
         resetGrid();
         setLevel(levelConstructor.constructLevel(loadData()));
     }
@@ -98,14 +105,13 @@ public class LevelWorld extends World{
         }
     }
     public String loadData(){
-        String levelName = "level_test";    // for testing
-        // read in record and get next level name
-        return levelName;
+        System.out.println("[LevelWorld] Loading level: " + Record.getCurrentLevel());
+        return Record.getCurrentLevel();
     }
     public void setLevel(Level level){
         this.level = level;
         castle = new Castle();
-        poopPurse = new Poop();
+        poopPurse = new Poop(100, 10, 10);
         setUpSelector();
         // background = level.getBackground();
     }
@@ -120,13 +126,13 @@ public class LevelWorld extends World{
         // selector.addSelection("Menu", "../img/menu_button.png", "../img/menu_button.png");
     }
 
-    public Selector getSelector() {
+    public AllySelector getAllySelector() {
         return this.selector;
     }
 
     // adjust units
     public void addAlly(String allyType, int lane, int column){
-        
+        if(grid[lane][column]){ return; }
         Ally freshman = allyConstructor.constructAlly(allyType, lane, column);
         allies.add(freshman);
         freshman.setLevelWorld(this);
@@ -138,7 +144,6 @@ public class LevelWorld extends World{
     }
     public void reallyKillAlly(Ally theRealVictim){
         dyingAllies.remove(theRealVictim);
-        System.out.println(theRealVictim.getLane() + " " + theRealVictim.getColumn());
         grid[theRealVictim.getLane()][theRealVictim.getColumn()] = false;
         // removeRenderee((Renderee)theRealVictim);
         theRealVictim.setLevelWorld(null);
@@ -189,13 +194,34 @@ public class LevelWorld extends World{
     private BattleStatus checkBattleStatus(){
         return level.checkBattleStatus();
     }
+
+    private void win() {
+        this.running = false;
+    }
+
+    private void lose() {
+        this.running = false;
+    }
+
+    
     private boolean checkGameOver(){     // return running or not
-        if(checkBattleStatus() == BattleStatus.battleContinue){
+        BattleStatus status = checkBattleStatus();
+        if(status == BattleStatus.battleContinue){
             return true;
         }
-        else{
-            return false;
+        else if(status == BattleStatus.win){
+            this.win();
+            Record.gotoNextLevel();
+            Record.writeRecord();
         }
+        else if(status == BattleStatus.lose){
+            this.lose();
+        }
+        else{
+            System.out.println("[LevelWorld] Undefined battle status.");
+        }
+        
+        return false;
     }
 
 }
