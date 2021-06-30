@@ -74,6 +74,7 @@ public class LevelWorld extends World{
             bullet.update();
         }
         poopPurse.update();
+        selector.update();
         // renderees.addAll( (List<Renderee>) allies );
         // renderees.addAll( (List<Renderee>) dyingAlly );
         // renderees.addAll( (List<Renderee>) allies );
@@ -113,8 +114,6 @@ public class LevelWorld extends World{
         for(String allyType : chosenAllyTypes){
             selector.addSelection(allyType, "../img/ally/button.png", "../img/ally/button.png");
         }
-        // selector.addSelection("MiMiMaoMao", "../img/ally/button.png", "../img/ally/button.png");
-        // selector.addSelection("Menu", "../img/menu_button.png", "../img/menu_button.png");
     }
 
     public AllySelector getAllySelector() {

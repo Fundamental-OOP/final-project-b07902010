@@ -18,8 +18,8 @@ public class Main {
             System.out.println("[Main] Error when loading version.");
             return;
         }
-        if(!Record.loadLastRecord()) {
-            System.out.println("[Main] Error when loading records.");
+        if(!Record.loadLastRecord()){
+            System.out.println("[Main] No last record, start a new one.");
             return;
         }
 
@@ -34,7 +34,9 @@ public class Main {
         // initialize canvas
         Canvas[] canvases = {
             new HomeCanvas(view,  (HomeWorld)worlds[1]),
+            new LevelSelectionCanvas(view),
             new LevelCanvas(view, (LevelWorld)worlds[0])
+
         };
 
         for (Canvas canvas : canvases)
@@ -42,6 +44,7 @@ public class Main {
 
         GameFlow gameFlow = new GameFlow(worlds, view);
         gameFlow.launchGame();
+        view.dispose();
     }   
 
 }

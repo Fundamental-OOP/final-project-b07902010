@@ -46,7 +46,6 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
         this.add(menu_button);
     }
 
-
     public void paintComponent(Graphics g) {   
         renderBackground(g);
         if (world.getRenderees().size() > 0) 
@@ -54,7 +53,6 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
                 renderee.getRenderer().render(g);
         renderPreview(g);
     }
-
 
     public void renderPreview(Graphics g) {
         Point p = MouseInfo.getPointerInfo().getLocation();

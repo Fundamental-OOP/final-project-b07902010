@@ -26,19 +26,19 @@ public class LevelMain {
         LevelWorld world = new LevelWorld(levelConstructor);
         
         GameView view = new GameView(1440, 900);
-        HomeCanvas maincanvas = new HomeCanvas(view);
-        LevelCanvas levelcanvas = new LevelCanvas(view);
+        // HomeCanvas maincanvas = new HomeCanvas(view);
+        // LevelCanvas levelcanvas = new LevelCanvas(view);
         // Container container = view.getContentPane();
         // container.add(levelcanvas);
         //container.add(maincanvas);
 
         // view.setContentPane(maincanvas);
 
-        world.resetWorld();
-        levelcanvas.setWorld(world);
-        // view.addCanvas("Menu", menucanvas);
-        view.addCanvas("Main", maincanvas);
-        view.addCanvas("Level", levelcanvas);
+        // world.resetWorld();
+        // levelcanvas.setWorld(world);
+        // // view.addCanvas("Menu", menucanvas);
+        // view.addCanvas("Main", maincanvas);
+        // view.addCanvas("Level", levelcanvas);
         
         
         // view.setCanvas("Level");
