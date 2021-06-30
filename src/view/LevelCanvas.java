@@ -17,7 +17,6 @@ import selector.Button;
 
 /** Draw some baseline */
 /** Gamecanvas */
-
 public class LevelCanvas extends Canvas implements MouseInputListener {
     
     final private AllySelector selector;
@@ -29,7 +28,7 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
     private JButton menu_button;    
     private MenuCanvas menu_canvas;
     private List<Renderee> renderees;
-    
+
 
     public LevelCanvas (GameView view, LevelWorld world) {
         super(view, "Level", "../img/background.png");
@@ -40,12 +39,11 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
         this.view = view;
         this.setBounds(0, 0, 1440, 900);
         this.addMouseListener(this);
-        this.menu_canvas = new MenuCanvas(view, world);
+        this.menu_canvas = new MenuCanvas(view, this);
         this.add(menu_canvas);
         this.menu_button = new MenuButton(this, menu_canvas);
         this.add(menu_button);
     }
-
 
     public void paintComponent(Graphics g) {   
         renderBackground(g);
@@ -55,7 +53,6 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
         renderPreview(g);
     }
 
-
     public void renderPreview(Graphics g) {
         Point p = MouseInfo.getPointerInfo().getLocation();
         Image preview_image = this.selector.getCurrentSelectionPreview();
@@ -64,7 +61,7 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
     }
 
     public void renderNextFrame () {
-        if (!menu_canvas.isPopUp()) repaint();   
+        repaint();   
     }
 
     public void renderBackground(Graphics g) {
@@ -91,7 +88,7 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
     public void mouseClicked(MouseEvent e) {
         Point p = e.getPoint();
         int lane = (p.y-150)/120, column = (p.x-300)/99;
-        if (mouse_enabled) createNewAlly(lane, column);
+        createNewAlly(lane, column);
     }
     
     public void createNewAlly(int lane, int column) {
@@ -107,14 +104,23 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
     }
 
     public void enableCanvas () {
-
-
+        // this.setEnabled(true);
+        for (Component component: this.getComponents())
+            component.setEnabled(true);
+        this.selector.update();
+        this.view.antiUnAnDeImPause();
+        this.world.antiUnAnDeImPause();
     }
 
     public void disableCanvas () {
-
+        // this.setEnabled(false);
+        for (Component component: this.getComponents())
+            component.setEnabled(false);
+        this.world.pause();
+        this.view.pause();
         
     }
+
 
     public void mousePressed(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {}
@@ -134,7 +140,6 @@ class MenuButton extends JButton implements ActionListener {
     LevelCanvas level_canvas;
     MenuCanvas menu_canvas;
 
-
     public MenuButton(LevelCanvas level_canvas, MenuCanvas menu_canvas) {
         this.level_canvas = level_canvas;
         this.menu_canvas = menu_canvas;
@@ -146,9 +151,7 @@ class MenuButton extends JButton implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        this.level_canvas.disableCanvas();
         this.menu_canvas.popUp();
-        this.level_canvas.setEnabled(false);
-        for (Component component: level_canvas.getComponents())
-            component.setEnabled(false);
     }
 }

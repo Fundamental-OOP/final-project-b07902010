@@ -12,25 +12,29 @@ import utils.*;
 import java.awt.event.*;
 import selector.Button;
 
+import utils.*;
 
 
-public class LevelSelectionCanvas extends Canvas implements MouseInputListener {
+
+public class LevelSelectionCanvas extends Canvas {
 
 
     private final LevelSelector levelSelector = new LevelSelector(3);
     private LevelButtonCanvas[] levelButtonCanvases = new LevelButtonCanvas[10];
     private LevelButtonCanvas currentLevelButtonCanvas;
-    private int max = 3, num = 0;
+    private int max_page = 3, num = 0, current_page = 0;
 
     public LevelSelectionCanvas (GameView view) {
         super(view, "Level Selection", "../img/levelselection.png");
-        this.addMouseListener(this);
         this.add(new BackButton(view));
+        this.add(new LeftButton(this));
+        this.add(new RightButton(this));
+        
         Button[] buttons = levelSelector.getButtons();
         for (int i = 0; i < buttons.length; i++) {
             System.out.println(i);
             this.levelButtonCanvases[i] = new LevelButtonCanvas(view, buttons[i]);
-            this.levelButtonCanvases[i].setBounds(200, 200*i, 600, 200);
+            this.levelButtonCanvases[i].setBounds(200, 200, 600, 200);
             this.levelButtonCanvases[i].add(buttons[i]);
             this.add(levelButtonCanvases[i]);
         }
@@ -52,23 +56,24 @@ public class LevelSelectionCanvas extends Canvas implements MouseInputListener {
     } 
 
 
-    public void mousePressed(MouseEvent e) {}
-    public void mouseReleased(MouseEvent e) {}
-    public void mouseEntered(MouseEvent e) {}
-    public void mouseExited(MouseEvent e) {}
-    public void mouseDragged(MouseEvent e) {}
-    public void mouseMoved(MouseEvent e) {}
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        this.currentLevelButtonCanvas.setVisible(false);
-        num = ( num+1 ) % max;
-        
-        this.currentLevelButtonCanvas = this.levelButtonCanvases[num];
-        this.currentLevelButtonCanvas.setVisible(true);
+    public void scrollLeft() {
+        if (current_page > 0) this.current_page --;
+        this.changeLevelButtonCanvas(this.current_page);
     }
 
+    public void scrollRight() {
+        if (current_page < max_page-1) this.current_page ++;
+        this.changeLevelButtonCanvas(this.current_page);
+    }
 
+    public void changeLevelButtonCanvas (int index) {
+        if (index >= 0 && index < this.max_page) {
+            this.currentLevelButtonCanvas.setVisible(false);
+            this.currentLevelButtonCanvas = this.levelButtonCanvases[index];
+            this.currentLevelButtonCanvas.setVisible(true);
+        }
+    }
 }
 
 
@@ -78,13 +83,12 @@ class LevelSelector extends Selector {
 
     private String[] level_names;
     
-
     public LevelSelector (int max_selections) {
         super(max_selections);
         level_names = new String[max_selections];
         addSelection("../img/level_1.png");
-        addSelection("../img/level_1.png");
-        addSelection("../img/level_1.png");
+        addSelection("../img/exit.png");
+        addSelection("../img/export.png");
     }
 
     @Override
@@ -125,4 +129,57 @@ class BackButton extends CanvasButton {
     public void actionPerformed(ActionEvent e) {
         view.getWorld().setNextWorld("Home");
     }
+}
+
+class LeftButton extends JLabel implements MouseInputListener {
+    Image image = ImageReader.readImageFromPath("../img/left.png");
+    ImageIcon icon = new ImageIcon(image); 
+    LevelSelectionCanvas canvas;
+    public LeftButton (LevelSelectionCanvas canvas) {
+        this.setIcon(icon);
+        this.setBounds(40, 700, 100, 100);
+        this.setOpaque(false);
+        this.addMouseListener(this);
+        this.canvas = canvas;
+    }
+
+    public void mousePressed(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void mouseDragged(MouseEvent e) {}
+    public void mouseMoved(MouseEvent e) {}
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("left button");
+        this.canvas.scrollLeft();
+    }
+}
+
+class RightButton extends JLabel implements MouseInputListener {
+    Image image = ImageReader.readImageFromPath("../img/right.png");
+    ImageIcon icon = new ImageIcon(image); 
+    LevelSelectionCanvas canvas;
+    public RightButton (LevelSelectionCanvas canvas) {
+        this.setIcon(icon);
+        this.setBounds(1000, 700, 100, 100);
+        this.setOpaque(false);
+        this.addMouseListener(this);
+        this.canvas = canvas;
+    }
+
+    public void mousePressed(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void mouseDragged(MouseEvent e) {}
+    public void mouseMoved(MouseEvent e) {}
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("right button");
+        this.canvas.scrollRight();
+    }
+
 }

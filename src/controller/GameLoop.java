@@ -29,7 +29,7 @@ public class GameLoop {
             // view.setWorld(world);
             running = world.update();
             view.update();
-            delay(100);
+            delay(15);
         }
         System.out.println("stopped");
     }

@@ -27,7 +27,7 @@ public class LevelWorld extends World{
     private Level level;
     private final AllyConstructor allyConstructor = new AllyConstructor(this);
     private final EnemyConstructor enemyConstructor = new EnemyConstructor(this);
-    private final AllySelector selector = new AllySelector(this, "../img/default_button.png");
+    private final AllySelector selector = new AllySelector(this);
 
     private final List< Ally > allies = new CopyOnWriteArrayList< Ally >();
     private final List< Enemy > enemies = new CopyOnWriteArrayList< Enemy >();
@@ -48,6 +48,7 @@ public class LevelWorld extends World{
 
     @Override
     public boolean update() {
+        if(pause){ return true; }
         level.update();
         renderees.clear();
         

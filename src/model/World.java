@@ -12,9 +12,9 @@ public abstract class World {
     protected String myWorldType;
     private int updateInterval = 3;
     private int updateCnt;
-    // protected Selector selector;
-
     protected boolean running;
+    protected boolean pause;
+    // protected Selector selector;
 
     // protected Background background;
     // String endingStatus;
@@ -22,7 +22,8 @@ public abstract class World {
         nextWorldType = "None";
         this.myWorldType = myWorldType;
         updateCnt = 0;
-        this.running = true;
+        running = true;
+        pause = false;
     }
     public boolean updateCount(){
         if(++updateCnt == updateInterval){
@@ -56,14 +57,17 @@ public abstract class World {
     public String getMyWorldType(){
         return myWorldType;
     }
-
+    /**
+     * goto next world
+     */
     public void setNextWorld(String nextWorld){
         this.nextWorldType = nextWorld;
-        this.running = false;
+        running = false;
     }
-
-    public void stop() {
-        this.running = false;
+    public void pause(){
+        pause = true;
     }
-
+    public void antiUnAnDeImPause(){
+        pause = false;
+    }
 }
