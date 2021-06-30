@@ -106,7 +106,7 @@ public class LevelWorld extends World{
     public void setLevel(Level level){
         this.level = level;
         castle = new Castle();
-        poopPurse = new Poop(100, 10, 10);
+        poopPurse = new Poop(100, 10, 100);
         setUpSelector();
         // background = level.getBackground();
     }
@@ -128,6 +128,7 @@ public class LevelWorld extends World{
         Ally freshman = allyConstructor.constructAlly(allyType, lane, column);
         allies.add(freshman);
         freshman.setLevelWorld(this);
+        grid[lane][column] = true;
         // addRenderee((Renderee)freshman);
     }
     public void moveAllyToGraveYard(Ally victim){
@@ -139,6 +140,7 @@ public class LevelWorld extends World{
         grid[theRealVictim.getLane()][theRealVictim.getColumn()] = false;
         // removeRenderee((Renderee)theRealVictim);
         theRealVictim.setLevelWorld(null);
+        grid[theRealVictim.getLane()][theRealVictim.getColumn()] = false;
     }
     public void addBullet(Bullet bullet){
         bullets.add(bullet);

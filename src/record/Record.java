@@ -193,7 +193,7 @@ public class Record {
                 currentBattleTypeName = "Normal";
                 currentLevelName = levelProgresses.get(currentBattleTypeName);
             }
-            
+            currentLevelName = GameVersion.getHighestAvailableLevel(currentBattleTypeName, currentLevelName);
             fr.close();
         }
         catch(FileNotFoundException e){

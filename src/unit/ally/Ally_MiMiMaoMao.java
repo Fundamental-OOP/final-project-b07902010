@@ -25,7 +25,10 @@ public class Ally_MiMiMaoMao extends Shooter {
     }
 
     public boolean canSee(Enemy e) { 
-        return e.getLane() == this.lane;
+        if(e.getLane() == this.lane){
+            return e.getPosX() - posX < 20;
+        }
+        return false;
     }
     public static int getCost(){ return Ally_MiMiMaoMao.cost; }
 }

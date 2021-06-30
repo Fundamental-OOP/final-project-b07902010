@@ -19,7 +19,7 @@ public class GameVersion {
     public static boolean loadVersion(BattleType[] battleTypes, String versionName){
         maxLevelNum = 0;
         String versionPath = "../versions/";
-        String[] infos = "";
+        String[] infos;
         // construct levelList
         // get every battle types' name
         for(BattleType type : battleTypes){
@@ -38,26 +38,24 @@ public class GameVersion {
                 fr.close();
                 return false;
             }
-            int battletypesNum = Integer.parseInt(infos[1]);
-            
-            for(int i = 0; i < battletypesNum; i++){
-                String battleTypeName = fr.readLine();
+            int battleTypesNum = Integer.parseInt(infos[1]);
+            for(int i = 0; i < battleTypesNum; i++){
+                infos = fr.readLine().split(":");
+                String battleTypeName = infos[0];
                 LevelList levelList = levelLists.get(battleTypeName);
                 if(levelList != null){
-                    int levelNum = Integer.parseInt(fr.readLine());  // how many level does this type has
-                    for(int j = 0; j < levelNum; j++){
+                    int levelNum = infos.length;
+                    for(int j = 1; j < levelNum; j++){
                         // read in level names
-                        levelList.addLevel(fr.readLine());
+                        levelList.addLevel(infos[j]);
                     }
                 }
                 else{
                     System.out.println("[Version] Battle type " + battleTypeName + " not supported, stop game.");
-                    // int levelNum = Integer.parseInt(fr.readLine());
-                    // for(int j = 0; j < levelNum; j++){ fr.readLine(); }
                     fr.close();
                     return false;
                 }
-            }            
+            }
             fr.close();
         }
         catch(FileNotFoundException e){
@@ -90,8 +88,8 @@ public class GameVersion {
         return levelList.getAvailableLevels(levelName);
     }
     public static int getMaxLevelNum(){ return maxLevelNum; }
-    public static String getHighestLevelOf(String battleTypeName){
+    public static String getHighestAvailableLevel(String battleTypeName, String checkLevelName){
         LevelList levelList = levelLists.get(battleTypeName);
-        return levelList.highestLevel();
+        return levelList.getHighestAvailableLevel(checkLevelName);
     }
 }

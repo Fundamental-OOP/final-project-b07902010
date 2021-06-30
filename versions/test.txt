@@ -1,3 +1,2 @@
-Battle Types
-1
+Battle Types:1
 Normal:1

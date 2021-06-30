@@ -70,7 +70,10 @@ public abstract class Enemy extends Unit {
     }
 
     protected boolean touch(Ally a) {  // TODO: set diff
-        return Math.abs(a.getPosX() - this.posX) < 10;
+        if(a.getLane() == lane){
+            return Math.abs(a.getPosX() - this.posX) < 30;
+        }
+        return false;
     }
 
 }
