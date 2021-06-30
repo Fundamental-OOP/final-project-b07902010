@@ -47,7 +47,7 @@ public class Main {
         GameFlow gameFlow = new GameFlow(worlds, view);
         gameFlow.launchGame();
         view.dispose();
-        System.out.println("88!!!!");
+        System.out.println("50505!!!!");
     }   
 
 }
