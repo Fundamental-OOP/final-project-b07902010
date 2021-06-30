@@ -43,7 +43,10 @@ public abstract class Bullet implements Renderee{
     }
 
     private boolean touch( Unit u )  {  // TODO: set diff
-        return Math.abs(u.getPosX() - this.posX) < 20;
+        if(u.getLane() == lane){
+            return Math.abs(u.getPosX() - this.posX) < 20;
+        }
+        return false;
     }
 
     private void damage(Enemy e) {

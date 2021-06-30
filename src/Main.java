@@ -14,16 +14,16 @@ public class Main {
         BattleType[] battleTypes = {
             new NormalBattleType()
         };
-        // if(!GameVersion.loadVersion(battleTypes)) {
-        //     System.out.println("[Main] Error when loading version.");
-        //     return;
-        // }
-        // if(!Record.loadRecord("last")) {
-        //     System.out.println("[Main] Error when loading last record, try construct a new one.");
-        //     if(!Record.loadRecord("new")){
-        //         System.out.println("[Main] Error when constructing new record, please check the init record file.");
-        //     }
-        // }
+        if(!GameVersion.loadVersion(battleTypes, "0.0.0")) {
+            System.out.println("[Main] Error when loading version.");
+            return;
+        }
+        if(!Record.loadRecord("last")) {
+            System.out.println("[Main] Error when loading last record, try construct a new one.");
+            if(!Record.loadRecord("new")){
+                System.out.println("[Main] Error when constructing new record, please check the init record file.");
+            }
+        }
 
         World[] worlds = {
             new LevelWorld(new LevelConstructor(battleTypes)),

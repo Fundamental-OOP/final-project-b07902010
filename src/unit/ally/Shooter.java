@@ -33,9 +33,9 @@ public abstract class Shooter extends Ally {
         boolean hasShoot = false;
         for (Enemy enemy : enemies){
             if ( this.aim(enemy) ) {
+                hasShoot = true;
                 if(shootCycleCnt == 0){
                     this.shoot();
-                    hasShoot = true;
                     shootCycleCnt++;
                 }
                 else{ shootCycleCnt = (shootCycleCnt + 1) % shootCycle;}

@@ -14,8 +14,8 @@ import battletype.BattleType;
 public class GameVersion {
     private static final Dictionary< String, LevelList > levelLists = new Hashtable< String, LevelList>();
     // private static final Set< String > initializedBattleTypes = new HashSet< String >();
-    public static boolean loadVersion(BattleType[] battleTypes){
-        String levelListPath = "./levelList.txt";
+    public static boolean loadVersion(BattleType[] battleTypes, String versionName){
+        String versionPath = "../versions/";
         String checkPoint = "";
         // construct levelList
         // get every battle types' name
@@ -25,7 +25,7 @@ public class GameVersion {
             levelLists.put(type.getName(), new LevelList(type.getName()));
         }
         try{
-            BufferedReader fr = new BufferedReader(new FileReader(levelListPath));
+            BufferedReader fr = new BufferedReader(new FileReader(versionPath + versionName + ".txt"));
             
             // types of battle
             checkPoint = fr.readLine();
@@ -57,7 +57,7 @@ public class GameVersion {
             fr.close();
         }
         catch(FileNotFoundException e){
-            System.out.println("[Version] File " + levelListPath + " does not exist.");
+            System.out.println("[Version] File " + versionPath + versionName + ".txt"+ " does not exist.");
             return false;
         }
         catch(IOException e){

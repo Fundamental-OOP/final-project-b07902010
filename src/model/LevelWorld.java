@@ -73,6 +73,7 @@ public class LevelWorld extends World{
             addRenderee((Renderee) bullet);
             bullet.update();
         }
+        poopPurse.update();
         // renderees.addAll( (List<Renderee>) allies );
         // renderees.addAll( (List<Renderee>) dyingAlly );
         // renderees.addAll( (List<Renderee>) allies );
@@ -100,14 +101,13 @@ public class LevelWorld extends World{
         }
     }
     public String loadData(){
-        String levelName = "level_test";    // for testing
-        // read in record and get next level name
-        return levelName;
+        System.out.println("[LevelWorld] Loading level: " + Record.getCurrentLevel());
+        return Record.getCurrentLevel();
     }
     public void setLevel(Level level){
         this.level = level;
         castle = new Castle();
-        poopPurse = new Poop();
+        poopPurse = new Poop(100, 10, 10);
         setUpSelector();
         // background = level.getBackground();
     }
@@ -191,12 +191,21 @@ public class LevelWorld extends World{
         return level.checkBattleStatus();
     }
     private boolean checkGameOver(){     // return running or not
-        if(checkBattleStatus() == BattleStatus.battleContinue){
+        BattleStatus status = checkBattleStatus();
+        if(status == BattleStatus.battleContinue){
             return true;
         }
-        else{
-            return false;
+        else if(status == BattleStatus.win){
+            Record.gotoNextLevel();
+            Record.writeRecord();
         }
+        else if(status == BattleStatus.lose){
+        }
+        else{
+            System.out.println("[LevelWorld] Undefined battle status.");
+        }
+        
+        return false;
     }
 
 }

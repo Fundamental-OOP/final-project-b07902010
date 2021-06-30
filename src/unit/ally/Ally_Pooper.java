@@ -23,6 +23,8 @@ public class Ally_Pooper extends Ally {
         // dead
         if (this.HP <= 0 ) {
             this.setState(State.Dead);
+            if (deadCycle == 0)
+                levelWorld.moveAllyToGraveYard(this);
             deadCycle++;
             if (deadCycle >= 5) {
                 levelWorld.reallyKillAlly(this);
@@ -31,8 +33,8 @@ public class Ally_Pooper extends Ally {
         }
 
         // idle
-        nowCycle++;
-        if (nowCycle % poopCycle == 0) {
+        nowCycle = (nowCycle+1) % poopCycle;
+        if (nowCycle == 0) {
             this.setState(State.Idle);
             levelWorld.getPoop().pickUp(poopAmount);
         }

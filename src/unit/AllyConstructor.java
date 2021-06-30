@@ -22,7 +22,7 @@ public class AllyConstructor {
                 newAlly = new Ally_Saxophone(300 + 99 * column, 160 + 120 * lane, lane, column, world);
                 break;
             default:
-                System.out.println("Ally type " + allyType + " not found.");
+                System.out.println("[AllyConstructor] Ally type " + allyType + " not found.");
         }
         return newAlly;
     }
