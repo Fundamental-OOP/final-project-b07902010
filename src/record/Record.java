@@ -79,15 +79,17 @@ public class Record {
     public static void addAvailableAllyTypes(String type){
         availableAllyTypes.add(type);
     }
-    public static boolean newRecord(String recordName){
+
+
+
+
+    public static boolean setRecord(String recordName){
         currentRecordName = recordName;
-        if(loadRecord("new")){
-            writeRecord();
-            return true;
+        if(!loadRecord(currentRecordName)){
+            System.out.println("[Record]: Cannot find record," + recordName +" start a new record.");
+            return newRecord(currentRecordName);
         }
-        else{
-            return false;
-        }
+        return false;
     }
     public static boolean loadLastRecord(){
         try{
@@ -105,6 +107,16 @@ public class Record {
         }
         catch(IOException e){
             System.out.println("[Record]: Reach unexpected EOF.");
+            return false;
+        }
+    }
+    public static boolean newRecord(String recordName){
+        currentRecordName = recordName;
+        if(loadRecord("new")){
+            writeRecord();
+            return true;
+        }
+        else{
             return false;
         }
     }

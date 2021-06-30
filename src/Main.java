@@ -18,7 +18,10 @@ public class Main {
             System.out.println("[Main] Error when loading version.");
             return;
         }
-        Record.loadLastRecord();
+        if(!Record.loadLastRecord()) {
+            System.out.println("[Main] Error when loading records.");
+            return;
+        }
 
         World[] worlds = {
             new LevelWorld(new LevelConstructor(battleTypes)),
