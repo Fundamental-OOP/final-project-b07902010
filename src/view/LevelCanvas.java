@@ -11,13 +11,18 @@ import java.util.List;
 
 import javax.swing.event.*;
 
+import battletype.BattleStatus;
+import java.util.Map;
+import java.util.HashMap;
+
 import utils.*;
 import selector.*;
 import selector.Button;
 
+import utils.*;
+
 /** Draw some baseline */
 /** Gamecanvas */
-
 public class LevelCanvas extends Canvas implements MouseInputListener {
     
     final private AllySelector selector;
@@ -30,6 +35,10 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
     private MenuCanvas menu_canvas;
     private List<Renderee> renderees;
     
+    // private AnimationRenderer lose_animation = new AnimationRenderer("../img/YouLose", "you_lose");
+    // private AnimationRenderer win_animation = new AnimationRenderer("../img/YouWin", "you_win");
+
+    private GameOverCanvas gameOverCanvas;
 
     public LevelCanvas (GameView view, LevelWorld world) {
         super(view, "Level", "../img/background.png");
@@ -40,20 +49,22 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
         this.view = view;
         this.setBounds(0, 0, 1440, 900);
         this.addMouseListener(this);
-        this.menu_canvas = new MenuCanvas(view, world);
+        this.menu_canvas = new MenuCanvas(view, this);
         this.add(menu_canvas);
         this.menu_button = new MenuButton(this, menu_canvas);
         this.add(menu_button);
+        this.gameOverCanvas = new GameOverCanvas(this);
+        this.add(gameOverCanvas);
     }
 
-
-    public void paintComponent(Graphics g) {   
+    public void paintComponent(Graphics g) {  
         renderBackground(g);
         if (world.getRenderees().size() > 0) 
             for (Renderee renderee :  this.world.getRenderees())
                 renderee.getRenderer().render(g);
-        renderPreview(g);
+        renderPreview(g);            
     }
+
 
 
     public void renderPreview(Graphics g) {
@@ -64,7 +75,17 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
     }
 
     public void renderNextFrame () {
-        if (!menu_canvas.isPopUp()) repaint();   
+        if (this.world.checkBattleStatus() == BattleStatus.battleContinue) {
+            this.gameOverCanvas.setVisible(false);
+            this.menu_canvas.setVisible(false);
+            repaint();
+        }
+        else if (this.world.checkBattleStatus() == BattleStatus.lose) {
+            this.gameOverCanvas.play("lose");
+        }
+        else if (this.world.checkBattleStatus() == BattleStatus.win) {
+            this.gameOverCanvas.play("win");
+        }
     }
 
     public void renderBackground(Graphics g) {
@@ -88,10 +109,11 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
         }
     }
 
+
     public void mouseClicked(MouseEvent e) {
         Point p = e.getPoint();
         int lane = (p.y-150)/120, column = (p.x-300)/99;
-        if (mouse_enabled) createNewAlly(lane, column);
+        createNewAlly(lane, column);
     }
     
     public void createNewAlly(int lane, int column) {
@@ -106,6 +128,39 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
         }
     }
 
+    public void enableCanvas () {
+        // this.setEnabled(true);
+        for (Component component: this.getComponents())
+            component.setEnabled(true);
+        this.selector.update();
+        this.view.antiUnAnDeImPause();
+        this.world.antiUnAnDeImPause();
+    }
+
+    public void disableCanvas () {
+        // this.setEnabled(false);
+        for (Component component: this.getComponents())
+            component.setEnabled(false);
+        this.world.pause();
+        this.view.pause();
+    }
+
+    public void invisibleCanvas () {
+        for (Component c: this.getComponents())
+            c.setVisible(false);
+    }
+
+    
+    public void visibleCanvas () {
+        for (Component c: this.getComponents())
+            c.setVisible(true);
+        this.gameOverCanvas.setVisible(false);
+        this.menu_canvas.setVisible(false);
+    }
+
+    public LevelWorld getWorld() {
+        return this.world;
+    }
 
     public void mousePressed(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {}
@@ -117,13 +172,13 @@ public class LevelCanvas extends Canvas implements MouseInputListener {
 }
 
 
+
 class MenuButton extends JButton implements ActionListener {
 
     // boolean selected = false;
     GameView view;
     LevelCanvas level_canvas;
     MenuCanvas menu_canvas;
-
 
     public MenuButton(LevelCanvas level_canvas, MenuCanvas menu_canvas) {
         this.level_canvas = level_canvas;
@@ -136,9 +191,13 @@ class MenuButton extends JButton implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        this.level_canvas.disableCanvas();
         this.menu_canvas.popUp();
-        this.level_canvas.setEnabled(false);
-        for (Component component: level_canvas.getComponents())
-            component.setEnabled(false);
     }
+
 }
+
+
+
+
+

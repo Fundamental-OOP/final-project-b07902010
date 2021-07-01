@@ -1,0 +1,26 @@
+Available Ally
+9
+MiMiMaoMao
+Pooper
+Saxophone
+Oppa
+RainbowCat
+Doge
+Chihwahwa
+Pingu
+MiMiMaoMao
+
+Chosen Ally
+5
+MiMiMaoMao
+Pooper
+Saxophone
+Oppa
+MiMiMaoMao
+
+Level Progress
+1
+Normal:1
+
+Current Battle Type
+Normal

@@ -15,10 +15,12 @@ public class ImageReader {
     public static List<Image> readImagesFromPrefix (String path_to_images, String prefix) {
         int max_index = new File(path_to_images).listFiles().length;
         List<Image> images = new ArrayList<>();
+        String image_path = path_to_images + "/" + prefix + "_" + 0 + ".png";
+        File tmp = new File(image_path);
+        boolean flag = tmp.exists();
         for (int i = 0; i < max_index; i++) {
             /** directory 結尾不可以加 "/"! */
-            String image_path;
-            if (max_index >= 10) image_path = path_to_images + "/" + prefix + "_" + i/10 + i%10 + ".png";
+            if (!flag) image_path = path_to_images + "/" + prefix + "_" + i/10 + i%10 + ".png";
             else                 image_path = path_to_images + "/" + prefix + "_" + i + ".png";
             File f = new File(image_path);
             if (f.exists()) {
@@ -29,6 +31,7 @@ public class ImageReader {
                 }
             }
         }
+        System.out.println("[ImageReader] " + path_to_images + ", " + prefix + ", " + max_index + ", " + images.size());
         return images;
     }
 

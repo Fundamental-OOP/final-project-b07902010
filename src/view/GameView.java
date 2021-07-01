@@ -13,6 +13,7 @@ public class GameView extends JFrame {
     private HashMap<String, Canvas> canvases = new HashMap<String, Canvas>();
     public Canvas canvas;
     private Container container;
+    private boolean isPaused;
 
     int width = 1440, height = 900;
 
@@ -50,11 +51,14 @@ public class GameView extends JFrame {
         this.canvas = canvases.get(canvas_name);
         this.setContentPane(this.canvas);
         this.canvas.setVisible(true);
+        if (canvas_name.equals("Level") && this.canvas instanceof LevelCanvas)
+            ((LevelCanvas) this.canvas).visibleCanvas();
     }
     
     /** 更新 gameview 當前畫布 */
     public void update () {
-        this.canvas.renderNextFrame();
+        if (!isPaused)
+            this.canvas.renderNextFrame();
     }
     
     public World getWorld() {
@@ -65,6 +69,15 @@ public class GameView extends JFrame {
     public Canvas getCanvas() {
         return this.canvas;
     }
+
+    public void pause() {
+        this.isPaused = true;
+    }
+
+    public void antiUnAnDeImPause() {
+        this.isPaused = false;
+    }
+
 }
 
 

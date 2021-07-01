@@ -24,7 +24,7 @@ public class EnemyConstructor {
                 newEnemy = new Enemy_DSA(1340, 160 + 120 * lane, lane, world);
                 break;
             default:
-                System.out.println("Enemy type " + enemyType + " not found.");
+                System.out.println("[EnemyConstructor] Enemy type " + enemyType + " not found.");
         }
         return newEnemy;
     }

@@ -4,22 +4,34 @@ import model.*;
 
 public abstract class Unit implements Renderee {
     protected int HP;
-    protected int ATK;
+    protected final int ATK;
     protected int posX, posY;
     protected int lane;
-    protected  LevelWorld levelWorld;
+    protected LevelWorld levelWorld;
     protected State state;
-    protected int deadCycle = 0;
+    protected final int deadDelay;
+    protected int deadCountDown;
 
+    protected int mutableATK;
+    protected int ATKrecoverTime;
     protected AnimationRenderer walkRenderer, idleRenderer, attackRenderer, beAttackedRenderer, deadRenderer;
 
-    public Unit(int HP, int ATK, int posX, int posY, int lane, LevelWorld levelWorld) {
+    public Unit(String name, String type, int HP, int ATK, int posX, int posY, int lane, int deadDelay, LevelWorld levelWorld) {
         this.HP = HP;
         this.ATK = ATK;
+        this.mutableATK = ATK;
         this.posX = posX;
         this.posY = posY;
         this.lane = lane;
         this.levelWorld = levelWorld;
+        this.deadDelay = deadDelay;
+        this.deadCountDown = deadDelay;
+        this.ATKrecoverTime = 0;
+        this.walkRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/walk", "walk");
+        this.idleRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/idle", "idle");
+        this.attackRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/attack", "attack");
+        this.beAttackedRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/beAttack", "beAttack");
+        this.deadRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/dead", "dead");
     }
 
     public int getHP() {
@@ -34,8 +46,9 @@ public abstract class Unit implements Renderee {
         return ATK;
     }
 
-    public void setATK(int ATK) {
-        this.ATK = ATK;
+    public void setATK(int ATK, int time) {
+        ATKrecoverTime = time;
+        this.mutableATK = ATK;
     }
 
     public int getLane() {
@@ -103,6 +116,16 @@ public abstract class Unit implements Renderee {
         return null;
     }
 
-    abstract public void update();
+    public void update(){
+        recoverATK();
+    }
+    public void recoverATK(){
+        if(ATKrecoverTime > 0){
+            ATKrecoverTime--;
+        }
+        else{
+            mutableATK = ATK;
+        }
+    }
 }
 

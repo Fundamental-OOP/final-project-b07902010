@@ -17,9 +17,8 @@ public class AllySelector extends Selector {
     private Image[] preview_images = new Image[8];
     private LevelWorld world;
 
-    public AllySelector (LevelWorld world, String default_icon_path) {
+    public AllySelector (LevelWorld world) {
         super(8);
-        this.default_icon_image = ImageReader.readImageFromPath(default_icon_path);
         this.default_icon = new ImageIcon( this.default_icon_image );
         this.world = world;
         for (Button button: buttons) {
@@ -64,14 +63,16 @@ public class AllySelector extends Selector {
     public void update () {
         for (int i = 0; i < num_selections; i++) {
             if ( this.world.getPoop().enough( AllyConstructor.getNeededPoop(types[i]) ) ) {
-                // buttons[i].setIcon(valid_icons[i]);
+                
                 buttons[i].setEnabled(true);
             }
             else {
-                // buttons[i].setIcon(invalid_icons[i]);
                 buttons[i].setEnabled(false);
             }
-        }   
+        }
+        for (int i = num_selections; i < max_selections; i++) {
+            buttons[i].setEnabled(false);
+        }    
     }
 
 
