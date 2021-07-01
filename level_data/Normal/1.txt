@@ -1,6 +1,9 @@
-4
-Normal
+AllFOOP
+Normal:7
 FOOP, 100, 1
-ADA, 200, 2
-CNLab, 300, 3
-DSA, 400, 4
+FOOP, 500, 3
+FOOP, 500, 2
+FOOP, 700, 4
+FOOP, 800, 0
+FOOP, 900, 1
+FOOP, 900, 3

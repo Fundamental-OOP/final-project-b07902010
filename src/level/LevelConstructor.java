@@ -25,14 +25,17 @@ public class LevelConstructor {
     public Level constructLevel(){
         int enemyNum = -1;
         ArrayList< EnemyInfo > enemySchedule = new ArrayList< EnemyInfo >();
+        String levelName = "";
         BattleType battleType = null;
         try{
             BufferedReader fr = new BufferedReader(new FileReader("../level_data/" + Record.getCurrentBattleTypeName() + "/" + Record.getCurrentLevel() + ".txt"));
-            // first line will be enemy number
-            enemyNum = Integer.parseInt(fr.readLine());
-            // second line will be battle type (define battle status checker)
+            // first line will be level name
+            levelName = fr.readLine();
+            String[] infos = fr.readLine().split(":");
+            String battleTypeName = infos[0];
+            enemyNum = Integer.parseInt(infos[1]);
+            // second line will be battle type (define battle status checker) and enemy number
 
-            String battleTypeName = fr.readLine();
             if(!battleTypeName.equals(Record.getCurrentBattleTypeName())){
                 System.out.println("[LevelContructor] Battle type not match:" + battleTypeName + "in file, " + Record.getCurrentBattleTypeName() + "in record.");
             }
@@ -64,7 +67,7 @@ public class LevelConstructor {
         catch(IOException e){
             System.out.println("Reach unexpected EOF.");
         }
-        Level level = new Level(Record.getCurrentLevel(), world, enemyNum, enemySchedule , battleType, new AllyConstructor(world), new EnemyConstructor(world));
+        Level level = new Level(levelName, world, enemyNum, enemySchedule , battleType, new AllyConstructor(world), new EnemyConstructor(world));
         System.out.println("[LevelConstructor] " + Record.getCurrentBattleTypeName() + ":" + Record.getCurrentLevel() + " constructed.");
         return level;
     }

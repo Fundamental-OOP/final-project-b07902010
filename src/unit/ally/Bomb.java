@@ -12,7 +12,7 @@ public abstract class Bomb extends Ally{
     int explosionDelay;
     int explosionCountDown;
     public Bomb(String Name, int HP, int ATK, int posX, int posY, int lane, int column, int deadDelay, LevelWorld levelWorld, int cost, int explosionDelay){
-        super(Name, HP, ATK, posX, posY, lane, column, deadDelay, levelWorld, cost);
+        super(Name, HP, ATK, posX, posY, lane, column, deadDelay, 0, 0, levelWorld, cost);
         this.explosionDelay = explosionDelay;
         explosionCountDown = explosionDelay;
     }

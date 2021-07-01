@@ -10,18 +10,12 @@ import model.*;
 
 public abstract class Enemy extends Unit {
     protected final int dx;
-    protected final int attackCycle;
-    protected int attackCycleCnt;
     protected int mutableDx;
     protected int dxRecoverTime;
-    protected int mutableAttackCycle;
-    protected int attackCycleRecoverTime;
-    public Enemy (String Name, int HP, int ATK, int posX, int posY, int lane, int deadDelay, int attackCycle, LevelWorld levelWorld, int dx) {
-        super(Name, "enemy", HP, ATK, posX, posY, lane, deadDelay, levelWorld);
+    public Enemy (String Name, int HP, int ATK, int posX, int posY, int lane, int deadDelay, int attackCycle, int attackDelay, LevelWorld levelWorld, int dx) {
+        super(Name, "enemy", HP, ATK, posX, posY, lane, deadDelay, attackCycle, attackDelay, levelWorld);
         this.dx = dx;
         this.state = State.Walk;
-        this.attackCycle = attackCycle;
-        this.attackCycleCnt = 0;
         this.mutableDx = dx;
         this.dxRecoverTime = 0;
     }
@@ -30,45 +24,57 @@ public abstract class Enemy extends Unit {
         super.update();
         if(HP <= 0){ state = State.Dead; }
         List<Ally> allies = this.levelWorld.getAllies();
+        boolean touched = false;
         switch(state){
-            case Walk:
-                posX -= dx;
-                if(posX < 367){
-                    posX = 367;
-                    state = State.Attack;
-                }
-                for (Ally ally : allies){
-                    if ( this.touch(ally) ) {
-                        state = State.Attack;
-                        break;
-                    }
-                }
-                break;
-            case Attack:
-                attackCycleCnt = (attackCycleCnt + 1) % attackCycle;
-                if(attackCycleCnt == 0){
-                    boolean hasDamaged = false;
+            case WaitForAttack:
+                touched = false;
+                if(posX <= 367){ touched = true; }
+                else{
                     for (Ally ally : allies){
                         if ( this.touch(ally) ) {
-                            this.damage(ally);
-                            hasDamaged = true;
-                        }
-                    }
-                    if (!hasDamaged && this.posX <= 367) {
-                        this.damageCastle();
-                        hasDamaged = true;
-                    }
-                    if(!hasDamaged){ state = State.Walk; }
-                }
-                else{
-                    boolean touched = false;
-                    for (Ally ally : allies){
-                        if(touched = this.touch(ally)){
+                            touched = true;
                             break;
                         }
                     }
-                    if(!touched){ state = State.Walk; }
                 }
+                if(touched){
+                    attackCycleCnt = (attackCycleCnt + 1) % mutableAttackCycle;
+                    if(attackCycleCnt == 0){ state = State.Attack; }
+                }
+                else{ state = State.Walk; }
+                break;
+            case Walk:
+                touched = false;
+                posX -= mutableDx;
+                if(posX < 367){
+                    posX = 367;
+                    touched = true;
+                }
+                else{
+                    for (Ally ally : allies){
+                        if ( this.touch(ally) ) {
+                            touched = true;
+                            break;
+                        }
+                    }
+                }
+                if(touched){
+                    state = State.WaitForAttack;
+                    attackCycleCnt = mutableAttackCycle - 1;
+                }
+                break;
+            case Attack:
+                if(--attackCountDown > 0){ break; }
+                boolean hasDamaged = false;
+                for (Ally ally : allies){
+                    if ( this.touch(ally) ) {
+                        this.damage(ally);
+                        hasDamaged = true;
+                    }
+                }
+                if (!hasDamaged && posX <= 367) { damageCastle(); }
+                state = State.WaitForAttack;
+                attackCountDown = attackDelay;
                 break;
             case Dead:
                 if (deadCountDown == deadDelay){
@@ -86,17 +92,16 @@ public abstract class Enemy extends Unit {
 
         }
         recoverDx();
-        recoverAttackCycle();
     }
 
     protected void damage(Ally a) {
-        int newHP = a.getHP() - this.ATK;
+        int newHP = a.getHP() - mutableATK;
         a.setHP(Math.max(newHP, 0));
     }
 
     protected void damageCastle() {
         Castle castle = levelWorld.getCastle();
-        int newHP =  castle.getHP() - this.ATK;
+        int newHP =  castle.getHP() - mutableATK;
         castle.setHP(Math.max(newHP, 0));
     }
 
@@ -117,18 +122,6 @@ public abstract class Enemy extends Unit {
         }
         else{
             mutableDx = dx;
-        }
-    }
-    public void setAttackCycle(int attackCycle, int time){
-        mutableAttackCycle = attackCycle;
-        attackCycleRecoverTime = time;
-    }
-    protected void recoverAttackCycle(){
-        if(attackCycleRecoverTime > 0){
-            attackCycleRecoverTime--;
-        }
-        else{
-            mutableAttackCycle = attackCycle;
         }
     }
 }

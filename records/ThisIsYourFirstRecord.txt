@@ -1,28 +1,24 @@
-Available Ally
-8
+Available Ally:8
 MiMiMaoMao
 Pooper
 Saxophone
 Oppa
 RainbowCat
 Doge
-Chihwahwa
+Chihuahua
 Pingu
 
-Chosen Ally
-4
+Chosen Ally:8
 MiMiMaoMao
 Pooper
 Saxophone
 Oppa
 RainbowCat
 Doge
-Chihwahwa
+Chihuahua
 Pingu
 
-Level Progress
-1
-Normal:1
+Level Progress:1
+Normal:3
 
-Current Battle Type
-Normal
+Current Battle Type:Normal

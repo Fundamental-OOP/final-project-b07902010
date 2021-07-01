@@ -7,13 +7,8 @@ import unit.State;
 import unit.enemy.Enemy;
 
 public abstract class Warrior extends Ally{
-    private final int hitCycle;
-    private int hitCycleCnt;
-    protected int mutableHitCycle;
-    protected int hitCycleRecoverTime;
-    public Warrior(String Name, int HP, int posX, int posY, int lane, int column, int deadDelay, LevelWorld levelWorld, int cost, int hitCycle){
-        super(Name, HP, 0, posX, posY, lane, column, deadDelay, levelWorld, cost);
-        this.hitCycle = hitCycle;
+    public Warrior(String Name, int HP, int ATK, int posX, int posY, int lane, int column, int deadDelay, int attackCycle, int attackDelay, LevelWorld levelWorld, int cost){
+        super(Name, HP, ATK, posX, posY, lane, column, deadDelay, attackCycle, attackDelay, levelWorld, cost);
     }
 
     @Override
@@ -23,21 +18,30 @@ public abstract class Warrior extends Ally{
         List<Enemy> enemies = this.levelWorld.getEnemies();
         switch(state){
             case Idle:
-                hitCycleCnt = 0;
+                attackCycleCnt = 0;
                 for (Enemy enemy : enemies){
                     if ( canSee(enemy) ) {
-                        state = State.Attack;
+                        state = State.WaitForAttack;
+                        attackCycleCnt = mutableAttackCycle - 1;
                         break;
                     }
                 }
                 break;
-            case Attack:
-                hitCycleCnt = (hitCycleCnt + 1) % hitCycle;
-                if(hitCycleCnt == 0){
-                    if(!HIT(enemies)){
-                        state = State.Idle;
+            case WaitForAttack:
+                for (Enemy enemy : enemies){
+                    if ( canSee(enemy) ) {
+                        attackCycleCnt = (attackCycleCnt + 1) % mutableAttackCycle;
+                        if(attackCycleCnt == 0){ state = State.Attack; }
+                        break;
                     }
                 }
+                state = State.Idle;
+                break;
+            case Attack:
+                if(--attackCountDown > 0){ break; }
+                HIT(enemies);
+                state = State.WaitForAttack;
+                attackCountDown = attackDelay;
                 break;
             case Dead:
                 if (deadCountDown == deadDelay){
@@ -51,21 +55,7 @@ public abstract class Warrior extends Ally{
             default:
                 state = State.Idle;
         }
-        recoverHitCycle();
     }
-    protected abstract boolean HIT(List< Enemy > enemies);
+    protected abstract void HIT(List< Enemy > enemies);
     protected abstract boolean canSee(Enemy e);
-    public void setHitCycle(int hitCycle, int time){
-        mutableHitCycle = hitCycle;
-        hitCycleRecoverTime = time;
-    }
-    protected void recoverHitCycle(){
-        if(hitCycleRecoverTime > 0){
-            hitCycleRecoverTime--;
-        }
-        else{
-            mutableHitCycle = hitCycle;
-        }
-    }
-    
 }

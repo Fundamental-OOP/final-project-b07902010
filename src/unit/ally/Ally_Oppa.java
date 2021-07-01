@@ -32,7 +32,7 @@ public class Ally_Oppa extends Bomb{
     protected void BOOM(List< Enemy > enemies) {
         for(Enemy enemy : enemies){
             if(canSee(enemy)){
-                enemy.setHP(enemy.getHP() - ATK);
+                enemy.setHP(enemy.getHP() - mutableATK);
             }
         }
     }

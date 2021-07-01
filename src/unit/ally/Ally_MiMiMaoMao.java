@@ -10,14 +10,15 @@ public class Ally_MiMiMaoMao extends Shooter {
     static private int atk = 100;
     static private int cost = 100;
     static private int deaddelay = 20;
-    static private int shootcycle = 10;
+    static private int attackcycle = 10;
     static private int bulletSpeed = 50;
+    private static int atkDelay = 8;
     public Ally_MiMiMaoMao (int posX, int posY, int lane, int column, LevelWorld levelWorld) {
-        super("MiMiMaoMao", hp, atk, posX, posY, lane, column, deaddelay, levelWorld, cost, shootcycle);
+        super("MiMiMaoMao", hp, atk, posX, posY, lane, column, deaddelay, attackcycle, atkDelay, levelWorld, cost);
     }
 
     public void shoot() {
-        this.levelWorld.addBullet(new Bullet_MiMiMaoMao(ATK, posX, posY, lane, bulletSpeed, levelWorld));
+        this.levelWorld.addBullet(new Bullet_MiMiMaoMao(mutableATK, posX, posY, lane, bulletSpeed, levelWorld));
     }
 
     public boolean canSee(Enemy e) { 

@@ -121,12 +121,12 @@ public class Record {
         }
     }
     public static boolean loadRecord(String loadRecordName){
-        String checkPoint = "";
+        String[] infos;
         try{
             BufferedReader fr = new BufferedReader(new FileReader(recordPath + loadRecordName + ".txt"));
             // available ally
-            checkPoint = fr.readLine();
-            if(!checkPoint.equals("Available Ally")){
+            infos = fr.readLine().split(":");
+            if(!infos[0].equals("Available Ally")){
                 System.out.println("[Record] Record file format error : Available Ally.");
                 fr.close();
                 return false;
@@ -134,14 +134,14 @@ public class Record {
             else{
                 System.out.println("[Record] Getting available Allies.");
             }
-            int availableAllyNum = Integer.parseInt(fr.readLine());
+            int availableAllyNum = Integer.parseInt(infos[1]);
             for(int i = 0; i < availableAllyNum; i++){
                 availableAllyTypes.add(fr.readLine());
             }
             fr.readLine();
             // chosen ally
-            checkPoint = fr.readLine();
-            if(!checkPoint.equals("Chosen Ally")){
+            infos = fr.readLine().split(":");
+            if(!infos[0].equals("Chosen Ally")){
                 System.out.println("[Record] Record file format error : Chosen Ally.");
                 fr.close();
                 return false;
@@ -149,7 +149,7 @@ public class Record {
             else{
                 System.out.println("[Record] Getting chosen Allies.");
             }
-            int chosenAllyNum = Integer.parseInt(fr.readLine());
+            int chosenAllyNum = Integer.parseInt(infos[1]);
             for(int i = 0; i < chosenAllyNum; i++){
                 String allyTypeName = fr.readLine();
                 if(availableAllyTypes.contains(allyTypeName)){
@@ -161,8 +161,8 @@ public class Record {
             }
             fr.readLine();
             // level progresses
-            checkPoint = fr.readLine();
-            if(!checkPoint.equals("Level Progress")){
+            infos = fr.readLine().split(":");
+            if(!infos[0].equals("Level Progress")){
                 System.out.println("[Record] Record file format error : Level Progress.");
                 fr.close();
                 return false;
@@ -170,15 +170,15 @@ public class Record {
             else{
                 System.out.println("[Record] Getting progresses.");
             }
-            int battleTypesNum = Integer.parseInt(fr.readLine());
+            int battleTypesNum = Integer.parseInt(infos[1]);
             for(int i = 0; i < battleTypesNum; i++){
                 String[] progress = fr.readLine().split(":");
                 levelProgresses.put(progress[0], progress[1]);
             }
             fr.readLine();
             // current battle type
-            checkPoint = fr.readLine();
-            if(!checkPoint.equals("Current Battle Type")){
+            infos = fr.readLine().split(":");
+            if(!infos[0].equals("Current Battle Type")){
                 System.out.println("[Record] Record file format error : Current Battle Type.");
                 fr.close();
                 return false;
@@ -186,7 +186,7 @@ public class Record {
             else{
                 System.out.println("[Record] Getting battle type.");
             }
-            currentBattleTypeName = fr.readLine();
+            currentBattleTypeName = infos[1];
             currentLevelName = levelProgresses.get(currentBattleTypeName);
             if( currentLevelName == null){
                 System.out.println("[Record]: Current battle type not supported, changed to Normal.");
@@ -224,31 +224,23 @@ public class Record {
         try{
             File recordFile = new File(recordPath + currentRecordName + ".txt");
             recordFile.createNewFile();
-            // if (recordFile.createNewFile()) {
-            //     System.out.println("File created: " + recordFile.getName());
-            // } else {
-            //     System.out.println("File already exists.");
-            // }
             FileWriter fw = new FileWriter(recordPath + currentRecordName+ ".txt");
             // available ally
-            fw.write("Available Ally\n");
-            fw.write(availableAllyTypes.size() + "\n");
+            fw.write("Available Ally:" + availableAllyTypes.size() + "\n");
             for(String allyTypeName : availableAllyTypes){
                 fw.write(allyTypeName + "\n");
             }
             fw.write("\n");
             System.out.println("[Record] Write in Available Ally.");
             // chosen ally
-            fw.write("Chosen Ally\n");
-            fw.write(chosenAllyTypes.size() + "\n");
+            fw.write("Chosen Ally:" + chosenAllyTypes.size() + "\n");
             for(String allyTypeName : chosenAllyTypes){
                 fw.write(allyTypeName + "\n");
             }
             fw.write("\n");
             System.out.println("[Record] Write in Chosen Ally.");
             // level progresses
-            fw.write("Level Progress\n");
-            fw.write(levelProgresses.size() + "\n");
+            fw.write("Level Progress:" + levelProgresses.size() + "\n");
             Enumeration< String > battleTypeNames = levelProgresses.keys();
             while (battleTypeNames.hasMoreElements()){
                String battleType = battleTypeNames.nextElement();
@@ -258,8 +250,7 @@ public class Record {
             fw.write("\n");
             System.out.println("[Record] Write in Level Progress.");
             // current battle type
-            fw.write("Current Battle Type\n");
-            fw.write(currentBattleTypeName + "\n");
+            fw.write("Current Battle Type:" + currentBattleTypeName +"\n");
             System.out.println("[Record] Write in Current Battle Type.");
             fw.close();
         }

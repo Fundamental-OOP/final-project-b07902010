@@ -29,7 +29,15 @@ public class AllyConstructor {
             case "RainbowCat":
                 newAlly = new Ally_RainbowCat(posX, posY, lane, column, world);
                 break;
-            
+            case "Doge":
+                newAlly = new Ally_Doge(posX, posY, lane, column, world);
+                break;
+            case "Chihwahwa":
+                newAlly = new Ally_Chihuahua(posX, posY, lane, column, world);
+                break;
+            case "Pingu":
+                newAlly = new Ally_Pingu(posX, posY, lane, column, world);
+                break;
             default:
                 System.out.println("[AllyConstructor] Ally type " + allyType + " not found.");
         }
@@ -49,6 +57,18 @@ public class AllyConstructor {
                 break;
             case "Oppa":
                 cost = Ally_Oppa.getCost();
+                break;
+            case "RainbowCat":
+                cost = Ally_RainbowCat.getCost();
+                break;
+            case "Doge":
+                cost = Ally_Doge.getCost();
+                break;
+            case "Chihwahwa":
+                cost = Ally_Chihuahua.getCost();
+                break;
+            case "Pingu":
+                cost = Ally_Pingu.getCost();
                 break;
             default:
                 System.out.println("Ally type " + allyType + " not found.");

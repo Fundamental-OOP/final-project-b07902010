@@ -9,8 +9,9 @@ public class Enemy_DSA extends Enemy {
     private int moveCycleCnt;
     private static int deaddelay = 5;
     private static int atkCycle = 20;
+    private static int atkDelay = 8;
     public Enemy_DSA (int posX, int posY, int lane, LevelWorld levelWorld ) {
-        super("DSA", 100, 10, posX, posY, lane, deaddelay, atkCycle, levelWorld, 5);
+        super("DSA", 100, 10, posX, posY, lane, deaddelay, atkCycle, atkDelay, levelWorld, 5);
     }
     @Override
     public void update(){

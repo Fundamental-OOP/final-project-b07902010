@@ -4,7 +4,7 @@ import model.*;
 
 public abstract class Tank extends Ally {
     public Tank (String Name, int HP, int posX, int posY, int lane, int column, int deadDelay, LevelWorld levelWorld, int cost) {
-        super(Name, HP, 0, posX, posY, lane, column, deadDelay, levelWorld, cost);
+        super(Name, HP, 0, posX, posY, lane, column, deadDelay, 0, 0, levelWorld, cost);
     }
 
     public void update() {

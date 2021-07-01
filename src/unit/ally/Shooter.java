@@ -7,16 +7,8 @@ import model.*;
 import java.util.List;
 
 public abstract class Shooter extends Ally {
-    private final int shootCycle;
-    private int shootCycleCnt;
-    protected int mutableShootCycle;
-    protected int shootCycleRecoverTime;
-    public Shooter (String Name, int HP, int ATK, int posX, int posY, int lane, int column, int deadDelay, LevelWorld levelWorld, int cost, int shootCycle) {
-        super(Name, HP, ATK, posX, posY, lane, column, deadDelay, levelWorld, cost);
-        this.shootCycle = shootCycle;
-        this.shootCycleCnt = 0;
-        mutableShootCycle = shootCycle;
-        shootCycleRecoverTime = 0;
+    public Shooter (String Name, int HP, int ATK, int posX, int posY, int lane, int column, int deadDelay, int attackCycle, int attackDelay, LevelWorld levelWorld, int cost) {
+        super(Name, HP, ATK, posX, posY, lane, column, deadDelay, attackCycle, attackDelay, levelWorld, cost);
     }
 
     public void update() {
@@ -25,24 +17,34 @@ public abstract class Shooter extends Ally {
         List<Enemy> enemies = this.levelWorld.getEnemies();
         switch(state){
             case Idle:
-                shootCycleCnt = 0;
+                attackCycleCnt = 0;
                 for (Enemy enemy : enemies){
                     if ( this.aim(enemy) ) {
-                        state = State.Attack;
+                        state = State.WaitForAttack;
+                        attackCycleCnt = mutableAttackCycle -1;
+                        break;
+                    }
+                }
+                break;
+            case WaitForAttack:
+                for (Enemy enemy : enemies){
+                    if ( this.aim(enemy) ) {
+                        attackCycleCnt = (attackCycleCnt + 1) % mutableAttackCycle;
+                        if(attackCycleCnt == 0){ state = State.Attack; }
                         break;
                     }
                 }
                 break;
             case Attack:
-                boolean hasShot = false;
+                if(--attackCountDown > 0){ break; }
                 for (Enemy enemy : enemies){
                     if ( this.aim(enemy) ) {
-                        hasShot = true;
-                        shootCycleCnt = (shootCycleCnt + 1) % shootCycle;
-                        if(shootCycleCnt == 0){ this.shoot(); }
+                        this.shoot();
+                        break;
                     }
                 }
-                if (!hasShot) { state = State.Idle; }
+                state = State.WaitForAttack;
+                attackCountDown = attackDelay;
                 break;
             case Dead:
                 if (deadCountDown == deadDelay){
@@ -56,7 +58,6 @@ public abstract class Shooter extends Ally {
             default:
                 state = State.Idle;
         }
-        recoverShootCycle();
     }
 
     public boolean aim(Unit u) {
@@ -65,16 +66,4 @@ public abstract class Shooter extends Ally {
 
     abstract public boolean canSee(Enemy e);
     abstract void shoot();
-    public void setShootCycle(int shootCycle, int time){
-        mutableShootCycle = shootCycle;
-        shootCycleRecoverTime = time;
-    }
-    protected void recoverShootCycle(){
-        if(shootCycleRecoverTime > 0){
-            shootCycleRecoverTime--;
-        }
-        else{
-            mutableShootCycle = shootCycle;
-        }
-    }
 }

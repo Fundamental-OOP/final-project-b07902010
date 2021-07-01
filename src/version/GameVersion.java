@@ -77,9 +77,8 @@ public class GameVersion {
         return levelList.searchNextLevel(levelName);
     }
     public static String getHigherLevelOf(String battleTypeName, String levelName1, String levelName2){
-        LevelList levelList = levelLists.get(battleTypeName);
-        int levelOrder1 = levelList.getLevelOrder(levelName1);
-        int levelOrder2 = levelList.getLevelOrder(levelName2);
+        int levelOrder1 = Integer.parseInt(levelName1);
+        int levelOrder2 = Integer.parseInt(levelName2);
         if(levelOrder1 >= levelOrder2){ return levelName1; }
         else{ return levelName2; }
     }

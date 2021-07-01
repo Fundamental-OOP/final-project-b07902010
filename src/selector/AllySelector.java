@@ -62,7 +62,7 @@ public class AllySelector extends Selector {
 
     public void update () {
         for (int i = 0; i < num_selections; i++) {
-            System.out.println("[AllyConstructor] update(): " + types[i] + " " + AllyConstructor.getNeededPoop(types[i]));
+            // System.out.println("[AllyConstructor] update(): " + types[i] + " " + AllyConstructor.getNeededPoop(types[i]));
             if ( this.world.getPoop().enough( AllyConstructor.getNeededPoop(types[i]) ) ) {
                 
                 buttons[i].setEnabled(true);

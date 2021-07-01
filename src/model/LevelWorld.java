@@ -68,8 +68,7 @@ public class LevelWorld extends World{
         poopPurse.update();
         addRenderee(poopPurse);
         selector.update();
-        checkGameOver();
-        return running;
+        return checkGameOver();
     }
     
     @Override

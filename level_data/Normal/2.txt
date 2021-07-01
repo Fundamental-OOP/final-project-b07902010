@@ -1,5 +1,5 @@
-5
-Normal
+CNLabBAD
+Normal:10
 FOOP, 100, 1
 FOOP, 100, 2
 FOOP, 200, 3

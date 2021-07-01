@@ -14,7 +14,7 @@ public class Ally_Pooper extends Ally {
     private static int poopAmount = 25;
     private int poopCycleCnt = 0;
     public Ally_Pooper(int posX, int posY, int lane, int column, LevelWorld levelWorld) {
-        super("Pooper", hp, atk, posX, posY, lane, column, deaddelay, levelWorld, cost);
+        super("Pooper", hp, atk, posX, posY, lane, column, deaddelay, 0, 0, levelWorld, cost);
     }
     @Override
     public void update() {
@@ -43,24 +43,6 @@ public class Ally_Pooper extends Ally {
                 state = State.Idle;
                 break;
         }
-        // // dead
-        // if (this.HP <= 0 ) {
-        //     this.setState(State.Dead);
-        //     if (deadCountDown == deadDelay)
-        //         levelWorld.moveAllyToGraveYard(this);
-        //     deadCountDown--;
-        //     if (deadCountDown <= 0) {
-        //         levelWorld.reallyKillAlly(this);
-        //     }
-        //     return;
-        // }
-
-        // // idle
-        // nowCycle = (nowCycle+1) % poopCycle;
-        // if (nowCycle == 0) {
-        //     this.setState(State.Idle);
-        //     levelWorld.getPoop().pickUp(poopAmount);
-        // }
     }
     public static int getCost(){ return Ally_Pooper.cost; }
 }
