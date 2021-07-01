@@ -22,7 +22,7 @@ public abstract class Warrior extends Ally{
                 for (Enemy enemy : enemies){
                     if ( canSee(enemy) ) {
                         state = State.WaitForAttack;
-                        attackCycleCnt = mutableAttackCycle - 1;
+                        // attackCycleCnt = mutableAttackCycle - 1;
                         break;
                     }
                 }

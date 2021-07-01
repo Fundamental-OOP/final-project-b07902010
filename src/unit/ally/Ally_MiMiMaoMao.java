@@ -8,7 +8,7 @@ import utils.*;
 
 public class Ally_MiMiMaoMao extends Shooter {
     static private int hp = 100;
-    static private int atk = 100;
+    static private int atk = 10;
     static private int cost = 100;
     static private int deaddelay = UnitImage.getUnitAnimation("MiMiMaoMao", "dead").size();
     static private int attackcycle = 10;

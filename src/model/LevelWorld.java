@@ -98,7 +98,7 @@ public class LevelWorld extends World{
     public void setLevel(Level level){
         this.level = level;
         castle = new Castle();
-        poopPurse = new Poop(100, 100, 25);
+        poopPurse = new Poop(100, 1000, 25);
         setUpSelector();
         // background = level.getBackground();
     }

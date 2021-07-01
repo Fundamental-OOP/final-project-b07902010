@@ -35,11 +35,12 @@ public class Record {
         return currentLevelName;
     }
     public static void setCurrentLevel(String levelName){
-        if(GameVersion.getHigherLevelOf(currentBattleTypeName, levelName, getProgressLevelName(currentBattleTypeName)).equals(levelName)){   
+
+        if(GameVersion.getHigherLevelOf(currentBattleTypeName, levelName, getProgressLevelName(currentBattleTypeName)).equals(getProgressLevelName(currentBattleTypeName))){   
             currentLevelName = levelName;
         }
         else{
-            System.out.println("[Record] Try to set current level to a locked one.");
+            System.out.println("[Record] Try to set current level to a locked one, levelName: "+ levelName + ", progress: "+ getProgressLevelName(currentBattleTypeName));
         }
     }
     /** 

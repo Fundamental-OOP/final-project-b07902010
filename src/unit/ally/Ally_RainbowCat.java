@@ -30,9 +30,9 @@ public class Ally_RainbowCat extends Shooter{
             levelWorld.addBullet(new Bullet_RainbowCat(mutableATK, posX, posY-120, lane-1, bulletSpeed, levelWorld, this));
         }
         if(lane < 4){
-            levelWorld.addBullet(new Bullet_RainbowCat(mutableATK, posX, posY, lane+1, bulletSpeed, levelWorld, this));
+            levelWorld.addBullet(new Bullet_RainbowCat(mutableATK, posX, posY+120, lane+1, bulletSpeed, levelWorld, this));
         }
-        levelWorld.addBullet(new Bullet_RainbowCat(mutableATK, posX, posY+120, lane, bulletSpeed, levelWorld, this));
+        levelWorld.addBullet(new Bullet_RainbowCat(mutableATK, posX, posY, lane, bulletSpeed, levelWorld, this));
     }
     public static int getCost(){ return Ally_RainbowCat.cost; }
 }

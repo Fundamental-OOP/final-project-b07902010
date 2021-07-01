@@ -27,7 +27,7 @@ public class GameLoop {
         while (running) {
             running = world.update();
             view.update();
-            delay(30);
+            delay(60);
         }
         System.out.println("stopped");
     }
