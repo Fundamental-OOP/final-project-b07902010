@@ -14,6 +14,7 @@ import version.GameVersion;
 public class Main {
     public static void main(String[] args) {
 
+    
         UnitImage unitImage = new UnitImage();
 
         BattleType[] battleTypes = {

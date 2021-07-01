@@ -35,6 +35,7 @@ public class AllySelector extends Selector {
     @Override
     public void clear() {
         num_selections = 0;
+        current_selection = -1;
         for (Button button: buttons) {
             button.cancel();
             button.setIcon(default_icon);

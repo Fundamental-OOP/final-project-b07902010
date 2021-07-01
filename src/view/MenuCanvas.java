@@ -16,10 +16,12 @@ public class MenuCanvas extends Canvas {
     private boolean pop_up = false;
     
     private LevelCanvas levelCanvas;
+    private GameView view;
 
     public MenuCanvas(GameView view, LevelCanvas levelCanvas) {
         super(view, "Menu", "../img/menu/menu.png");
         this.levelCanvas = levelCanvas;
+        this.view = view;
         this.setLayout(null);
         this.setOpaque(false);
         this.setBounds(0, 0, 1440, 900);
@@ -51,7 +53,9 @@ public class MenuCanvas extends Canvas {
 
     public void setInvisible () {
         pop_up = false;
-        this.setVisible(false); 
+        this.setVisible(false);
+        this.view.antiUnAnDeImPause();
+        this.levelCanvas.getWorld().antiUnAnDeImPause();
         this.levelCanvas.enableCanvas();
     }
     public boolean isPopUp() {
@@ -96,7 +100,8 @@ class HomeButton extends CanvasButton {
         this.view = view;
     }
     public void actionPerformed(ActionEvent e) {
-        menu_canvas.setInvisible();
+        this.view.antiUnAnDeImPause();
+        this.view.getWorld().antiUnAnDeImPause();
         view.getWorld().setNextWorld("Home");
     }
 }

@@ -47,7 +47,9 @@ public class LevelWorld extends World{
     }
     @Override
     public boolean update() {
-        if(pause){ return true; }
+        if (pause)    { return true; }
+        if (!running) { return false; }
+        
         level.update();
         renderees.clear();
         // ally

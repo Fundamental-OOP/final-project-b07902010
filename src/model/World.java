@@ -60,6 +60,7 @@ public abstract class World {
      * goto next world
      */
     public void setNextWorld(String nextWorld){
+        System.out.println("[World] setNextWorld(): " + nextWorld);
         this.nextWorldType = nextWorld;
         running = false;
     }

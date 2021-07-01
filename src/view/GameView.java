@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.Container;
 import model.*;
 import java.util.HashMap;
+import java.awt.Toolkit;
+import utils.*;
 
 public class GameView extends JFrame {
     
@@ -18,8 +20,9 @@ public class GameView extends JFrame {
     int width = 1440, height = 900;
 
     public GameView ()  {
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-        //this.setUndecorated(true);
+        // this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        // this.setUndecorated(true);
+
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -45,8 +48,12 @@ public class GameView extends JFrame {
         this.canvas = canvases.get(canvas_name);
         this.setContentPane(this.canvas);
         this.canvas.setVisible(true);
-        if (canvas_name.equals("Level") && this.canvas instanceof LevelCanvas)
+        if (canvas_name.equals("Level") && this.canvas instanceof LevelCanvas) {
             ((LevelCanvas) this.canvas).visibleCanvas();
+            ((LevelCanvas) this.canvas).enableCanvas();
+            
+        }
+            
     }
     
     /** 更新 gameview 當前畫布 */
