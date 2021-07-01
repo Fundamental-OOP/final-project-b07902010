@@ -1,14 +1,12 @@
 package unit.ally;
 import unit.State;
+import utils.UnitImage;
 import model.*;
-import resource.*;
-import graphics.*;
-
 
 public class Ally_Pooper extends Ally {
-    private static int hp = 100;
+    private static int hp = 50;
     private static int atk = 0;
-    private static int deaddelay = 5;
+    private static int deaddelay = UnitImage.getUnitAnimation("Pooper", "Dead").size();
     private static int cost = 50;
     private static int poopCycle = 100;
     private static int poopAmount = 25;
