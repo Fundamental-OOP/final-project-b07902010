@@ -8,7 +8,7 @@ MiMiMaoMao
 
 Level Progress
 1
-Normal:level_test
+Normal:1
 
 Current Battle Type
 Normal

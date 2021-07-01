@@ -14,13 +14,14 @@ public abstract class Bullet implements Renderee{
     protected LevelWorld levelWorld;
     protected ImageRenderer renderer;
 
-    public Bullet (int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld) {
+    public Bullet (String Name, int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld) {
         this.ATK = ATK;
         this.posX = posX;
         this.posY = posY;
         this.lane = lane;
         this.dx = dx;
         this.levelWorld = levelWorld;
+        renderer =  new ImageRenderer("../img/bullet/" + Name +"/sprite_0.png");
     }
 
     public void setLevelWorld(LevelWorld levelWorld) {
@@ -42,14 +43,14 @@ public abstract class Bullet implements Renderee{
             posX += dx;
     }
 
-    private boolean touch( Unit u )  {  // TODO: set diff
+    protected boolean touch( Unit u )  {  // TODO: set diff
         if(u.getLane() == lane){
             return Math.abs(u.getPosX() - this.posX) < 20;
         }
         return false;
     }
 
-    private void damage(Enemy e) {
+    protected void damage(Enemy e) {
         int newHP = e.getHP() - ATK;
         e.setHP(Math.max(newHP, 0));
     }

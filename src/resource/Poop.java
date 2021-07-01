@@ -7,7 +7,7 @@ import utils.*;
 
 public class Poop implements Renderee {
     
-    PoopRenderer poopRenderer = new PoopRenderer(100, 800);
+    PoopRenderer poopRenderer = new PoopRenderer(141, 798);
 
     int count;
     
@@ -53,7 +53,7 @@ public class Poop implements Renderee {
 class PoopRenderer implements Renderer {
 
     private int number, x, y;
-    private GameImage gameImage = new GameImage();
+    private NumberImage gameImage = new NumberImage();
 
     public PoopRenderer(int x, int y) {
         this.x = x;
@@ -80,7 +80,7 @@ class PoopRenderer implements Renderer {
         else if (n >= 0) digits = 1;
         else return;
         for (int i = 3; i >= 4-digits; i--) {
-            g.drawImage(GameImage.getNumberImage(n%10), x+24*i, y, null);
+            g.drawImage(NumberImage.getNumberImage(n%10), x+45*i, y, null);
             n /= 10;
         }
     }

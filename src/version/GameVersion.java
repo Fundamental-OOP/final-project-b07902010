@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -13,10 +14,12 @@ import battletype.BattleType;
 
 public class GameVersion {
     private static final Dictionary< String, LevelList > levelLists = new Hashtable< String, LevelList>();
+    private static int maxLevelNum; // for one type of battle
     // private static final Set< String > initializedBattleTypes = new HashSet< String >();
     public static boolean loadVersion(BattleType[] battleTypes, String versionName){
+        maxLevelNum = 0;
         String versionPath = "../versions/";
-        String checkPoint = "";
+        String[] infos;
         // construct levelList
         // get every battle types' name
         for(BattleType type : battleTypes){
@@ -28,32 +31,31 @@ public class GameVersion {
             BufferedReader fr = new BufferedReader(new FileReader(versionPath + versionName + ".txt"));
             
             // types of battle
-            checkPoint = fr.readLine();
-            if(!checkPoint.equals("Battle Types")){
+            infos = fr.readLine().split(":");
+            
+            if(!infos[0].equals("Battle Types")){
                 System.out.println("[Version] Version file format error : Battle Types.");
                 fr.close();
                 return false;
             }
-            int battletypesNum = Integer.parseInt(fr.readLine());
-
-            for(int i = 0; i < battletypesNum; i++){
-                String battleTypeName = fr.readLine();
+            int battleTypesNum = Integer.parseInt(infos[1]);
+            for(int i = 0; i < battleTypesNum; i++){
+                infos = fr.readLine().split(":");
+                String battleTypeName = infos[0];
                 LevelList levelList = levelLists.get(battleTypeName);
                 if(levelList != null){
-                    int levelNum = Integer.parseInt(fr.readLine());  // how many level does this type has
-                    for(int j = 0; j < levelNum; j++){
+                    int levelNum = infos.length;
+                    for(int j = 1; j < levelNum; j++){
                         // read in level names
-                        levelList.addLevel(fr.readLine());
+                        levelList.addLevel(infos[j]);
                     }
                 }
                 else{
                     System.out.println("[Version] Battle type " + battleTypeName + " not supported, stop game.");
-                    // int levelNum = Integer.parseInt(fr.readLine());
-                    // for(int j = 0; j < levelNum; j++){ fr.readLine(); }
                     fr.close();
                     return false;
                 }
-            }            
+            }
             fr.close();
         }
         catch(FileNotFoundException e){
@@ -80,5 +82,14 @@ public class GameVersion {
         int levelOrder2 = levelList.getLevelOrder(levelName2);
         if(levelOrder1 >= levelOrder2){ return levelName1; }
         else{ return levelName2; }
+    }
+    public static ArrayList< String > getAvailableLevels(String battleTypeName, String levelName){
+        LevelList levelList = levelLists.get(battleTypeName);
+        return levelList.getAvailableLevels(levelName);
+    }
+    public static int getMaxLevelNum(){ return maxLevelNum; }
+    public static String getHighestAvailableLevel(String battleTypeName, String checkLevelName){
+        LevelList levelList = levelLists.get(battleTypeName);
+        return levelList.getHighestAvailableLevel(checkLevelName);
     }
 }

@@ -9,9 +9,9 @@ import unit.AllyConstructor;
 
 /** 選擇 Ally 的 selector，固定最多有 8 種選項，不足 8 個會有空白的欄位 */
 public class AllySelector extends Selector {
-
+    
     private String[] types = new String[8];
-    private Image default_icon_image = ImageReader.readImageFromPath("../img/default_button.png");
+    private Image default_icon_image = ImageReader.readImageFromPath("../img/level/default_button.png");
     private ImageIcon default_icon = new ImageIcon(default_icon_image); // 可能要做一個存所有圖片的 class ，減少 IO 負擔
     private ImageIcon[] icons = new ImageIcon[8];
     private Image[] preview_images = new Image[8];
@@ -84,18 +84,12 @@ public class AllySelector extends Selector {
     public void addSelection(Object... o) {
         
         types[num_selections] = (String) o[0];
-        icons[num_selections] = new ImageIcon(ImageReader.readImageFromPath((String) o[1]));
+        icons[num_selections] = new ImageIcon(UnitImage.getIcon(types[num_selections]));
         buttons[num_selections].setIcon(icons[num_selections]);
-        // invalid_icons[num_selections] = new ImageIcon(ImageReader.readImageFromPath((String) o[1]));
-        // valid_icons[num_selections] = new ImageIcon(ImageReader.readImageFromPath((String) o[2]));
-        // selected_icons[num_selections] = new ImageIcon(ImageReader.readImageFromPath((String) o[3]));
-        preview_images[num_selections] = ImageReader.readImageFromPath((String) o[2]);
+        preview_images[num_selections] = UnitImage.getPreview(types[num_selections]);
         num_selections++;
-        
-        System.out.println("[AllySelector] addSelection(): " + (String)o[0] + " " + (String)o[1] + " " + (String)o[2]);
-        
-        // else System.out.println("[AllySelector] addSelection(): Wrong type or wrong number of arguments.");
-        
+        System.out.println("[AllySelector] addSelection(): " + (String)o[0]);        
+    
     }
 
     @Override

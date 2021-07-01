@@ -51,6 +51,8 @@ public class GameView extends JFrame {
         this.canvas = canvases.get(canvas_name);
         this.setContentPane(this.canvas);
         this.canvas.setVisible(true);
+        if (canvas_name.equals("Level") && this.canvas instanceof LevelCanvas)
+            ((LevelCanvas) this.canvas).visibleCanvas();
     }
     
     /** 更新 gameview 當前畫布 */

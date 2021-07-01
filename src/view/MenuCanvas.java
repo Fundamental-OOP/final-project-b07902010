@@ -18,7 +18,7 @@ public class MenuCanvas extends Canvas {
     private LevelCanvas levelCanvas;
 
     public MenuCanvas(GameView view, LevelCanvas levelCanvas) {
-        super(view, "Menu", "../img/menu.png");
+        super(view, "Menu", "../img/menu/menu.png");
         this.levelCanvas = levelCanvas;
         this.setLayout(null);
         this.setOpaque(false);
@@ -38,10 +38,10 @@ public class MenuCanvas extends Canvas {
     }
 
     public void renderBackground(Graphics g) {
-        int window_width = 1440, window_height = 900;
-        int w = background.getWidth(null), h = background.getHeight(null);
-        int x = (window_width - w) / 2, y = (window_height - h) / 2 ;
-        g.drawImage(background, x, y, null);
+        // int window_width = 1440, window_height = 900;
+        // int w = background.getWidth(null), h = background.getHeight(null);
+        // int x = (window_width - w) / 2, y = (window_height - h) / 2 ;
+        g.drawImage(background, 360, 225, null);
     }
 
     public void popUp () {
@@ -63,7 +63,7 @@ class CancelButton extends CanvasButton {
     MenuCanvas menu_canvas;
     GameView view;
     public CancelButton (GameView view, MenuCanvas menu_canvas) {
-        super("../img/cancel.png", 600, 500);
+        super("../img/menu/x_button.png", 1032, 243);
         this.menu_canvas = menu_canvas;
     }
     public void actionPerformed(ActionEvent e) {
@@ -76,7 +76,7 @@ class RestartButton extends CanvasButton {
     GameView view;
 
     public RestartButton (GameView view, MenuCanvas menu_canvas) {
-        super("../img/restart.png", 300, 500);
+        super("../img/menu/restart_button.png", 471, 534);
         this.menu_canvas = menu_canvas;
         this.view = view;
 
@@ -91,7 +91,7 @@ class HomeButton extends CanvasButton {
     MenuCanvas menu_canvas;
     GameView view;
     public HomeButton (GameView view, MenuCanvas menu_canvas) {
-        super("../img/home.png", 600, 200);
+        super("../img/menu/home_button.png", 744, 534);
         this.menu_canvas = menu_canvas;
         this.view = view;
     }
