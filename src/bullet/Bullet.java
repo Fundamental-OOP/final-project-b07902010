@@ -14,13 +14,14 @@ public abstract class Bullet implements Renderee{
     protected LevelWorld levelWorld;
     protected ImageRenderer renderer;
 
-    public Bullet (int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld) {
+    public Bullet (String Name, int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld) {
         this.ATK = ATK;
         this.posX = posX;
         this.posY = posY;
         this.lane = lane;
         this.dx = dx;
         this.levelWorld = levelWorld;
+        renderer =  new ImageRenderer("../img/bullet/" + Name +"/sprite_0.png");
     }
 
     public void setLevelWorld(LevelWorld levelWorld) {

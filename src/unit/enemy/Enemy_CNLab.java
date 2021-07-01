@@ -6,9 +6,11 @@ import graphics.*;
 import model.*;
 
 public class Enemy_CNLab extends Enemy {
-    private static int deadDelay = 10;
+    private static int deaddelay = 5;
+    private static int atkCycle = 3;
+
     public Enemy_CNLab (int posX, int posY, int lane, LevelWorld levelWorld ) {
-        super("CNLab", 10, 1, posX, posY, lane, deadDelay, levelWorld, 20);
+        super("CNLab", 10, 1, posX, posY, lane, deaddelay, atkCycle, levelWorld, 20);
     }
 
 }

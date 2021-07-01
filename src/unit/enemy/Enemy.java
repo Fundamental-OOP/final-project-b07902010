@@ -9,12 +9,15 @@ import java.util.List;
 import model.*;
 
 public abstract class Enemy extends Unit {
-    int dx;
-
-    public Enemy (String Name, int HP, int ATK, int posX, int posY, int lane, int deadDelay, LevelWorld levelWorld, int dx) {
+    protected int dx;
+    protected int attackCycle;
+    protected int attackCycleCnt;
+    public Enemy (String Name, int HP, int ATK, int posX, int posY, int lane, int deadDelay, int attackCycle, LevelWorld levelWorld, int dx) {
         super(Name, "enemy", HP, ATK, posX, posY, lane, deadDelay, levelWorld);
         this.dx = dx;
         this.state = State.Walk;
+        this.attackCycle = attackCycle;
+        this.attackCycleCnt = 0;
     }
 
     public void update() {
@@ -35,18 +38,30 @@ public abstract class Enemy extends Unit {
                 }
                 break;
             case Attack:
-                boolean hasDamaged = false;
-                for (Ally ally : allies){
-                    if ( this.touch(ally) ) {
-                        this.damage(ally);
+                attackCycleCnt = (attackCycleCnt + 1) % attackCycle;
+                if(attackCycleCnt == 0){
+                    boolean hasDamaged = false;
+                    for (Ally ally : allies){
+                        if ( this.touch(ally) ) {
+                            this.damage(ally);
+                            hasDamaged = true;
+                        }
+                    }
+                    if (!hasDamaged && this.posX <= 367) {
+                        this.damageCastle();
                         hasDamaged = true;
                     }
+                    if(!hasDamaged){ state = State.Walk; }
                 }
-                if (!hasDamaged && this.posX <= 367) {
-                    this.damageCastle();
-                    hasDamaged = true;
+                else{
+                    boolean touched = false;
+                    for (Ally ally : allies){
+                        if(touched = this.touch(ally)){
+                            break;
+                        }
+                    }
+                    if(!touched){ state = State.Walk; }
                 }
-                if(!hasDamaged){ state = State.Walk; }
                 break;
             case Dead:
                 if (deadCountDown == deadDelay){

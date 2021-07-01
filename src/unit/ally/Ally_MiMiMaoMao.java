@@ -12,12 +12,13 @@ public class Ally_MiMiMaoMao extends Shooter {
     static private int cost = 100;
     static private int deaddelay = 20;
     static private int shootcycle = 10;
+    static private int bulletspeed = 10;
     public Ally_MiMiMaoMao (int posX, int posY, int lane, int column, LevelWorld levelWorld) {
         super("MiMiMaoMao", hp, atk, posX, posY, lane, column, deaddelay, levelWorld, cost, shootcycle); // TODO:寫死
     }
 
     public void shoot() {
-        Bullet bullet = new Bullet_MiMiMaoMao(posX, posY, lane, levelWorld);
+        Bullet bullet = new Bullet_MiMiMaoMao(ATK, posX, posY, bulletspeed, lane, levelWorld);
         this.levelWorld.addBullet(bullet);
     }
 

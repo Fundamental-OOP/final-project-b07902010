@@ -7,8 +7,8 @@ import model.*;
 import java.util.List;
 
 public abstract class Shooter extends Ally {
-    int shootCycle;
-    int shootCycleCnt;
+    private int shootCycle;
+    private int shootCycleCnt;
     public Shooter (String Name, int HP, int ATK, int posX, int posY, int lane, int column, int deadDelay, LevelWorld levelWorld, int cost, int shootCycle) {
         super(Name, HP, ATK, posX, posY, lane, column, deadDelay, levelWorld, cost);
         this.shootCycle = shootCycle;
@@ -18,12 +18,10 @@ public abstract class Shooter extends Ally {
     public void update() {
         if(this.HP <= 0){ state = State.Dead; }
         List<Enemy> enemies = this.levelWorld.getEnemies();
-        // int chk = 0;
         switch(state){
             case Idle:
+                shootCycleCnt = 0;
                 for (Enemy enemy : enemies){
-                    // chk++;
-                    // System.out.println("[Shooter] idle " + chk + ", " + enemy.getLane() + ", " + lane);
                     if ( this.aim(enemy) ) {
                         state = State.Attack;
                         break;
@@ -33,8 +31,6 @@ public abstract class Shooter extends Ally {
             case Attack:
                 boolean hasShot = false;
                 for (Enemy enemy : enemies){
-                    // chk++;
-                    // System.out.println("[Shooter] attack " + chk + ", " + enemy.getLane() + ", " + lane);
                     if ( this.aim(enemy) ) {
                         hasShot = true;
                         shootCycleCnt = (shootCycleCnt + 1) % shootCycle;
