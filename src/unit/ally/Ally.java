@@ -2,7 +2,7 @@ package unit.ally;
 
 import unit.State;
 import unit.Unit;
-
+import unit.enemy.Enemy;
 import model.*;
 
 public abstract class Ally extends Unit {

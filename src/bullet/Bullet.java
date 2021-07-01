@@ -3,7 +3,7 @@ package bullet;
 import unit.enemy.Enemy;
 import utils.UnitImage;
 import unit.Unit;
-
+import unit.ally.Shooter;
 import graphics.*;
 import model.*;
 import java.util.List;
@@ -14,14 +14,16 @@ public abstract class Bullet implements Renderee{
     protected int lane;
     protected LevelWorld levelWorld;
     protected ImageRenderer renderer;
+    protected Shooter shooter;
 
-    public Bullet (String Name, int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld) {
+    public Bullet (String Name, int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld, Shooter shooter) {
         this.ATK = ATK;
         this.posX = posX;
         this.posY = posY;
         this.lane = lane;
         this.dx = dx;
         this.levelWorld = levelWorld;
+        this.shooter = shooter;
         renderer =  new ImageRenderer(UnitImage.getBullet(Name));
     }
 
@@ -40,8 +42,10 @@ public abstract class Bullet implements Renderee{
         }
         if (hit)
             levelWorld.removeBullet(this); // 應該 remove 掉之後就不會 call renderer 了吧
-        else
+        else{
             posX += dx;
+            if(posX > 1440){ levelWorld.removeBullet(this); }
+        }
     }
 
     protected boolean touch( Unit u )  {  // TODO: set diff
@@ -52,8 +56,7 @@ public abstract class Bullet implements Renderee{
     }
 
     protected void damage(Enemy e) {
-        int newHP = e.getHP() - ATK;
-        e.setHP(Math.max(newHP, 0));
+        e.damaged(shooter, ATK);
     }
 
     public Renderer getRenderer() {

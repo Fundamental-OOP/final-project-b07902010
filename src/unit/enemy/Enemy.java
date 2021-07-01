@@ -68,7 +68,7 @@ public abstract class Enemy extends Unit {
                 boolean hasDamaged = false;
                 for (Ally ally : allies){
                     if ( this.touch(ally) ) {
-                        this.damage(ally);
+                        damage(ally);
                         hasDamaged = true;
                     }
                 }
@@ -95,8 +95,7 @@ public abstract class Enemy extends Unit {
     }
 
     protected void damage(Ally a) {
-        int newHP = a.getHP() - mutableATK;
-        a.setHP(Math.max(newHP, 0));
+        a.damaged(this, mutableATK);
     }
 
     protected void damageCastle() {
