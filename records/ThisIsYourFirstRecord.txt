@@ -1,0 +1,23 @@
+Available Ally:8
+MiMiMaoMao
+Pooper
+Saxophone
+Oppa
+RainbowCat
+Doge
+Chihuahua
+Pingu
+
+Chosen Ally:7
+MiMiMaoMao
+Pooper
+Saxophone
+Oppa
+RainbowCat
+Doge
+Pingu
+
+Level Progress:1
+Normal:3
+
+Current Battle Type:Normal

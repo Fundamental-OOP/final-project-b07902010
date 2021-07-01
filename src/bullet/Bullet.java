@@ -1,6 +1,7 @@
 package bullet;
 
 import unit.enemy.Enemy;
+import utils.UnitImage;
 import unit.Unit;
 
 import graphics.*;
@@ -12,15 +13,16 @@ public abstract class Bullet implements Renderee{
     protected int posX, posY, dx;
     protected int lane;
     protected LevelWorld levelWorld;
-    protected AnimationRenderer renderer;
+    protected ImageRenderer renderer;
 
-    public Bullet (int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld) {
+    public Bullet (String Name, int ATK, int posX, int posY, int dx, int lane, LevelWorld levelWorld) {
         this.ATK = ATK;
         this.posX = posX;
         this.posY = posY;
         this.lane = lane;
         this.dx = dx;
         this.levelWorld = levelWorld;
+        renderer =  new ImageRenderer(UnitImage.getBullet(Name));
     }
 
     public void setLevelWorld(LevelWorld levelWorld) {
@@ -42,11 +44,14 @@ public abstract class Bullet implements Renderee{
             posX += dx;
     }
 
-    private boolean touch( Unit u )  {  // TODO: set diff
-        return Math.abs(u.getPosX() - this.posX) < 10;
+    protected boolean touch( Unit u )  {  // TODO: set diff
+        if(u.getLane() == lane){
+            return Math.abs(u.getPosX() - this.posX) < 20;
+        }
+        return false;
     }
 
-    private void damage(Enemy e) {
+    protected void damage(Enemy e) {
         int newHP = e.getHP() - ATK;
         e.setHP(Math.max(newHP, 0));
     }

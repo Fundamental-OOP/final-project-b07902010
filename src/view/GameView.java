@@ -13,18 +13,13 @@ public class GameView extends JFrame {
     private HashMap<String, Canvas> canvases = new HashMap<String, Canvas>();
     public Canvas canvas;
     private Container container;
+    private boolean isPaused;
 
     int width = 1440, height = 900;
 
-    public GameView (int width, int height)  {
-        this.setSize(width, height);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
-        this.container = this.getContentPane();
-        this.container.setLayout(null);
-    }
-
     public GameView ()  {
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        //this.setUndecorated(true);
         this.setSize(width, height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -50,11 +45,14 @@ public class GameView extends JFrame {
         this.canvas = canvases.get(canvas_name);
         this.setContentPane(this.canvas);
         this.canvas.setVisible(true);
+        if (canvas_name.equals("Level") && this.canvas instanceof LevelCanvas)
+            ((LevelCanvas) this.canvas).visibleCanvas();
     }
     
     /** 更新 gameview 當前畫布 */
     public void update () {
-        this.canvas.renderNextFrame();
+        if (!isPaused)
+            this.canvas.renderNextFrame();
     }
     
     public World getWorld() {
@@ -65,16 +63,13 @@ public class GameView extends JFrame {
     public Canvas getCanvas() {
         return this.canvas;
     }
+
+    public void pause() {
+        this.isPaused = true;
+    }
+
+    public void antiUnAnDeImPause() {
+        this.isPaused = false;
+    }
+
 }
-
-
-
-
-// class Background implements Renderee {
-    
-//     ImageRenderer renderer = new ImageRenderer("./img/background.png");
-    
-//     public Renderer getRenderer() {
-//         return renderer;
-//     }
-// }

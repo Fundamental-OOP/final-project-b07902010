@@ -12,6 +12,8 @@ public abstract class World {
     protected String myWorldType;
     private int updateInterval = 3;
     private int updateCnt;
+    protected boolean running;
+    protected boolean pause;
     // protected Selector selector;
 
     // protected Background background;
@@ -20,6 +22,8 @@ public abstract class World {
         nextWorldType = "None";
         this.myWorldType = myWorldType;
         updateCnt = 0;
+        running = true;
+        pause = false;
     }
     public boolean updateCount(){
         if(++updateCnt == updateInterval){
@@ -30,9 +34,6 @@ public abstract class World {
         }
     }
     public abstract boolean update();
-    // public setBackground(Background background){
-    //     this.background = background;
-    // }
     public void addRenderee(Renderee r) {
         renderees.add(r);
     }
@@ -46,11 +47,26 @@ public abstract class World {
         updateCnt = 0;
         reset();
     }
-    public abstract void reset();
+    public void reset(){
+        running = true;
+    }
     public String getNextWorldType(){
         return nextWorldType;
     }
     public String getMyWorldType(){
         return myWorldType;
+    }
+    /**
+     * goto next world
+     */
+    public void setNextWorld(String nextWorld){
+        this.nextWorldType = nextWorld;
+        running = false;
+    }
+    public void pause(){
+        pause = true;
+    }
+    public void antiUnAnDeImPause(){
+        pause = false;
     }
 }

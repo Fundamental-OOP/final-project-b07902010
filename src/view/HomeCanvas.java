@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 
+import graphics.AnimationRenderer;
 import model.HomeWorld;
 
 import java.awt.*;
@@ -11,18 +12,16 @@ import java.awt.event.*;
 
 public class HomeCanvas extends Canvas {
 
-    private int w = background.getWidth(null), h = background.getHeight(null);
-    private StartButton button;
-    private boolean pop_up = true;
     private HomeWorld world;
 
+    private AnimationRenderer renderer = new AnimationRenderer("../img/home/background", "background");
+
     public HomeCanvas(GameView view, HomeWorld world) {
-        super(view, "Home", "../img/main.png");
+        super(view, "Home", "../img/home/background/background_00.png");
         this.world = world;
-        this.setLayout(null);
-        this.setBounds(0, 0, w, h);
-        button = new StartButton(this, world);
-        this.add(button);
+        this.add(new StartButton(this, world));
+        this.add(new ExitButton(world));
+        this.add(new LevelSelectionButton(view, world));
         this.setVisible(true);
     }
 
@@ -31,51 +30,63 @@ public class HomeCanvas extends Canvas {
     }
 
     public void renderNextFrame () {
-        while (pop_up)
-           repaint();  /** calliing paintComponent() */
+        repaint(); 
     }
 
     public void renderBackground(Graphics g) {
-        g.drawImage(background, 0, 0, null);
-    }
-
-    public void popUp () {
-        pop_up = true;
-        this.setVisible(true);
-    }
-
-    public void setInvisible () {
-        pop_up = false;
-        this.setVisible(false);
-        
-    }
-
-    public boolean isPopUp() {
-        return pop_up;
-    }
+        this.renderer.render(g);
+    } 
 
 }
 
 
-class StartButton extends JButton implements ActionListener {
-    private Image icon_image = ImageReader.readImageFromPath("../img/start.png");
+class StartButton extends CanvasButton {
+
     private HomeCanvas home_canvas;
     private HomeWorld home_world;
-    private boolean selected = false;
 
     public StartButton (HomeCanvas home_canvas, HomeWorld home_world) {
-        this.addActionListener(this);
+        super("../img/../img/home/start_button.png", 438, 606);
         this.home_canvas = home_canvas;
         this.home_world = home_world;
-        this.setIcon(new ImageIcon(icon_image));
-        this.setBounds(700, 600, 300, 100);
-        this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
         System.out.println("start:)");
-        this.home_canvas.setInvisible();
+        this.home_canvas.setVisible(false);
         this.home_world.setNextWorld("Level");
+    }
+}
+
+
+class ExitButton extends CanvasButton {
+
+    HomeWorld homeWorld;
+    public ExitButton (HomeWorld homeWorld) {
+        super("../img/home/quit_button.png", 897, 612);
+        this.homeWorld = homeWorld;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.homeWorld.setNextWorld("None");
+    }
+
+}
+
+class LevelSelectionButton extends CanvasButton {
+
+    GameView view;
+    HomeWorld homeWorld;
+    public LevelSelectionButton (GameView view, HomeWorld homeWorld) {
+        super("../img/home/select_level_button.png", 666, 609);
+        this.view = view;
+        this.homeWorld = homeWorld;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.homeWorld.setNextWorld("Level Selection");
     }
 
 }

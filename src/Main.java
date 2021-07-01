@@ -4,20 +4,34 @@ import controller.GameFlow;
 import level.LevelConstructor;
 import model.LevelWorld;
 import model.HomeWorld;
+import model.LevelSelectionWorld;
 import model.World;
 import view.*;
-// import record.RecordIO;
+import record.Record;
+import utils.UnitImage;
+import version.GameVersion;
 
 public class Main {
     public static void main(String[] args) {
+
+        UnitImage unitImage = new UnitImage();
+
         BattleType[] battleTypes = {
             new NormalBattleType()
         };
-        
-        // RecordIO recordIO = new RecordIO(battleTypes);
+        if(!GameVersion.loadVersion(battleTypes, "test")) {
+            System.out.println("[Main] Error when loading version.");
+            return;
+        }
+        if(!Record.loadLastRecord()){
+            System.out.println("[Main] No last record, start a new one.");
+            return;
+        }
+
         World[] worlds = {
             new LevelWorld(new LevelConstructor(battleTypes)),
-            new HomeWorld()
+            new HomeWorld(),
+            new LevelSelectionWorld()
         };
         
         // initialize gameview
@@ -26,7 +40,8 @@ public class Main {
         // initialize canvas
         Canvas[] canvases = {
             new HomeCanvas(view,  (HomeWorld)worlds[1]),
-            new LevelCanvas(view, (LevelWorld)worlds[0])
+            new LevelCanvas(view, (LevelWorld)worlds[0]),
+            new LevelSelectionCanvas(view, (LevelSelectionWorld)worlds[2])
         };
 
         for (Canvas canvas : canvases)
@@ -34,6 +49,7 @@ public class Main {
 
         GameFlow gameFlow = new GameFlow(worlds, view);
         gameFlow.launchGame();
+        view.dispose();
     }   
 
 }
