@@ -19,6 +19,6 @@ Chihuahua
 Pingu
 
 Level Progress:1
-Normal:2
+Normal:3
 
 Current Battle Type:Normal
