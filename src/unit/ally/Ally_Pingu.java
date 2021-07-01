@@ -10,9 +10,9 @@ public class Ally_Pingu extends Warrior{
     private static int hp = 100;
     private static int atk = 5;
     private static int cost = 200;
-    private static int deaddelay = UnitImage.getUnitAnimation("Pingu", "Dead").size();
+    private static int deaddelay = UnitImage.getUnitAnimation("Pingu", "dead").size();
     private static int attackcycle = 50;
-    private static int atkDelay = UnitImage.getUnitAnimation("Pingu", "Attack").size();
+    private static int atkDelay = UnitImage.getUnitAnimation("Pingu", "attack").size();
     public Ally_Pingu(int posX, int posY, int lane, int column, LevelWorld levelWorld){
         super("Pingu", hp, atk, posX, posY, lane, column, deaddelay, attackcycle, atkDelay, levelWorld, cost);
     }

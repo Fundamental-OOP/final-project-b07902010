@@ -6,7 +6,7 @@ import model.*;
 public class Ally_Pooper extends Ally {
     private static int hp = 50;
     private static int atk = 0;
-    private static int deaddelay = UnitImage.getUnitAnimation("Pooper", "Dead").size();
+    private static int deaddelay = UnitImage.getUnitAnimation("Pooper", "dead").size();
     private static int cost = 50;
     private static int poopCycle = 100;
     private static int poopAmount = 25;

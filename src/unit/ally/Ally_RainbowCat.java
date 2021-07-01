@@ -9,10 +9,10 @@ public class Ally_RainbowCat extends Shooter{
     static private int hp = 100;
     static private int atk = 10;
     static private int cost = 325;
-    static private int deaddelay =  UnitImage.getUnitAnimation("RainbowCat", "Dead").size();
+    static private int deaddelay =  UnitImage.getUnitAnimation("RainbowCat", "dead").size();
     static private int attackcycle = 10;
     static private int bulletSpeed = 50;
-    private static int atkDelay = UnitImage.getUnitAnimation("RainbowCat", "Attack").size();
+    private static int atkDelay = UnitImage.getUnitAnimation("RainbowCat", "attack").size();
     public Ally_RainbowCat(int posX, int posY, int lane, int column, LevelWorld levelWorld){
         super("RainbowCat", hp, atk, posX, posY, lane, column, deaddelay, attackcycle, atkDelay, levelWorld, cost);
         

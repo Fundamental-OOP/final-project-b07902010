@@ -39,7 +39,7 @@ public class UnitImage {
         }
         /** read icons image */
         for (String ally: allies) {
-            image_path = path + "/ally/" + ally + "/icon.png";
+            image_path = path + "/level/icon/icon_" + ally + ".png";
             icons.put(ally, ImageReader.readImageFromPath(image_path));   
         }
 

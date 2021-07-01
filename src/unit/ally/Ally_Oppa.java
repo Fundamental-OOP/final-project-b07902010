@@ -9,7 +9,7 @@ import utils.UnitImage;
 public class Ally_Oppa extends Bomb{
     static private int hp = 10;
     static private int atk = 999;
-    private static int deaddelay = UnitImage.getUnitAnimation("Oppa", "Dead").size();
+    private static int deaddelay = UnitImage.getUnitAnimation("Oppa", "dead").size();
     private static int cost = 150;
     private static int explosiondelay = deaddelay ;
     public Ally_Oppa(int posX, int posY, int lane, int column, LevelWorld levelWorld){

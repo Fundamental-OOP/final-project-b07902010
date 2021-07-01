@@ -9,10 +9,10 @@ public class Ally_Chihuahua extends Shooter{
     static private int hp = 80;
     static private int atk = 3;
     static private int cost = 225;
-    static private int deaddelay = UnitImage.getUnitAnimation("Chihuahua", "Dead").size();
+    static private int deaddelay = UnitImage.getUnitAnimation("Chihuahua", "dead").size();
     static private int attackcycle = 5;
     static private  int bulletSpeed = 5;
-    private static int atkDelay = UnitImage.getUnitAnimation("Saxophone", "Attack").size();
+    private static int atkDelay = UnitImage.getUnitAnimation("Saxophone", "attack").size();
     private static double deBuff = 0.8;
     private static int deBuffDuration = 100;
     public Ally_Chihuahua(int posX, int posY, int lane, int column, LevelWorld levelWorld){

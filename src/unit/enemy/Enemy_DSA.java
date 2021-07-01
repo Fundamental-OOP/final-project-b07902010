@@ -7,9 +7,9 @@ import model.*;
 public class Enemy_DSA extends Enemy {
     private static int moveCycle = 100;
     private int moveCycleCnt;
-    private static int deaddelay = UnitImage.getUnitAnimation("DSA", "Dead").size();;
+    private static int deaddelay = UnitImage.getUnitAnimation("DSA", "dead").size();;
     private static int atkCycle = 20;
-    private static int atkDelay = UnitImage.getUnitAnimation("DSA", "Attack").size();
+    private static int atkDelay = UnitImage.getUnitAnimation("DSA", "attack").size();
     public Enemy_DSA (int posX, int posY, int lane, LevelWorld levelWorld ) {
         super("DSA", 80, 20, posX, posY, lane, deaddelay, atkCycle, atkDelay, levelWorld, 5);
     }

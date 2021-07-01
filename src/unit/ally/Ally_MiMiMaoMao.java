@@ -10,10 +10,10 @@ public class Ally_MiMiMaoMao extends Shooter {
     static private int hp = 100;
     static private int atk = 100;
     static private int cost = 100;
-    static private int deaddelay = UnitImage.getUnitAnimation("MiMiMaoMao", "Dead").size();
+    static private int deaddelay = UnitImage.getUnitAnimation("MiMiMaoMao", "dead").size();
     static private int attackcycle = 10;
     static private int bulletSpeed = 50;
-    private static int atkDelay = UnitImage.getUnitAnimation("MiMiMaoMao", "Attack").size();
+    private static int atkDelay = UnitImage.getUnitAnimation("MiMiMaoMao", "attack").size();
     public Ally_MiMiMaoMao (int posX, int posY, int lane, int column, LevelWorld levelWorld) {
         super("MiMiMaoMao", hp, atk, posX, posY, lane, column, deaddelay, attackcycle, atkDelay, levelWorld, cost);
     }
