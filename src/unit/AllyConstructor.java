@@ -32,7 +32,7 @@ public class AllyConstructor {
             case "Doge":
                 newAlly = new Ally_Doge(posX, posY, lane, column, world);
                 break;
-            case "Chihwahwa":
+            case "Chihuahua":
                 newAlly = new Ally_Chihuahua(posX, posY, lane, column, world);
                 break;
             case "Pingu":
@@ -64,7 +64,7 @@ public class AllyConstructor {
             case "Doge":
                 cost = Ally_Doge.getCost();
                 break;
-            case "Chihwahwa":
+            case "Chihuahua":
                 cost = Ally_Chihuahua.getCost();
                 break;
             case "Pingu":

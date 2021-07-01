@@ -15,6 +15,7 @@ public abstract class Shooter extends Ally {
         super.update();
         if(this.HP <= 0){ state = State.Dead; }
         List<Enemy> enemies = this.levelWorld.getEnemies();
+        boolean target = false;
         switch(state){
             case Idle:
                 attackCycleCnt = 0;
@@ -27,13 +28,18 @@ public abstract class Shooter extends Ally {
                 }
                 break;
             case WaitForAttack:
+                target = false;
                 for (Enemy enemy : enemies){
                     if ( this.aim(enemy) ) {
-                        attackCycleCnt = (attackCycleCnt + 1) % mutableAttackCycle;
-                        if(attackCycleCnt == 0){ state = State.Attack; }
+                        target = true;
                         break;
                     }
                 }
+                if(target){
+                    attackCycleCnt = (attackCycleCnt + 1) % mutableAttackCycle;
+                    if(attackCycleCnt == 0){ state = State.Attack; }
+                }
+                else{ state = State.Idle; }
                 break;
             case Attack:
                 if(--attackCountDown > 0){ break; }

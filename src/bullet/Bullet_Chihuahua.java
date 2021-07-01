@@ -8,7 +8,7 @@ public class Bullet_Chihuahua extends Bullet{
     private static int maxDist = 200;
     private int dist;
     public Bullet_Chihuahua(int ATK, int posX, int posY, int lane,  int speed, LevelWorld levelWorld) {
-        super("Chihwahwa", ATK, posX, posY, speed, lane, levelWorld);    // 寫死
+        super("Chihuahua", ATK, posX, posY, speed, lane, levelWorld);    // 寫死
         dist = 0;
     }
     @Override

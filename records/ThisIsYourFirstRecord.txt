@@ -8,16 +8,17 @@ Doge
 Chihuahua
 Pingu
 
-Chosen Ally:7
+Chosen Ally:8
 MiMiMaoMao
 Pooper
 Saxophone
 Oppa
 RainbowCat
 Doge
+Chihuahua
 Pingu
 
 Level Progress:1
-Normal:3
+Normal:2
 
 Current Battle Type:Normal

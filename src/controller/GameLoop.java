@@ -25,11 +25,9 @@ public class GameLoop {
     private void gameLoop() {
         running = true;
         while (running) {
-            // World world = getWorld();
-            // view.setWorld(world);
             running = world.update();
             view.update();
-            delay(100);
+            delay(80);
         }
         System.out.println("stopped");
     }
@@ -50,20 +48,3 @@ public class GameLoop {
         }
     }
 }
-
-
-//     public void moveKnight(int playerNumber, Direction direction) {
-//         getPlayer(playerNumber).move(direction);
-//     }
-
-//     public void stopKnight(int playerNumber, Direction direction) {
-//         getPlayer(playerNumber).stop(direction);
-//     }
-
-//     public void attack(int playerNumber) {
-//         getPlayer(playerNumber).attack();
-//     }
-
-//     public Knight getPlayer(int playerNumber) {
-//         return playerNumber == 1 ? p1 : p2;
-//     }

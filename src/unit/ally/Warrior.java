@@ -16,9 +16,9 @@ public abstract class Warrior extends Ally{
         super.update();
         if(this.HP <= 0){ state = State.Dead; }
         List<Enemy> enemies = this.levelWorld.getEnemies();
+        boolean target = false;
         switch(state){
             case Idle:
-                attackCycleCnt = 0;
                 for (Enemy enemy : enemies){
                     if ( canSee(enemy) ) {
                         state = State.WaitForAttack;
@@ -28,14 +28,18 @@ public abstract class Warrior extends Ally{
                 }
                 break;
             case WaitForAttack:
+                target = false;
                 for (Enemy enemy : enemies){
                     if ( canSee(enemy) ) {
-                        attackCycleCnt = (attackCycleCnt + 1) % mutableAttackCycle;
-                        if(attackCycleCnt == 0){ state = State.Attack; }
+                        target = true;
                         break;
                     }
                 }
-                state = State.Idle;
+                if(target){
+                    attackCycleCnt = (attackCycleCnt + 1) % mutableAttackCycle;
+                    if(attackCycleCnt == 0){ state = State.Attack; }
+                }
+                else{ state = State.Idle; }
                 break;
             case Attack:
                 if(--attackCountDown > 0){ break; }

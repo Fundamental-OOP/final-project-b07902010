@@ -6,8 +6,8 @@ import model.LevelWorld;
 import unit.enemy.Enemy;
 
 public class Ally_Pingu extends Warrior{
-    private static int hp;
-    private static int atk;
+    private static int hp = 100;
+    private static int atk = 50;
     private static int cost = 100;
     private static int deaddelay = 10;
     private static int attackcycle = 10;
@@ -20,14 +20,15 @@ public class Ally_Pingu extends Warrior{
         for(Enemy enemy : enemies){
             if(canSee(enemy)){
                 enemy.setHP(enemy.getHP() - mutableATK);
+                enemy.setPosX(enemy.getPosX() + 3);
                 break;
             }
         }
     }
     @Override
     protected boolean canSee(Enemy e) {
-        if(e.getLane() == lane && e.getPosX() - posX >= -20 && e.getPosX() - posX <= 240){
-            return false;
+        if(e.getLane() == lane && e.getPosX() - posX >= -50 && e.getPosX() - posX <= 150){
+            return true;
         }
         return false;
     }

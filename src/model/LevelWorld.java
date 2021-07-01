@@ -134,7 +134,6 @@ public class LevelWorld extends World{
     public void reallyKillAlly(Ally theRealVictim){
         dyingAllies.remove(theRealVictim);
         grid[theRealVictim.getLane()][theRealVictim.getColumn()] = false;
-        // removeRenderee((Renderee)theRealVictim);
         theRealVictim.setLevelWorld(null);
     }
     public void addBullet(Bullet bullet){
@@ -147,7 +146,6 @@ public class LevelWorld extends World{
         Enemy freshman = enemyConstructor.constructEnemy(enemyType, lane);
         enemies.add(freshman);
         freshman.setLevelWorld(this);
-        // addRenderee((Renderee)freshman);
     }
     public void moveEnemyToGraveYard(Enemy victim){
         enemies.remove(victim);
@@ -155,8 +153,7 @@ public class LevelWorld extends World{
     }
     public void reallyKillEnemy(Enemy theRealVictim){
         dyingEnemies.remove(theRealVictim);
-        // removeRenderee((Renderee)theRealVictim);
-        // theRealVictim.setLevelWorld(null);
+        theRealVictim.setLevelWorld(null);
     }
 
 

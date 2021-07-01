@@ -1,5 +1,10 @@
-3
-Normal
-FOOP, 100, 1
-FOOP, 100, 2
-FOOP, 200, 3
+DSAJumping
+Normal:8
+FOOP, 100, 0
+FOOP, 200, 1
+FOOP, 300, 2
+FOOP, 400, 3
+FOOP, 500, 4
+DSA, 600, 2
+DSA, 700, 2
+DSA, 800, 2
