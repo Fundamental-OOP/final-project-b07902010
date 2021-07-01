@@ -1,0 +1,11 @@
+FirstADA
+Normal:9
+FOOP, 300, 2
+DSA, 350, 1
+DSA, 350, 3
+FOOP, 700, 2
+CNLab, 800, 2
+FOOP, 900, 4
+CNLab, 900, 2
+FOOP, 900, 1
+ADA, 1100, 2

@@ -1,6 +1,6 @@
 AllFOOP
 Normal:7
-FOOP, 100, 1
+FOOP, 300, 1
 FOOP, 500, 3
 FOOP, 500, 2
 FOOP, 700, 4
