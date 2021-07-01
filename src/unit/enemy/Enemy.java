@@ -11,50 +11,57 @@ import model.*;
 public abstract class Enemy extends Unit {
     int dx;
 
-    public Enemy (int HP, int ATK, int posX, int posY, int lane, LevelWorld levelWorld, int dx) {
-        super(HP, ATK, posX, posY, lane, levelWorld);
+    public Enemy (String Name, int HP, int ATK, int posX, int posY, int lane, int deadDelay, LevelWorld levelWorld, int dx) {
+        super(Name, "enemy", HP, ATK, posX, posY, lane, deadDelay, levelWorld);
         this.dx = dx;
         this.state = State.Walk;
     }
 
     public void update() {
-        // dead
-        if (this.HP <= 0 ) {
-            this.setState(State.Dead);
-            if (deadCycle == 0)
-                levelWorld.moveEnemyToGraveYard(this);
-            deadCycle++;
-            if (deadCycle >= 5) {
-                levelWorld.reallyKillEnemy(this);
-            }
-            return;
-        }
-
-        // attack
-        // attack ally
+        if(HP <= 0){ state = State.Dead; }
         List<Ally> allies = this.levelWorld.getAllies();
-        boolean hasDamage = false;
-        for (Ally ally : allies){
-            if ( this.touch(ally) ) {
-                this.damage(ally);
-                hasDamage = true;
-            }
-        }
-        // attack castle
-        if (!hasDamage && this.posX <= 300) {
-            this.damageCastle();
-            hasDamage = true;
-        }
-        if (hasDamage) {
-            this.setState(State.Attack);
-            return;
-        }
+        switch(state){
+            case Walk:
+                posX -= dx;
+                if(posX < 367){
+                    posX = 367;
+                    state = State.Attack;
+                }
+                for (Ally ally : allies){
+                    if ( this.touch(ally) ) {
+                        state = State.Attack;
+                        break;
+                    }
+                }
+                break;
+            case Attack:
+                boolean hasDamaged = false;
+                for (Ally ally : allies){
+                    if ( this.touch(ally) ) {
+                        this.damage(ally);
+                        hasDamaged = true;
+                    }
+                }
+                if (!hasDamaged && this.posX <= 367) {
+                    this.damageCastle();
+                    hasDamaged = true;
+                }
+                if(!hasDamaged){ state = State.Walk; }
+                break;
+            case Dead:
+                if (deadCountDown == deadDelay){
+                    levelWorld.moveEnemyToGraveYard(this);
+                    deadCountDown--;
+                }
+                else if (deadCountDown <= 0) {
+                    levelWorld.reallyKillEnemy(this);
+                }
+                else{
+                    deadCountDown--;
+                }
+                break;
+            default:
 
-        // walk
-        else {
-            this.posX -= dx;
-            this.setState(State.Walk);
-            return;
         }
     }
 

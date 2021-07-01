@@ -43,47 +43,35 @@ public class LevelWorld extends World{
         super("Level");
         this.nextWorldType = "Home";
         this.levelConstructor = levelConstructor;
-        
         levelConstructor.setWorld(this);
     }
-
     @Override
     public boolean update() {
         if(pause){ return true; }
         level.update();
         renderees.clear();
-        
-        for (Ally ally : allies) {
-            addRenderee((Renderee) ally);
-            ally.update();
-        }
-        for(Ally dyingAlly : dyingAllies){
-            addRenderee((Renderee) dyingAlly);
-            dyingAlly.update();
-        }
-        for(Enemy enemy : enemies){
-            
-            addRenderee((Renderee) enemy);
-            enemy.update();
-        }
-        for(Enemy dyingEnemy : dyingEnemies){
-            addRenderee((Renderee) dyingEnemy);
-            dyingEnemy.update();
-        }
-        for(Bullet bullet : bullets){
-            addRenderee((Renderee) bullet);
-            bullet.update();
-        }
+        // ally
+        for (Ally ally : allies) { ally.update(); }
+        for (Ally ally : allies) { addRenderee((Renderee) ally); }
+        // dying ally
+        for(Ally dyingAlly : dyingAllies){ dyingAlly.update(); }
+        for(Ally dyingAlly : dyingAllies){ addRenderee((Renderee) dyingAlly); }
+        // enemy
+        for(Enemy enemy : enemies){ enemy.update(); }
+        for(Enemy enemy : enemies){ addRenderee((Renderee) enemy); }
+        // dying enemy
+        for(Enemy dyingEnemy : dyingEnemies){ dyingEnemy.update(); }
+        for(Enemy dyingEnemy : dyingEnemies){ addRenderee((Renderee) dyingEnemy); }
+        //bullet
+        for(Bullet bullet : bullets){ bullet.update(); }
+        for(Bullet bullet : bullets){ addRenderee((Renderee) bullet); }
         poopPurse.update();
         selector.update();
-        // renderees.addAll( (List<Renderee>) allies );
-        // renderees.addAll( (List<Renderee>) dyingAlly );
-        // renderees.addAll( (List<Renderee>) allies );
         checkGameOver();
         return running;
     }
-
     public void reset(){   // be called when this world is the next one to run
+        running = true;
         pause = false;
         allies.clear();
         enemies.clear();
@@ -106,7 +94,7 @@ public class LevelWorld extends World{
     public void setLevel(Level level){
         this.level = level;
         castle = new Castle();
-        poopPurse = new Poop(100, 10, 100);
+        poopPurse = new Poop(100, 100, 25);
         setUpSelector();
         // background = level.getBackground();
     }
@@ -125,10 +113,14 @@ public class LevelWorld extends World{
     // adjust units
     public void addAlly(String allyType, int lane, int column){
         if(grid[lane][column]){ return; }
-        Ally freshman = allyConstructor.constructAlly(allyType, lane, column);
-        allies.add(freshman);
-        freshman.setLevelWorld(this);
-        grid[lane][column] = true;
+        int cost = AllyConstructor.getNeededPoop(allyType);
+        if(poopPurse.enough(cost)){
+            Ally freshman = allyConstructor.constructAlly(allyType, lane, column);
+            allies.add(freshman);
+            freshman.setLevelWorld(this);
+            poopPurse.Use(cost);
+            grid[lane][column] = true;
+        }
         // addRenderee((Renderee)freshman);
     }
     public void moveAllyToGraveYard(Ally victim){
@@ -140,7 +132,6 @@ public class LevelWorld extends World{
         grid[theRealVictim.getLane()][theRealVictim.getColumn()] = false;
         // removeRenderee((Renderee)theRealVictim);
         theRealVictim.setLevelWorld(null);
-        grid[theRealVictim.getLane()][theRealVictim.getColumn()] = false;
     }
     public void addBullet(Bullet bullet){
         bullets.add(bullet);
@@ -185,7 +176,7 @@ public class LevelWorld extends World{
         return poopPurse;
     }
 
-    private BattleStatus checkBattleStatus(){
+    public BattleStatus checkBattleStatus(){
         return level.checkBattleStatus();
     }
     private boolean checkGameOver(){     // return running or not
@@ -207,7 +198,6 @@ public class LevelWorld extends World{
         
         return false;
     }
-
     private void win(){
         running = false;
     }

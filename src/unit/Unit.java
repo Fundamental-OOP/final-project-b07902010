@@ -9,17 +9,25 @@ public abstract class Unit implements Renderee {
     protected int lane;
     protected  LevelWorld levelWorld;
     protected State state;
-    protected int deadCycle = 0;
+    protected int deadDelay;
+    protected int deadCountDown;
 
     protected AnimationRenderer walkRenderer, idleRenderer, attackRenderer, beAttackedRenderer, deadRenderer;
 
-    public Unit(int HP, int ATK, int posX, int posY, int lane, LevelWorld levelWorld) {
+    public Unit(String name, String type, int HP, int ATK, int posX, int posY, int lane, int deadDelay, LevelWorld levelWorld) {
         this.HP = HP;
         this.ATK = ATK;
         this.posX = posX;
         this.posY = posY;
         this.lane = lane;
         this.levelWorld = levelWorld;
+        this.deadDelay = deadDelay;
+        this.deadCountDown = deadDelay;
+        this.walkRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/walk", "walk");
+        this.idleRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/idle", "idle");
+        this.attackRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/attack", "attack");
+        this.beAttackedRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/beAttack", "beAttack");
+        this.deadRenderer = new AnimationRenderer("../img/" + type + "/" + name + "/dead", "dead");
     }
 
     public int getHP() {

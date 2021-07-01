@@ -9,8 +9,8 @@ public abstract class Ally extends Unit {
     protected int cost;
     int column;
 
-    public Ally (int HP, int ATK, int posX, int posY, int lane, int column, LevelWorld levelWorld, int cost) {
-        super(HP, ATK, posX, posY, lane, levelWorld);
+    public Ally (String Name, int HP, int ATK, int posX, int posY, int lane, int column, int deadDelay, LevelWorld levelWorld, int cost) {
+        super(Name, "ally", HP, ATK, posX, posY, lane, deadDelay, levelWorld);
         this.cost = cost;
         this.state = State.Idle;
         this.column = column;

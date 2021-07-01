@@ -6,39 +6,60 @@ import graphics.*;
 
 
 public class Ally_Pooper extends Ally {
-    int poopCycle = 10;
-    int poopAmount = 25;
-    int nowCycle = 0;
-    private static int cost;
+    private static int hp = 100;
+    private static int atk = 0;
+    private static int deaddelay = 5;
+    private static int cost = 50;
+    private static int poopCycle = 100;
+    private static int poopAmount = 25;
+    private int poopCycleCnt = 0;
     public Ally_Pooper(int posX, int posY, int lane, int column, LevelWorld levelWorld) {
-        super(100, 0, posX, posY, lane, column, levelWorld, 100);
-        this.walkRenderer = new AnimationRenderer("../img/ally/Pooper", "walk");
-        this.idleRenderer = new AnimationRenderer("../img/ally/Pooper", "idle");
-        this.attackRenderer = new AnimationRenderer("../img/ally/Pooper", "attack");
-        this.beAttackedRenderer = new AnimationRenderer("../img/ally/Pooper", "beAttack");
-        this.deadRenderer = new AnimationRenderer("../img/ally/Pooper", "dead");
-        cost = 100;
+        super("Pooper", hp, atk, posX, posY, lane, column, deaddelay, levelWorld, cost);
     }
 
     public void update() {
-        // dead
-        if (this.HP <= 0 ) {
-            this.setState(State.Dead);
-            if (deadCycle == 0)
-                levelWorld.moveAllyToGraveYard(this);
-            deadCycle++;
-            if (deadCycle >= 5) {
-                levelWorld.reallyKillAlly(this);
-            }
-            return;
+        if(HP <= 0){ state = State.Dead; }
+        switch(state){
+            case Idle:
+                poopCycleCnt = (poopCycleCnt+1) % poopCycle;
+                if (poopCycleCnt == 0) {
+                    levelWorld.getPoop().pickUp(poopAmount);
+                }
+                break;
+            case Dead:
+                if (deadCountDown == deadDelay){
+                    levelWorld.moveAllyToGraveYard(this);
+                    deadCountDown--;
+                }
+                else if (deadCountDown <= 0) {
+                    levelWorld.reallyKillAlly(this);
+                }
+                else{
+                    deadCountDown--;
+                }
+                break;
+            default:
+                state = State.Idle;
+                break;
         }
+        // // dead
+        // if (this.HP <= 0 ) {
+        //     this.setState(State.Dead);
+        //     if (deadCountDown == deadDelay)
+        //         levelWorld.moveAllyToGraveYard(this);
+        //     deadCountDown--;
+        //     if (deadCountDown <= 0) {
+        //         levelWorld.reallyKillAlly(this);
+        //     }
+        //     return;
+        // }
 
-        // idle
-        nowCycle = (nowCycle+1) % poopCycle;
-        if (nowCycle == 0) {
-            this.setState(State.Idle);
-            levelWorld.getPoop().pickUp(poopAmount);
-        }
+        // // idle
+        // nowCycle = (nowCycle+1) % poopCycle;
+        // if (nowCycle == 0) {
+        //     this.setState(State.Idle);
+        //     levelWorld.getPoop().pickUp(poopAmount);
+        // }
     }
     public static int getCost(){ return Ally_Pooper.cost; }
 }

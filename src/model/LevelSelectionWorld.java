@@ -50,5 +50,8 @@ public class LevelSelectionWorld extends World{
             levelSelector.addSelection(levelName);
         }
     }
+    public LevelSelector getSelector(){
+        return levelSelector;
+    }
     
 }

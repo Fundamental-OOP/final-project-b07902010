@@ -1,14 +1,20 @@
 Available Ally
-1
+4
 MiMiMaoMao
+Pooper
+Saxophone
+Oppa
 
 Chosen Ally
-1
+4
 MiMiMaoMao
+Pooper
+Saxophone
+Oppa
 
 Level Progress
 1
-Normal:3
+Normal:1
 
 Current Battle Type
 Normal

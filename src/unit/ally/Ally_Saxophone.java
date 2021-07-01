@@ -3,15 +3,11 @@ import model.*;
 import graphics.*;
 
 public class Ally_Saxophone extends Tank {
-    static private int cost;
+    static private int hp = 300;
+    static private int cost = 100;
+    static private int deaddelay = 20;
     public Ally_Saxophone(int posX, int posY, int lane, int column, LevelWorld levelWorld) {
-        super(300, posX, posY, lane, column, levelWorld, 50);
-        this.walkRenderer = new AnimationRenderer("../img/ally/Saxophone", "walk");
-        this.idleRenderer = new AnimationRenderer("../img/ally/Saxophone", "idle");
-        this.attackRenderer = new AnimationRenderer("../img/ally/Saxophone", "attack");
-        this.beAttackedRenderer = new AnimationRenderer("../img/ally/Saxophone", "beAttack");
-        this.deadRenderer = new AnimationRenderer("../img/ally/Saxophone", "dead");
-        cost = 50;
+        super("Saxophone", hp, posX, posY, lane, column, deaddelay, levelWorld, cost);
     }
     public static int getCost(){ return Ally_Saxophone.cost; }
 
