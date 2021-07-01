@@ -7,15 +7,20 @@ import model.*;
 import java.util.List;
 
 public abstract class Shooter extends Ally {
-    private int shootCycle;
+    private final int shootCycle;
     private int shootCycleCnt;
+    protected int mutableShootCycle;
+    protected int shootCycleRecoverTime;
     public Shooter (String Name, int HP, int ATK, int posX, int posY, int lane, int column, int deadDelay, LevelWorld levelWorld, int cost, int shootCycle) {
         super(Name, HP, ATK, posX, posY, lane, column, deadDelay, levelWorld, cost);
         this.shootCycle = shootCycle;
         this.shootCycleCnt = 0;
+        mutableShootCycle = shootCycle;
+        shootCycleRecoverTime = 0;
     }
 
     public void update() {
+        super.update();
         if(this.HP <= 0){ state = State.Dead; }
         List<Enemy> enemies = this.levelWorld.getEnemies();
         switch(state){
@@ -51,7 +56,7 @@ public abstract class Shooter extends Ally {
             default:
                 state = State.Idle;
         }
-
+        recoverShootCycle();
     }
 
     public boolean aim(Unit u) {
@@ -60,5 +65,16 @@ public abstract class Shooter extends Ally {
 
     abstract public boolean canSee(Enemy e);
     abstract void shoot();
-
+    public void setShootCycle(int shootCycle, int time){
+        mutableShootCycle = shootCycle;
+        shootCycleRecoverTime = time;
+    }
+    protected void recoverShootCycle(){
+        if(shootCycleRecoverTime > 0){
+            shootCycleRecoverTime--;
+        }
+        else{
+            mutableShootCycle = shootCycle;
+        }
+    }
 }

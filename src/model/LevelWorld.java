@@ -52,26 +52,29 @@ public class LevelWorld extends World{
         renderees.clear();
         // ally
         for (Ally ally : allies) { ally.update(); }
-        for (Ally ally : allies) { addRenderee((Renderee) ally); }
+        for (Ally ally : allies) { addRenderee(ally); }
         // dying ally
         for(Ally dyingAlly : dyingAllies){ dyingAlly.update(); }
-        for(Ally dyingAlly : dyingAllies){ addRenderee((Renderee) dyingAlly); }
+        for(Ally dyingAlly : dyingAllies){ addRenderee(dyingAlly); }
         // enemy
         for(Enemy enemy : enemies){ enemy.update(); }
-        for(Enemy enemy : enemies){ addRenderee((Renderee) enemy); }
+        for(Enemy enemy : enemies){ addRenderee(enemy); }
         // dying enemy
         for(Enemy dyingEnemy : dyingEnemies){ dyingEnemy.update(); }
-        for(Enemy dyingEnemy : dyingEnemies){ addRenderee((Renderee) dyingEnemy); }
+        for(Enemy dyingEnemy : dyingEnemies){ addRenderee(dyingEnemy); }
         //bullet
         for(Bullet bullet : bullets){ bullet.update(); }
-        for(Bullet bullet : bullets){ addRenderee((Renderee) bullet); }
+        for(Bullet bullet : bullets){ addRenderee(bullet); }
         poopPurse.update();
+        addRenderee(poopPurse);
         selector.update();
         checkGameOver();
         return running;
     }
+    
+    @Override
     public void reset(){   // be called when this world is the next one to run
-        running = true;
+        super.reset();
         pause = false;
         allies.clear();
         enemies.clear();
@@ -185,23 +188,15 @@ public class LevelWorld extends World{
             return true;
         }
         else if(status == BattleStatus.win){
-            win();
             Record.gotoNextLevel();
             Record.writeRecord();
         }
         else if(status == BattleStatus.lose){
-            lose();
         }
         else{
             System.out.println("[LevelWorld] Undefined battle status.");
         }
         
         return false;
-    }
-    private void win(){
-        running = false;
-    }
-    private void lose(){
-        running = false;
     }
 }

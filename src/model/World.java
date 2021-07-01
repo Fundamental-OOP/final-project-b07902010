@@ -34,9 +34,6 @@ public abstract class World {
         }
     }
     public abstract boolean update();
-    // public setBackground(Background background){
-    //     this.background = background;
-    // }
     public void addRenderee(Renderee r) {
         renderees.add(r);
     }
@@ -50,7 +47,9 @@ public abstract class World {
         updateCnt = 0;
         reset();
     }
-    public abstract void reset();
+    public void reset(){
+        running = true;
+    }
     public String getNextWorldType(){
         return nextWorldType;
     }

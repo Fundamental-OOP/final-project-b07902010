@@ -9,18 +9,25 @@ import java.util.List;
 import model.*;
 
 public abstract class Enemy extends Unit {
-    protected int dx;
-    protected int attackCycle;
+    protected final int dx;
+    protected final int attackCycle;
     protected int attackCycleCnt;
+    protected int mutableDx;
+    protected int dxRecoverTime;
+    protected int mutableAttackCycle;
+    protected int attackCycleRecoverTime;
     public Enemy (String Name, int HP, int ATK, int posX, int posY, int lane, int deadDelay, int attackCycle, LevelWorld levelWorld, int dx) {
         super(Name, "enemy", HP, ATK, posX, posY, lane, deadDelay, levelWorld);
         this.dx = dx;
         this.state = State.Walk;
         this.attackCycle = attackCycle;
         this.attackCycleCnt = 0;
+        this.mutableDx = dx;
+        this.dxRecoverTime = 0;
     }
 
     public void update() {
+        super.update();
         if(HP <= 0){ state = State.Dead; }
         List<Ally> allies = this.levelWorld.getAllies();
         switch(state){
@@ -78,6 +85,8 @@ public abstract class Enemy extends Unit {
             default:
 
         }
+        recoverDx();
+        recoverAttackCycle();
     }
 
     protected void damage(Ally a) {
@@ -97,5 +106,29 @@ public abstract class Enemy extends Unit {
         }
         return false;
     }
-
+    public int getDx(){ return dx; }
+    public void setDx(int dx, int time){
+        mutableDx = dx;
+        dxRecoverTime = time;
+    }
+    protected void recoverDx(){
+        if(dxRecoverTime > 0){
+            dxRecoverTime--;
+        }
+        else{
+            mutableDx = dx;
+        }
+    }
+    public void setAttackCycle(int attackCycle, int time){
+        mutableAttackCycle = attackCycle;
+        attackCycleRecoverTime = time;
+    }
+    protected void recoverAttackCycle(){
+        if(attackCycleRecoverTime > 0){
+            attackCycleRecoverTime--;
+        }
+        else{
+            mutableAttackCycle = attackCycle;
+        }
+    }
 }

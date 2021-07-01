@@ -18,7 +18,7 @@ public class HomeCanvas extends Canvas {
         this.world = world;
         this.add(new StartButton(this, world));
         this.add(new ExitButton(world));
-        this.add(new LevelButton(view, world));
+        this.add(new LevelSelectionButton(view, world));
         this.setVisible(true);
     }
 
@@ -71,11 +71,11 @@ class ExitButton extends CanvasButton {
 
 }
 
-class LevelButton extends CanvasButton {
+class LevelSelectionButton extends CanvasButton {
 
     GameView view;
     HomeWorld homeWorld;
-    public LevelButton (GameView view, HomeWorld homeWorld) {
+    public LevelSelectionButton (GameView view, HomeWorld homeWorld) {
         super("../img/level.png", 300, 400);
         this.view = view;
         this.homeWorld = homeWorld;
@@ -83,7 +83,7 @@ class LevelButton extends CanvasButton {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.view.setCanvas("Level Selection");
+        this.homeWorld.setNextWorld("Level Selection");
     }
 
 }

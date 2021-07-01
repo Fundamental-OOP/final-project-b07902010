@@ -26,6 +26,10 @@ public class AllyConstructor {
             case "Oppa":
                 newAlly = new Ally_Oppa(posX, posY, lane, column, world);
                 break;
+            case "RainbowCat":
+                newAlly = new Ally_RainbowCat(posX, posY, lane, column, world);
+                break;
+            
             default:
                 System.out.println("[AllyConstructor] Ally type " + allyType + " not found.");
         }

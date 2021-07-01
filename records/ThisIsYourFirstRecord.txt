@@ -1,9 +1,13 @@
 Available Ally
-4
+8
 MiMiMaoMao
 Pooper
 Saxophone
 Oppa
+RainbowCat
+Doge
+Chihwahwa
+Pingu
 
 Chosen Ally
 4
@@ -11,6 +15,10 @@ MiMiMaoMao
 Pooper
 Saxophone
 Oppa
+RainbowCat
+Doge
+Chihwahwa
+Pingu
 
 Level Progress
 1

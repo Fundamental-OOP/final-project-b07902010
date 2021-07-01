@@ -6,7 +6,7 @@ import record.Record;
 import selector.LevelSelector;
 
 public class LevelSelectionWorld extends World{
-    private final LevelSelector levelSelector = new LevelSelector(9);
+    private final LevelSelector levelSelector = new LevelSelector(this, 9);
     private ArrayList< String > levelNames;
     // private int page;
     // private int maxPage;
@@ -25,26 +25,10 @@ public class LevelSelectionWorld extends World{
         nextWorldType = "Level";
         running = false;
     }
-    // public void nextPage(){
-    //     if(page >= maxPage){ return; }
-    //     page++;
-    //     newPage();
-    // }
-    // public void previousPage(){
-    //     if(page <= 0){ return; }
-    //     page--;
-    //     newPage();
-    // }
-    // public void newPage(){
-    //     levelSelector.clear();
-    //     // add levels
-    // }
-    // something set running to false
+    @Override
     public void reset(){
-        // add selections to selector
+        super.reset();
         levelSelector.clear();
-        // page = 0;
-        // get available levels and set max page
         levelNames = Record.getAvailableLevels();
         for(String levelName : levelNames){
             levelSelector.addSelection(levelName);

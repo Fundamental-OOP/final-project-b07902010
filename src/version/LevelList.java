@@ -36,10 +36,15 @@ public class LevelList {
         return levelNames.indexOf(levelName);
     }
     public ArrayList< String > getAvailableLevels(String progress){
+        int progressLevelOrder = Integer.parseInt(progress);
         ArrayList< String > ret = new ArrayList< String >();
-        for(String levelName : levelNames){
-            ret.add(levelName);
-            if(levelName.equals(progress)){ break;}
+        for(int i = 0; i < levelNames.size(); i++){
+            if(levelOrders.get(i) <= progressLevelOrder){
+                ret.add(levelNames.get(i));
+            }
+            else{
+                break;
+            }
         }
         return ret;
     }

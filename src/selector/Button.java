@@ -15,6 +15,7 @@ public class Button extends JButton implements ActionListener {
 
     public Button (Selector selector, int index) {
         this.index = index;
+        this.setEnabled(false);
         this.selector = selector;
         this.setOpaque(false);
         this.addActionListener(this);

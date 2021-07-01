@@ -16,8 +16,9 @@ public class Ally_Pooper extends Ally {
     public Ally_Pooper(int posX, int posY, int lane, int column, LevelWorld levelWorld) {
         super("Pooper", hp, atk, posX, posY, lane, column, deaddelay, levelWorld, cost);
     }
-
+    @Override
     public void update() {
+        super.update();
         if(HP <= 0){ state = State.Dead; }
         switch(state){
             case Idle:

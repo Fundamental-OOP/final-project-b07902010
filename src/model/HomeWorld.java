@@ -8,7 +8,4 @@ public class HomeWorld extends World{
     public boolean update(){
         return running;
     }
-    public void reset(){
-        running = true;
-    }
 }

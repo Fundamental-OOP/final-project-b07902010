@@ -19,6 +19,7 @@ public abstract class Bomb extends Ally{
     
     @Override
     public void update(){
+        super.update();
         if(HP <= 0){ state = State.Dead; }
         List< Enemy > enemies = levelWorld.getEnemies();
         switch(state){

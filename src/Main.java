@@ -4,6 +4,7 @@ import controller.GameFlow;
 import level.LevelConstructor;
 import model.LevelWorld;
 import model.HomeWorld;
+import model.LevelSelectionWorld;
 import model.World;
 import view.*;
 import record.Record;
@@ -25,7 +26,8 @@ public class Main {
 
         World[] worlds = {
             new LevelWorld(new LevelConstructor(battleTypes)),
-            new HomeWorld()
+            new HomeWorld(),
+            new LevelSelectionWorld()
         };
         
         // initialize gameview
@@ -34,9 +36,8 @@ public class Main {
         // initialize canvas
         Canvas[] canvases = {
             new HomeCanvas(view,  (HomeWorld)worlds[1]),
-            new LevelSelectionCanvas(view),
-            new LevelCanvas(view, (LevelWorld)worlds[0])
-
+            new LevelCanvas(view, (LevelWorld)worlds[0]),
+            new LevelSelectionCanvas(view, (LevelSelectionWorld)worlds[2])
         };
 
         for (Canvas canvas : canvases)

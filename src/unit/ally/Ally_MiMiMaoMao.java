@@ -1,6 +1,5 @@
 package unit.ally;
 
-import bullet.Bullet;
 import bullet.Bullet_MiMiMaoMao;
 import unit.enemy.Enemy;
 import model.*;
@@ -12,14 +11,13 @@ public class Ally_MiMiMaoMao extends Shooter {
     static private int cost = 100;
     static private int deaddelay = 20;
     static private int shootcycle = 10;
-    static private int bulletspeed = 10;
+    static private int bulletSpeed = 50;
     public Ally_MiMiMaoMao (int posX, int posY, int lane, int column, LevelWorld levelWorld) {
-        super("MiMiMaoMao", hp, atk, posX, posY, lane, column, deaddelay, levelWorld, cost, shootcycle); // TODO:寫死
+        super("MiMiMaoMao", hp, atk, posX, posY, lane, column, deaddelay, levelWorld, cost, shootcycle);
     }
 
     public void shoot() {
-        Bullet bullet = new Bullet_MiMiMaoMao(ATK, posX, posY, bulletspeed, lane, levelWorld);
-        this.levelWorld.addBullet(bullet);
+        this.levelWorld.addBullet(new Bullet_MiMiMaoMao(ATK, posX, posY, lane, bulletSpeed, levelWorld));
     }
 
     public boolean canSee(Enemy e) { 

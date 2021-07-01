@@ -43,14 +43,14 @@ public abstract class Bullet implements Renderee{
             posX += dx;
     }
 
-    private boolean touch( Unit u )  {  // TODO: set diff
+    protected boolean touch( Unit u )  {  // TODO: set diff
         if(u.getLane() == lane){
             return Math.abs(u.getPosX() - this.posX) < 20;
         }
         return false;
     }
 
-    private void damage(Enemy e) {
+    protected void damage(Enemy e) {
         int newHP = e.getHP() - ATK;
         e.setHP(Math.max(newHP, 0));
     }
