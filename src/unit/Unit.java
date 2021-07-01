@@ -49,6 +49,9 @@ public abstract class Unit implements Renderee {
 
     public int getHP() { return HP; }
     public void setHP(int HP) { this.HP = HP; }
+    public void damaged(Unit attacker, int dmg){
+        HP -= dmg;
+    }
 
     public int getATK() { return ATK; }
     public void setATK(int ATK, int time) {

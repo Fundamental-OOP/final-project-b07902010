@@ -1,16 +1,15 @@
 package unit.enemy;
 
-import unit.State;
-import graphics.*;
+import utils.UnitImage;
 
 import model.*;
 
 public class Enemy_ADA extends Enemy {
-    private static int deaddelay = 5;
-    private static int atkCycle = 50;
-    private static int atkDelay = 10;
+    private static int deaddelay = UnitImage.getUnitAnimation("ADA", "Dead").size();
+    private static int atkCycle = 100;
+    private static int atkDelay = UnitImage.getUnitAnimation("ADA", "Attack").size();
     public Enemy_ADA (int posX, int posY, int lane, LevelWorld levelWorld ) {
-        super("ADA", 300, 10, posX, posY, lane, deaddelay, atkCycle, atkDelay, levelWorld, 1);
+        super("ADA", 300, 999, posX, posY, lane, deaddelay, atkCycle, atkDelay, levelWorld, 1);
     }
 
 }

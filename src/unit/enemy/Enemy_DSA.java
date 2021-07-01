@@ -1,17 +1,17 @@
 package unit.enemy;
 
 import unit.State;
-
+import utils.UnitImage;
 import model.*;
 
 public class Enemy_DSA extends Enemy {
     private static int moveCycle = 100;
     private int moveCycleCnt;
-    private static int deaddelay = 5;
+    private static int deaddelay = UnitImage.getUnitAnimation("DSA", "Dead").size();;
     private static int atkCycle = 20;
-    private static int atkDelay = 8;
+    private static int atkDelay = UnitImage.getUnitAnimation("DSA", "Attack").size();
     public Enemy_DSA (int posX, int posY, int lane, LevelWorld levelWorld ) {
-        super("DSA", 100, 10, posX, posY, lane, deaddelay, atkCycle, atkDelay, levelWorld, 5);
+        super("DSA", 80, 20, posX, posY, lane, deaddelay, atkCycle, atkDelay, levelWorld, 5);
     }
     @Override
     public void update(){

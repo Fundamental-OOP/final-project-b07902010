@@ -4,13 +4,14 @@ import java.util.List;
 
 import model.LevelWorld;
 import unit.enemy.Enemy;
+import utils.UnitImage;
 
 public class Ally_Oppa extends Bomb{
     static private int hp = 10;
-    static private int atk = 300;
-    private static int deaddelay = 20;
-    private static int cost;
-    private static int explosiondelay = 10;
+    static private int atk = 999;
+    private static int deaddelay = UnitImage.getUnitAnimation("Oppa", "Dead").size();
+    private static int cost = 150;
+    private static int explosiondelay = deaddelay ;
     public Ally_Oppa(int posX, int posY, int lane, int column, LevelWorld levelWorld){
         super("Oppa", hp, atk, posX, posY, lane, column, deaddelay, levelWorld, cost, explosiondelay);
     }
@@ -32,7 +33,7 @@ public class Ally_Oppa extends Bomb{
     protected void BOOM(List< Enemy > enemies) {
         for(Enemy enemy : enemies){
             if(canSee(enemy)){
-                enemy.setHP(enemy.getHP() - mutableATK);
+                enemy.damaged(this, mutableATK);
             }
         }
     }
