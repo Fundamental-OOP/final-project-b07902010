@@ -1,0 +1,11 @@
+CnLabBAD
+Normal:9
+FOOP, 300, 3
+FOOP, 300, 4
+FOOP, 400, 0
+FOOP, 400, 1
+CNLab, 600, 2
+CNLab, 620, 2
+CNLab, 640, 2
+CNLab, 660, 2
+CNLab, 680, 2

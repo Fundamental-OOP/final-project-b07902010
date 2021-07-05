@@ -1,0 +1,12 @@
+FOOP_DSA_CNLab
+Normal:10
+FOOP, 300, 0
+FOOP, 350, 1
+FOOP, 350, 2
+DSA, 600, 2
+DSA, 700, 2
+DSA, 800, 2
+CNLab, 900, 4
+CNLab, 900, 3
+CNLab, 900, 1
+CNLab, 900, 0

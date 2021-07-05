@@ -1,0 +1,12 @@
+DSAEveryWhere
+Normal:10
+DSA, 500, 0
+DSA, 500, 1
+DSA, 550, 2
+DSA, 600, 3
+DSA, 600, 4
+DSA, 650, 4
+DSA, 700, 3
+DSA, 750, 2
+DSA, 800, 1
+DSA, 800, 0

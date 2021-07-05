@@ -1,0 +1,17 @@
+MORECNLab
+Normal:15
+FOOP, 300, 2
+FOOP, 400, 1
+DSA, 600, 4
+DSA, 800, 3
+FOOP, 900, 0
+CNLab, 1200, 0
+CNLab, 1220, 1
+CNLab, 1240, 2
+CNLab, 1260, 3
+CNLab, 1280, 4
+CNLab, 1300, 4
+CNLab, 1320, 3
+CNLab, 1340, 2
+CNLab, 1360, 1
+CNLab, 1380, 0
